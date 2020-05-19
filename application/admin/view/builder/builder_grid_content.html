@@ -1,0 +1,50 @@
+<?php foreach($lists as $k=>$list){ ?>
+	<label for="g-<?php echo empty($list['id'])?$list['id']:$k; ?>" class="small-4 medium-3 large-2 columns">
+		<input id="g-<?php echo empty($list['id'])?$list['id']:$k; ?>" name="selected[]" class="check_box" type="checkbox" value="{$list.id|default=''}">
+		<img data-id="{$list.id|default=''}" class="thumbnail" src="<?php echo get_image_by_id($list['icon']); ?>">
+		
+		<?php 
+			$des_n = 0;
+			if(!empty($keys)){ 
+		?>
+			<?php foreach($keys as $key){ ?>
+			
+			<?php if($key['key']!='do' && $key['key']!='id' && $des_n<1){ ?>
+				
+				<div class="drid_des">
+					{$list[$key['key']]|default=''}
+				</div>
+			<?php
+				$des_n++;
+				} 
+			?>
+			
+			<?php 
+				$do_n = 0;
+				if($key['key']=='do' && !empty($key['do'])){ 
+			?>
+				<div class="button-group">
+					
+					<?php 
+						foreach($key['do'] as $k=>$do){
+						
+						if($do_n>3){
+							break;
+						}
+					?>
+						
+						<a class="button {$do.class|default=''}" href="{$do.href|default='javascript:;'}<?php if(!empty($do['href']) && !empty($do['key'])){ ?>?&{$do.key}={$list[$do.key]|default=''}<?php } ?>">
+						{$do.title|default=''}
+						</a>
+						
+					<?php 
+						$do_n++;
+						}
+					?>
+					
+				</div>
+			<?php } ?>
+			<?php } ?>
+		<?php } ?>
+	</label>
+<?php } ?>

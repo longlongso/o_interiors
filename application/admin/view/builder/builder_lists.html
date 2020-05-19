@@ -1,0 +1,381 @@
+{include file="base/header" title="$_meta_title" description="$meta_description" keywords="$meta_keywords" /}
+<style>
+.eg_stack {
+	line-height: 1.1;
+    font-size: .9rem;
+	color: #000;
+}
+</style>
+{include file="base/script" /}
+
+	<div class="content_body">
+		<div class="row">
+			<div class="con_header">
+				<h3>{$title|default=''}</h3>
+				<?php if(!empty($breadcrumbs)){ ?>
+					<nav>
+					  <ul class="breadcrumbs">
+						<?php foreach($breadcrumbs as $bc){ ?>
+							<?php if(empty($bc['href'])){ ?>
+								<li>{$bc.title|default=''}</li>
+							<?php }else{ ?>
+								<li>
+								<a href="{$bc.href|default='javascript:;'}">{$bc.title|default=''}</a>
+								</li>
+							<?php } ?>
+						<?php } ?>
+					  </ul>
+					</nav>
+				<?php } ?>
+			</div>
+			
+			<?php if(!empty($success_msg)){ ?>
+			<div class="success callout">
+				<span>{$success_msg|default=''}</span>
+				<button class="close-button" data-close="" aria-label="Close reveal" type="button">
+					<span aria-hidden="true">×</span>
+				</button>
+			</div>
+			<?php } ?>
+			<?php if(!empty($error_msg)){ ?>
+			<div class="alert callout">
+			  <span>{$error_msg|default=''}</span>
+			  <button class="close-button" data-close="" aria-label="Close reveal" type="button">
+					<span aria-hidden="true">×</span>
+				</button>
+			</div>
+			<?php } ?>
+			
+			<form action="{$action_url|default=''}" method="post" enctype="multipart/form-data" class="eg_form builder_list">
+				
+				
+				{$buttons|default=''}
+				
+				
+				<?php if(empty($isGridView)){ ?>
+				
+					<div class="eg_list">
+						<div class="loading"><i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i></div>
+						
+						<table class="eg_stack">
+						  <thead>
+							<tr>
+							  <th><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);"></th>
+							  <?php if(!empty($keys)){ ?>
+								  <?php foreach($keys as $key){ ?>
+									<?php if(!empty($key['key']) && empty($key['hide'])){ ?>
+										<?php if(!empty($key['sort'])){ ?>
+											
+											<?php
+												$get_arr = request()->get();
+												$get_arr['sort'] = $key['key'];
+												$get_arr['order'] = empty($get_arr['order'])?'ASC':($get_arr['order']=='ASC'?'DESC':'ASC');
+												$url_param = http_build_query($get_arr);
+											?>
+											
+											<th <?php if($key['key']=='do'){ ?>class="text-right"<?php } ?>><a href="{:url()}?<?php echo $url_param; ?>">{$key.title|default=''}
+											<?php if(!empty($_GET['sort']) && $_GET['sort']==$key['key'] && !empty($_GET['order'])){ ?>
+												<?php if($_GET['order']=='ASC'){ ?>
+													<i class="fa fa-sort-asc" aria-hidden="true"></i>
+												<?php }else{ ?>
+													<i class="fa fa-sort-desc" aria-hidden="true"></i>
+												<?php } ?>
+											<?php } ?>
+											</a></th>
+										<?php }else{ ?>
+											<th <?php if($key['key']=='do'){ ?>class="text-right"<?php } ?>>{$key.title|default=''}</th>
+										<?php } ?>
+									<?php } ?>
+								  <?php } ?>
+							  <?php } ?>
+							</tr>
+						  </thead>
+						  <tbody>
+							<?php if(!empty($data['list'])){ ?>
+								{$data.list}
+							<?php } ?>
+							
+						  </tbody>
+						</table>
+						
+					</div>
+					
+					<div id="page">
+					{$data.page|default=''}
+					</div>
+					
+				<?php }else{ ?>
+					
+					<div  class="eg_grid">
+						<div class="loading">
+							<i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>
+						</div>
+						
+						<div class="row">
+							<?php if(!empty($data['list'])){ ?>
+								{$data.list}
+							<?php } ?>
+						</div>
+						
+						<div id="page">
+							{$data.page|default=''}
+						</div>
+						
+					</div>
+					
+				<?php } ?>
+				
+			</form>
+		</div>
+	</div>
+
+
+<script>
+/**
+ * set meta title
+**/
+$('head title').text('{$meta_title}');
+
+$(function(){
+	$('.eg_form, .eg_form form').submit(function(){
+		$('.eg_form .loading').eq(0).show();
+		var url = window.location.href;
+		var pm = '';
+		$('.egSearchForm *[name]').each(function(){
+			if($(this).val()){
+				pm += '&' + $(this).attr('name') + '=' + $(this).val();
+			}
+		});
+		if(pm){
+			if(url.indexOf('?')>-1){
+				url += pm;
+			}else{
+				url += '?'+pm;
+			}
+			//window.location.href = url;
+			getContent(url);
+		}else{
+			if(url.indexOf('&')>-1){
+				//window.location.href = url.split('&')[0];
+				getContent(url);
+			}
+		}
+		setTimeout(function(){
+			$('.eg_form .loading').eq(0).hide();
+		},200);
+		return false;
+	});
+	
+	/* get list page */
+	$('#page').on('click', 'a', function(){
+		var pm = '';
+		$('.egSearchForm *[name]').each(function(){
+			if($(this).val()){
+				pm += '&' + $(this).attr('name') + '=' + $(this).val();
+			}
+		});
+		getContent($(this).attr('href')+'<?php $get_data = request()->get(); if(!empty($get_data)){ unset($get_data['page']); echo '&' . http_build_query($get_data); } ?>'+pm);
+		return false;
+	});
+	
+	<?php if(empty($isGridView)){ ?>
+		function getContent(url){
+			$('.eg_form .loading').show();
+			$.get(url, function(res){
+				$('.eg_form .loading').hide();
+				$('.eg_form .eg_list table tbody').html(res.list);
+				$('.eg_form #page').html(res.page);
+			});
+		}
+	<?php }else{ ?>
+		function getContent(url){
+			$('.eg_grid .loading').show();
+			$.get(url, function(res){
+				$('.eg_grid .loading').hide();
+				$('.eg_grid .row').html(res.list);
+				$('.eg_grid #page').html(res.page);
+			});
+		}
+		
+		//select all
+		$('.selectAll').click(function(){
+			$('.eg_grid input[type="checkbox"]').prop("checked", true);
+		});
+		
+	<?php } ?>
+	
+	//button group toggle
+	$('.btnGroup .button').click(function(){
+		if(!$(this).hasClass('delete_selected')){
+			$('input[type="checkbox"]').prop("checked", false);
+		}
+		
+		var sub_btn_id = $(this).data('for');
+		
+		if(sub_btn_id){
+			if(!$(this).hasClass('active')){
+				$('.btnGroup .button').removeClass('active');
+				$('.subBtnGroup').slideUp();
+				$('#'+sub_btn_id).slideDown();
+				
+				//manager active
+				if($(this).hasClass('managerBtn') || $(this).hasClass('editBtn')){
+					$('.eg_grid').addClass('active');
+				}
+				
+				$(this).addClass('active');
+				return false;
+			}
+		}
+		
+		$('.eg_grid').removeClass('active');
+		$('.btnGroup .button').removeClass('active');
+		$('.subBtnGroup').slideUp();
+	});
+	
+	//delete a row
+	$('.eg_form').on('click', '.delete', function(){
+		var self = $(this);
+		window.eg_confirm('{$Think.lang.confirm_delete}', function(res){
+			if(res){
+				$.get(self.attr('href'), function(res){
+					if(res.code){
+						window.success(res.msg);
+					}else{
+						window.error(res.msg);
+					}
+					getContent(window.location.href);
+				});
+			}
+		}, '{$Think.lang.confirm}', '{$Think.lang.cancel}');
+		return false;
+	});
+	
+	//delete selected
+	$('.button-group .delete_selected').click(function(){
+		var self = $(this);
+		var del = [];
+		$('.eg_form input[name="selected[]"]:checked').each(function(){
+			del[del.length] = $(this).val();
+		});
+		
+		if(!del.length){
+			window.error('{$Think.lang.please_select_delete_object}');
+			return false;
+		}
+		
+		window.eg_confirm('{$Think.lang.confirm_delete}', function(res){
+			if(res){
+				$.post(self.data('href'), {'id': del}, function(res){
+					if(res.code){
+						window.success(res.msg);
+					}else{
+						window.error(res.msg);
+					}
+					getContent(window.location.href);
+				});
+			}
+		}, '{$Think.lang.confirm}', '{$Think.lang.cancel}');
+		
+	});
+	
+	//refresh page
+	$('.button-group .refresh').click(function(){
+		getContent(window.location.href);
+	});
+	$('.button-group .refresh').dblclick(function(){
+		window.location.reload();
+	});
+	
+	$('.egSearch').click(function(){
+		if($(this).parent().hasClass('active')){
+			self = $(this);
+			self.parent().find('.eg_btn_form').animate({'width':'160px'}, function(){
+				$(this).hide('fast', function(){
+					self.parent().removeClass('active').removeClass('desktop');
+				});
+			});
+		}else{
+			
+			if (Foundation.MediaQuery.atLeast('medium')) {
+				if($('body').outerWidth(true)-$(this).offset().left>310){
+					$(this).parent().addClass('desktop');
+				}
+			}
+			
+			$(this).parent().addClass('active').find('.eg_btn_form').css({'width':'160px', 'display':'inline-block'}).animate({'width':'300px'});
+		}
+	});
+	
+	$('.egSearch').each(function(){
+		if($(this).hasClass('egSearchActive')){
+			$(this).trigger('click');
+		}
+	});
+	
+	$('.egSearchForm *[type="reset"]').click(function(){
+		url = window.location.href;
+		//window.location.href = url.split('&')[0];
+		getContent(url);
+	});
+	
+	// button csv export
+	$('#button-export').on('click', function() {
+		window.open('{:url('export_student')}');
+	});
+	
+	// button csv upload
+	$('#button-upload').on('click', function() {
+		$('#form-upload').remove();
+
+		$('body').prepend('<form enctype="multipart/form-data" id="form-upload" style="display: none;"><input type="file" name="file" /></form>');
+
+		$('#form-upload input[name=\'file\']').trigger('click');
+
+		if (typeof timer != 'undefined') {
+			clearInterval(timer);
+		}
+
+		if (typeof(timer) != 'undefined' && timer) {
+			clearInterval(timer);	
+		}
+		
+
+		timer = setInterval(function() {
+			if ($('#form-upload input[name=\'file\']').val() != '') {
+				clearInterval(timer);
+
+				$.ajax({
+					url: '{:url('import_students')}',
+					type: 'post',
+					dataType: 'json',
+					data: new FormData($('#form-upload')[0]),
+					cache: false,
+					contentType: false,
+					processData: false,
+					beforeSend: function() {
+						$('#button-upload').attr('disabled', 'disabled');
+					},
+					complete: function() {
+						$('#button-upload').removeAttr('disabled');
+					},
+					success: function(json) {
+						console.log(json);
+						if (json['error']) {
+							alert(json['error']);
+						}else{
+							alert('complete! ' + json['succ_info']);
+						}
+					},
+					error: function(xhr, ajaxOptions, thrownError) {
+						alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+					}
+				});
+			}
+		}, 500);
+	});
+	
+});
+</script>
+
+{include file="base/footer" /}

@@ -1,0 +1,20 @@
+<a id="copy_ac" class="button fa fa-clone" href="javascript:;"> {$Think.lang.copy} </a>
+<script>
+$(function(){
+    $('#copy_ac').click(function(){
+       
+        if($('input[name="selected[]"]:checked').length==1){
+            
+            var id = $('input[name="selected[]"]:checked').val();
+            window.location.href = "{:url('edit')}?copy=1&id="+id;
+            
+        }else if($('input[name="selected[]"]:checked').length>1){
+            window.error('只能選擇一個 {$Think.lang.copy} 對象！');
+        }else{
+            window.error('請選擇一個 {$Think.lang.copy} 對象！');
+        }
+        
+        return false;
+    });
+});
+</script>

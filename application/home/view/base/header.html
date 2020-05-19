@@ -1,0 +1,108 @@
+<?php 
+$controller_active = strtolower( request()->controller() );
+$get_arr = request()->get();
+$url_param = http_build_query($get_arr);
+$url_current = url();
+$url_end = substr($url_current, -6);
+if ($url_end == '/index') {
+	$url_current = substr(url(), 0, -6) . '.html';
+}
+$self_url = $url_current . '?' . $url_param;
+?>
+<!doctype html>
+<html class="no-js" lang="en" dir="ltr">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="renderer" content="webkit" />
+    <title>[title]</title>
+    <meta name="description" content="[description]">
+    <meta name="keywords" content="[keywords]">
+    <link href="<?php echo get_image_by_id($site_meta_icon); ?>" rel="shortcut icon" />
+    <link rel="stylesheet" href="__STATIC__/css/foundation.min.css">
+    <link rel="stylesheet" href="__STATIC__/css/app.css">
+    <script src="__STATIC__/vendor/jquery.js"></script>
+    <script src="__STATIC__/vendor/foundation.min.js"></script>
+    <script src="__STATIC__/js/app.js"></script>
+	<?php if ($lang_id == 2) { ?>
+	<style>
+		header .nav a {
+			padding: 2px 18px;
+		}
+	</style>
+	<?php } ?>
+</head>
+<?php if ($lang_id == 2) { ?>
+<?php $body_font = 'font-family: 微軟正黑體,Microsoft JhengHei,SimHei,STHeiti,Apple LiGothic Medium,LiHei Pro Medium,Century Gothic !important;'; ?>
+<?php } else { ?>
+<?php $body_font = 'font-family: Montserrat-Regular,Century Gothic,微軟正黑體,Microsoft JhengHei,SimHei,STHeiti,Apple LiGothic Medium,LiHei Pro Medium !important;'; ?>
+<?php } ?>
+<body style="<?php echo $body_font; ?>">
+    <header>
+        <div class="grid-container" style="max-width: 2000px">
+            <div>
+				<!-- 
+				<span class="head_nav_tog_btn"><button class="menu-icon" type="button"></button></span>
+				 -->
+                <a class="logo_con" href="index.html"><img class="logo" src="<?php echo get_image_by_id($site_logo); ?>" /></a>
+				<div style="position: absolute; top: 1px; right: 4px; font-size: 14px">
+					<a href="https://www.facebook.com/#" target="_blank"><img style="width: 40px; vertical-align: middle; margin-bottom: 10px;" src="__STATIC__/img/icon/facebook_icon.png" /></a>
+					<!-- 
+					<a style="color: #fff" href="{$self_url|default=''}&lang=en-us">ENG </a> | 
+					<a style="color: #fff" href="{$self_url|default=''}&lang=zh-hk"> 繁中</a>
+					 -->
+				</div>
+            </div>
+			<!-- <div class="head_nav">
+				<ul class="vertical menu accordion-menu" data-accordion-menu>
+				  <li><a <?php if($controller_active=='index' ){ ?>class="is-active"<?php } ?> href="index.html">{$Think.lang.cate_home}</a></li>
+				  <li><a <?php if($controller_active=='about' ){ ?>class="is-active"<?php } ?> href="about.html">{$Think.lang.cate_about}</a></li>
+				  <li><a <?php if($controller_active=='project' ){ ?>class="is-active"<?php } ?> href="project.html?type=new&first=1">{$Think.lang.cate_projects}</a></li>
+				  <li><a <?php if($controller_active=='award' ){ ?>class="is-active"<?php } ?> href="award.html">{$Think.lang.cate_awards}</a></li>
+				  <li><a <?php if($controller_active=='column' ){ ?>class="is-active"<?php } ?> href="column.html">{$Think.lang.cate_column}</a></li>
+				  <li><a <?php if($controller_active=='magazine' ){ ?>class="is-active"<?php } ?> href="magazine.html">{$Think.lang.cate_magazine_interview}</a></li>
+				  <li><a <?php if($controller_active=='media' ){ ?>class="is-active"<?php } ?> href="media.html">{$Think.lang.cate_media}</a></li>
+				  <li><a <?php if($controller_active=='contact' ){ ?>class="is-active"<?php } ?> href="contact.html">{$Think.lang.cate_contact}</a></li>
+				</ul>
+			</div>
+            <div class="nav pc-nav-box">
+				<div class="pc-nav">
+					<a <?php if($controller_active=='index' ){ ?>class="active"<?php } ?> href="index.html">{$Think.lang.cate_home}</a>
+					<a <?php if($controller_active=='about' ){ ?>class="active"<?php } ?> href="about.html">{$Think.lang.cate_about}</a>
+					<a <?php if($controller_active=='project' ){ ?>class="active"<?php } ?> href="project.html?type=new&first=1">{$Think.lang.cate_projects}</a>
+					<a <?php if($controller_active=='award' ){ ?>class="active"<?php } ?> href="award.html">{$Think.lang.cate_awards}</a>
+					
+					<a <?php if($controller_active=='column' ){ ?>class="active"<?php } ?> href="column.html">{$Think.lang.cate_column}</a>
+					<a <?php if($controller_active=='magazine' ){ ?>class="active"<?php } ?> href="magazine.html">{$Think.lang.cate_magazine_interview}</a>
+					<a <?php if($controller_active=='media' ){ ?>class="active"<?php } ?> href="media.html">{$Think.lang.cate_media}</a>
+					<a <?php if($controller_active=='contact' ){ ?>class="active"<?php } ?> href="contact.html">{$Think.lang.cate_contact}</a>
+				</div>
+            </div> -->
+        </div>
+		<script>
+			$(function() {
+				resize_to_fit();
+			});
+			
+			function resize_to_fit() {
+				if ($(window).width() > 650) {
+					var pc_nav_height = $('.nav .pc-nav').height();
+					var nav_padleft = $('.pc-nav a').css('padding-left');
+					$('.pc-nav a').css('padding-left', parseFloat(nav_padleft) + 1);
+					$('.pc-nav a').css('padding-right', parseFloat(nav_padleft) + 1);
+					var pc_nav_box = $('.pc-nav-box').width();
+					var pc_nav_width = $('.nav .pc-nav').width();
+					if ($('.nav .pc-nav').height() > pc_nav_height) {
+						$('.pc-nav a').css('padding-left', parseFloat(nav_padleft) - 1);
+						$('.pc-nav a').css('padding-right', parseFloat(nav_padleft) - 1);
+					} else {
+						if (pc_nav_box > pc_nav_width) {
+							resize_to_fit();
+						}
+					}
+				}
+			}
+		</script>
+    </header>

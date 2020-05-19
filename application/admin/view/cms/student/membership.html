@@ -1,0 +1,198 @@
+<style>
+.inblock{
+	display: inline-block;
+}
+.inblock input,.inblock select{
+	width: 130px !important;
+}
+</style>
+
+<div>
+	{$Think.lang.membership} History
+	<div id="membershipHistoryCon">
+		
+	</div>
+
+	{$Think.lang.membership}
+	
+	<?php $membership_type = ['R'=>'Regular', 'E'=>'Extended', 'P'=>'Passed', 'X'=>'NonStuden', 'W'=>'Website', 'S'=>'Special', 'F'=>'Free Seminar']; ?>
+	
+	<?php if(!empty($membership_list)){ ?>
+		<?php foreach($membership_list as $membership){ ?>
+		
+			<table class="history_member_ship">
+				<thead>
+					<tr>
+						<th> {$Think.lang.membership} </th>
+						<th> From </th>
+						<th> To </th>
+						<th> Type </th>
+						<th> Update time </th>    
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td> </td>
+						<td> <?php echo date('Y-m-d', $membership['from']); ?> </td>
+						<td> <?php echo date('Y-m-d', $membership['to']); ?> </td>
+						<td> <?php echo empty($membership['type'])?'--':(isset($membership_type[$membership['type']])?$membership_type[$membership['type']]:''); ?> </td>
+						<td> <?php echo date('Y-m-d', $membership['update_time']); ?> </td>
+					</tr>
+				</tbody>
+			</table>
+		
+		
+		<?php if(!$membership['history']){ ?>
+			
+			<div class="ms_item" date-id="<?php echo $membership['id']; ?>">
+				<input type="hidden" name="membership[id]" value="<?php echo $membership['id']; ?>"/>
+				<div>
+				<div class="date-range-tool" style="border: 1px solid #ccc; padding: 5px 10px;">
+					<label class="inblock">
+						From	
+						<input class="date-range" data-range="from" disabled="disabled" type="text" name="membership[from]" value="<?php echo date('Y-m-d', $membership['from']); ?>"/>
+					</label>
+					<label class="inblock">
+					  To 
+					  <input class="date-range" data-range="to" disabled="disabled" type="text" name="membership[to]" data-h="<?php echo ($membership['to']<time()?1:0); ?>" value="<?php echo date('Y-m-d', $membership['to']); ?>"/>
+					</label>
+					<label class="inblock">
+					  Type 
+					  <select name="membership[type]">
+						<option value="">--</option>
+						<option value="R">Regular</option>
+						<option value="E">Extended</option>
+						<option value="P">Passed</option>
+						<option value="X">NonStuden</option>
+						<option value="W">Website</option>
+						<option value="S">Special</option>
+						<option value="F">Free Seminar</option>
+					  </select>
+					  <script>
+					  $(function(){
+						var v = '<?php echo empty($membership['type'])?'':$membership['type']; ?>';
+						$('select[name="membership[type]"]').val(v).attr('disabled', 'disabled');
+					  });
+					  </script>
+					</label>
+				</div>
+				</div>
+				<div class="">
+					<button class="button fa fa-pencil-square edit"> {$Think.lang.edit} </button>
+				</div>
+				<div class="">
+					<button class="button fa fa-plus-circle add"> Renew {$Think.lang.membership} </button>
+				</div>
+			</div>
+			
+		<?php } ?>
+		
+		<?php } ?>
+		
+	<?php }else{ ?>
+	
+		<div class="date-range-tool" style="border: 1px solid #ccc; padding: 5px 10px;">
+			<label class="inblock">
+				From	
+				<input class="date-range" data-range="from" type="text" name="membership[from]" value=""/>
+			</label>
+			<label class="inblock">
+			  To 
+			  <input class="date-range" data-range="to" type="text" name="membership[to]" value=""/>
+			</label>
+			<label class="inblock">
+			  Type 
+			  <select name="membership[type]">
+				<option value="">--</option>
+				<option value="R">Regular</option>
+				<option value="E">Extended</option>
+				<option value="P">Passed</option>
+				<option value="X">NonStuden</option>
+				<option value="W">Website</option>
+				<option value="S">Special</option>
+				<option value="F">Free Seminar</option>
+			  </select>
+			</label>
+		</div>
+		
+	<?php } ?>
+	
+</div>
+
+<script>
+    $(function() {
+		$('.ms_item .edit').click(function(){
+			$('.ms_item .add_new').remove();
+			$(this).parent().parent().find('.date-range').removeAttr('disabled');
+			$(this).parent().parent().find('select[name="membership[type]"]').removeAttr('disabled');
+			return false;
+		});
+		$('.ms_item .add').click(function(){
+			//$(this).parent().parent().find('input[name="membership[id]"]').remove();
+			//$(this).parent().parent().find('.date-range').removeAttr('disabled').val('');
+			if($('.ms_item .add_new').length){
+				return false;
+			}
+			var html = '';
+			html +='<div class="date-range-tool add_new" style="border: 1px solid #ccc; padding: 5px 10px;">';
+			html +='<input type="hidden" name="membership[id]" value=""/>';
+			html +='	<label class="inblock"> From ';
+			html +='	<input class="date-range" data-range="from" type="text" name="membership[from]" value=""/>';
+			html +='	</label>';
+			html +='	<label class="inblock"> To ';
+			html +='	  <input class="date-range" data-range="to" type="text" name="membership[to]" value=""/>';
+			html +='	</label> ';
+			
+			html +='<label class="inblock">';
+			html +='  Type ';
+			html +='  <select name="membership[type]">';
+			html +='	<option value="">--</option>';
+			html +='	<option value="R">Regular</option>';
+			html +='	<option value="E">Extended</option>';
+			html +='	<option value="P">Passed</option>';
+			html +='	<option value="X">NonStuden</option>';
+			html +='	<option value="W">Website</option>';
+			html +='	<option value="S">Special</option>';
+			html +='	<option value="F">Free Seminar</option>';
+			html +='  </select>';	
+			html +='</label>';
+			
+			html +='</div>';
+			$('.ms_item .add_new').remove();
+			$('.ms_item .add').before(html);
+			return false;
+		});
+		$('.history_member_ship').appendTo('#membershipHistoryCon');
+		var m_to = $('input[name="membership[to]"]').val();
+		var m_h = $('input[name="membership[to]"]').data('h');
+		if(m_to && !m_h){
+			$('#m_membership_expiry_date').text(m_to);
+			
+			if( Date.parse( new Date(m_to) ) - 2592000000 < Date.parse( new Date() ) ){
+				$('#m_membership_status').html('<i style="color:#ff9800;font-size: 20px;" class="fa fa-lightbulb-o" aria-hidden="true"></i> Yes *');
+			}else{
+				$('#m_membership_status').html('<i style="color:#4CAF50;font-size: 20px;" class="fa fa-lightbulb-o" aria-hidden="true"></i> Yes');
+			}
+		}else if(m_h){
+			$('#m_membership_expiry_date').text('{$Think.lang.expired}');
+			$('#m_membership_status').html('<i style="color:#F44336;font-size: 20px;" class="fa fa-lightbulb-o" aria-hidden="true"></i> No');
+		}
+		setTimeout(function(){
+			var v = $('select[name="membership[type]"]').val();
+			var t = $('select[name="membership[type]"]').find('option[value="'+ v +'"]').text();
+			var c = '';
+			if(v == 'R' || v == 'E'){
+				var c = $('#m_membership_type').data('course-count');
+			}
+			$('#m_membership_type').text(t+c);
+		},100);
+		
+		$('.ms_item .inblock').click(function(){
+			//return false;
+		});
+		
+		
+		// Chegue iamge upload
+		
+	});
+</script>

@@ -1,0 +1,280 @@
+{include file="base/header" title="$meta_title" description="$meta_description" keywords="$meta_keywords" /}
+
+<style>
+body{background-color: #1EBADF;}
+</style>
+
+<div class="pro_body">
+
+	<div class="reg_header text-center">
+		<img src="__STATIC__/image/reg.png"/>
+		
+		<div class="text-center">
+			<ul class="tabs c_tabs" data-tabs id="pro-tabs">
+			  <li class="tabs-title is-active"><a href="#profile_con" aria-selected="true">{$Think.lang.profile}</a></li>
+			  <li class="tabs-title"><a href="#social_con">{$Think.lang.social_account}</a></li>
+			</ul>
+		</div>
+	</div>
+	<div class="reg_content">
+		<?php if(!empty($success_msg)){ ?>
+		<div class="success callout">
+		    <span>{$success_msg|default=''}</span>
+			<button class="close-button" data-close="" aria-label="Close reveal" type="button">
+				<span aria-hidden="true">×</span>
+			</button>
+		</div>
+		<?php } ?>
+		<?php if(!empty($error_msg)){ ?>
+		<div class="alert callout">
+		  <span>{$error_msg|default=''}</span>
+		  <button class="close-button" data-close="" aria-label="Close reveal" type="button">
+				<span aria-hidden="true">×</span>
+			</button>
+		</div>
+		<?php } ?>
+		
+		<div class="tabs-content" data-tabs-content="pro-tabs">
+		  <div class="tabs-panel is-active" id="profile_con">
+			<form id="profileForm" class="box_form" action="{:url('save')}" method="post">
+				<div class="vl_line"></div>
+				<div class="vr_line"></div>
+				<a href="{:url('auth/logout')}" class="logout"><i class="fa fa-sign-out" aria-hidden="true"></i></a>
+				
+				<div class="input-group">
+				  <span class="input-group-label">
+					<span class="OL_icon_accout OL_icon"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span><span class="path7"></span><span class="path8"></span><span class="path9"></span><span class="path10"></span><span class="path11"></span><span class="path12"></span><span class="path13"></span><span class="path14"></span><span class="path15"></span><span class="path16"></span><span class="path17"></span><span class="path18"></span><span class="path19"></span></span>
+				  </span>
+				  <span class="input-group-field">
+					{$data.username|default=''}
+				  </span>
+				</div>
+				
+				<div class="input-group">
+				  <span class="input-group-label">
+					<span class="OL_icon_mail OL_icon"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span></span>
+				  </span>
+				  <span class="input-group-field">
+					{$data.email|default=''}
+				  </span>
+				</div>
+				
+				<div class="input-group">
+				  <span class="input-group-label">
+					<span class="OL_icon_key OL_icon"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span></span>
+				  </span>
+				  <span class="input-group-field">
+					********
+				  </span>
+				  <span class="input-group-label"> <a href="{:url('modifyPassword')}" target="_blank">{$Think.lang.modify_password}</a></span>
+				</div>
+				
+				<hr class="dotted_line">
+				
+				<div class="input-group <?php if(!empty($error['real_name'])){ ?> has-error<?php } ?>">
+				  <span class="input-group-label">
+					<span class="OL_icon_username OL_icon"></span>
+				  </span>
+				  <input class="input-group-field" type="text" placeholder="{$Think.lang.real_name}" value="{$data.real_name|default=''}" name="real_name" required>
+				  <span class="input-group-label required"> &nbsp; </span>
+				</div>
+				<?php if(!empty($error['real_name'])){ ?>
+				<div class="error_tips" for="real_name">
+					{$error.real_name}
+				</div>
+				<?php } ?>
+				
+				<div class="input-group <?php if(!empty($error['mobile'])){ ?> has-error<?php } ?>">
+				  <span class="input-group-label">
+					<span class="OL_icon_mobile OL_icon"></span>
+				  </span>
+				  <input class="input-group-field" type="text" placeholder="{$Think.lang.mobile}" value="{$data.mobile|default=''}" name="mobile" required>
+				  <span class="input-group-label required"> &nbsp; </span>
+				</div>
+				<?php if(!empty($error['mobile'])){ ?>
+				<div class="error_tips" for="mobile">
+					{$error.mobile}
+				</div>
+				<?php } ?>
+				
+				<div class="input-group <?php if(!empty($error['gender'])){ ?> has-error<?php } ?>">
+				  <span class="input-group-label">
+					<span class="OL_icon_gender OL_icon"><span class="path1"></span><span class="path2"></span></span>
+				  </span>
+				  <?php $data['gender'] = isset($data['gender'])?$data['gender']:0; ?>
+				  <select class="input-group-field" name="gender" required>
+					<option value="1" <?php if($data['gender']==1){ ?>selected<?php } ?>>{$Think.lang.male}</option>
+					<option value="2" <?php if($data['gender']==2){ ?>selected<?php } ?>>{$Think.lang.female}</option>
+					<option value="0" <?php if($data['gender']==0){ ?>selected<?php } ?>>{$Think.lang.not_set}</option>
+				  </select>
+				  <span class="input-group-label required"> &nbsp; </span>
+				</div>
+				<?php if(!empty($error['gender'])){ ?>
+				<div class="error_tips" for="gender">
+					{$error.gender}
+				</div>
+				<?php } ?>
+				
+				<div class="text-center">
+					<button type="submit" class="warning button">&nbsp; {$Think.lang.save} &nbsp;</button>
+				</div>
+				
+			</form>
+		  </div>
+		  
+		  <div class="tabs-panel" id="social_con">
+			<form id="socialForm" class="box_form" action="{:url('save')}" method="post">
+				<div class="vl_line"></div>
+				<div class="vr_line"></div>
+				<a href="{:url('auth/logout')}" class="logout"><i class="fa fa-sign-out" aria-hidden="true"></i></a>
+				
+				<div class="input-group <?php if(!empty($error['facebook'])){ ?> has-error<?php } ?>">
+				  <span class="input-group-label">
+					<span class="OL_icon_facebook OL_icon"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span></span>
+				  </span>
+				  <input class="input-group-field" type="text" placeholder="{$Think.lang.facebook}" value="{$data.facebook|default=''}" name="facebook" required>
+				  <span class="input-group-label required"> &nbsp; </span>
+				</div>
+				<?php if(!empty($error['facebook'])){ ?>
+				<div class="error_tips" for="facebook">
+					{$error.facebook}
+				</div>
+				<?php } ?>
+				
+				<div class="input-group <?php if(!empty($error['line'])){ ?> has-error<?php } ?>">
+				  <span class="input-group-label">
+					<span class="OL_icon_line OL_icon"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span><span class="path7"></span><span class="path8"></span></span>
+				  </span>
+				  <input class="input-group-field" type="text" placeholder="{$Think.lang.line}" value="{$data.line|default=''}" name="line" required>
+				  <span class="input-group-label required"> &nbsp; </span>
+				</div>
+				<?php if(!empty($error['line'])){ ?>
+				<div class="error_tips" for="line">
+					{$error.line}
+				</div>
+				<?php } ?>
+				
+				<div class="input-group <?php if(!empty($error['wechat'])){ ?> has-error<?php } ?>">
+				  <span class="input-group-label">
+					<span class="OL_icon_wechat OL_icon"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span><span class="path7"></span><span class="path8"></span></span>
+				  </span>
+				  <input class="input-group-field" type="text" placeholder="{$Think.lang.wechat}" value="{$data.wechat|default=''}" name="wechat" required>
+				  <span class="input-group-label required"> &nbsp; </span>
+				</div>
+				<?php if(!empty($error['wechat'])){ ?>
+				<div class="error_tips" for="wechat">
+					{$error.wechat}
+				</div>
+				<?php } ?>
+				
+				<div class="input-group <?php if(!empty($error['qq'])){ ?> has-error<?php } ?>">
+				  <span class="input-group-label">
+					<span class="OL_icon_qq OL_icon"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span><span class="path7"></span><span class="path8"></span><span class="path9"></span><span class="path10"></span><span class="path11"></span><span class="path12"></span><span class="path13"></span><span class="path14"></span><span class="path15"></span><span class="path16"></span><span class="path17"></span><span class="path18"></span><span class="path19"></span></span>
+				  </span>
+				  <input class="input-group-field" type="text" placeholder="{$Think.lang.qq}" value="{$data.qq|default=''}" name="qq" required>
+				  <span class="input-group-label required"> &nbsp; </span>
+				</div>
+				<?php if(!empty($error['qq'])){ ?>
+				<div class="error_tips" for="qq">
+					{$error.qq}
+				</div>
+				<?php } ?>
+				
+				<div class="input-group <?php if(!empty($error['whatsapp'])){ ?> has-error<?php } ?>">
+				  <span class="input-group-label">
+					<span class="OL_icon_whatsapp OL_icon"><span class="path1"></span><span class="path2"></span></span>
+				  </span>
+				  <input class="input-group-field" type="text" placeholder="{$Think.lang.whatsapp}" value="{$data.whatsapp|default=''}" name="whatsapp" required>
+				  <span class="input-group-label required"> &nbsp; </span>
+				</div>
+				<?php if(!empty($error['whatsapp'])){ ?>
+				<div class="error_tips" for="whatsapp">
+					{$error.whatsapp}
+				</div>
+				<?php } ?>
+				
+				<div class="text-center">
+					<button type="submit" class="warning button">&nbsp; {$Think.lang.save} &nbsp;</button>
+				</div>
+				
+			</form>
+		  </div>
+		</div>
+		
+	</div>
+
+	
+</div>
+<div class="footer">
+		<div class="row text-center">
+			<span> {:copy_rights()} </span>
+		</div>
+	</div>
+{include file="base/script" /}
+
+<script type="text/javascript">
+if(getCookie('profTag')==2){
+	$('#social_con-label').click();
+	$('#profileForm .has-error').removeClass('has-error');
+	$('#profileForm .error_tips').slideUp(function(){
+		$(this).remove();
+	});
+}else{
+	$('#socialForm .has-error').removeClass('has-error');
+	$('#socialForm .error_tips').slideUp(function(){
+		$(this).remove();
+	});
+}
+
+$('#pro-tabs a').click(function(){
+	if($(this).attr('href')=='#social_con')
+		setCookie('profTag', 2);
+	else
+		setCookie('profTag', 1);
+});
+
+$(function(){
+	//save
+	$('#profileForm, #socialForm').submit(function(){
+		var self = $(this);
+		self.find('.has-error').removeClass('has-error');
+		self.find('.error_tips').remove();
+		
+		var data = self.serializeArray();
+		var err = 0;
+		for(i in data){
+			if(!data[i]['value']){
+				self.find('input[name="' + data[i]['name'] + '"]').parent().addClass('has-error');
+				err++ ;
+			}
+		}
+		
+		if(err){
+			window.error('{$Think.lang.red_mark_is_required}');
+			return false;
+		}
+		
+		$.post(self.attr('action'), data, function(res){
+			
+			if(!res.code){
+				//error
+				window.error(res.msg);
+				if(res.data.error){
+					for(i in res.data.error){
+						self.find('input[name="'+i+'"]').parent().addClass('has-error');
+						self.find('input[name="'+i+'"]').parent().after('<div class="error_tips" for="'+i+'">'+res.data.error[i]+'</div>');
+					}
+				}
+			}else{
+				//success
+				window.success(res.msg);
+			}
+		});
+		
+		return false;
+	});
+	
+});
+</script>
+
+{include file="base/footer" /}

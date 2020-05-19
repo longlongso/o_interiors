@@ -1,0 +1,550 @@
+{include file="base/header" title="$meta_title" description="$meta_description" keywords="$meta_keywords" /}
+
+<style>
+body{background-color: #1EBADF;}
+</style>
+
+<div class="reg_body">
+
+	<div class="reg_header text-center">
+		<a href="">
+			<img src="__STATIC__/image/log.png"/>
+		</a>
+		<div class="text-center">
+			<ul class="tabs c_tabs" data-tabs id="reg-tabs">
+			  <li class="tabs-title is-active"><a href="#login_con" aria-selected="true">{$Think.lang.user_login}</a></li>
+			  <li class="tabs-title"><a href="#register_con">{$Think.lang.user_register}</a></li>
+			  <li class="tabs-title" id="go_fb_reg_con" style="display:none;"><a href="#fb_reg_con">{$Think.lang.fill_in_information}</a></li>
+			</ul>
+		</div>
+	</div>
+	<div class="reg_content">
+		
+		<?php if(!empty($success_msg)){ ?>
+		<div class="success callout">
+			<span>{$success_msg|default=''}</span>
+			<button class="close-button" data-close="" aria-label="Close reveal" type="button">
+				<span aria-hidden="true">×</span>
+			</button>
+		</div>
+		<?php } ?>
+		<?php if(!empty($error_msg)){ ?>
+		<div class="alert callout">
+			<span>{$error_msg|default=''}</span>
+			<button class="close-button" data-close="" aria-label="Close reveal" type="button">
+				<span aria-hidden="true">×</span>
+			</button>
+		</div>
+		<?php } ?>
+		
+		<div class="tabs-content" data-tabs-content="reg-tabs">
+		  <div class="tabs-panel is-active" id="login_con">
+			<form id="loginForm" class="box_form" action="{:url('login')}" method="post">
+				<div class="vl_line"></div>
+				<div class="vr_line"></div>
+				
+				<div class="input-group <?php if(!empty($error['username'])){ ?> has-error<?php } ?>">
+				  <span class="input-group-label">
+					<span class="OL_icon_accout OL_icon"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span><span class="path7"></span><span class="path8"></span><span class="path9"></span><span class="path10"></span><span class="path11"></span><span class="path12"></span><span class="path13"></span><span class="path14"></span><span class="path15"></span><span class="path16"></span><span class="path17"></span><span class="path18"></span><span class="path19"></span></span>
+				  </span>
+				  <input class="input-group-field" type="text" placeholder="{$Think.lang.username_or_email}" value="{$data.username|default=''}" name="username" required>
+				  <span class="input-group-label required"> &nbsp; </span>
+				</div>
+				<?php if(!empty($error['username'])){ ?>
+				<div class="error_tips" for="username">
+					{$error.username}
+				</div>
+				<?php } ?>
+				
+				<div class="input-group show_icon_box <?php if(!empty($error['password'])){ ?> has-error<?php } ?>">
+				  <span class="input-group-label">
+					<span class="OL_icon_key OL_icon"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span></span>
+				  </span>
+				  <input class="input-group-field" type="password" placeholder="{$Think.lang.password}" name="password" required>
+				  <span class="show_icon"><i class="fa fa-eye" aria-hidden="true"></i></span>
+				  <span class="input-group-label required"> &nbsp; </span>
+				</div>
+				<?php if(!empty($error['password'])){ ?>
+				<div class="error_tips" for="password">
+					{$error.password}
+				</div>
+				<?php } ?>
+				
+				<div class="input-group <?php if(!empty($error['captcha'])){ ?> has-error<?php } ?>">
+				  <span class="input-group-label">
+					<span class="OL_icon_verify OL_icon"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span></span>
+				  </span>
+				  <input class="input-group-field" type="text" placeholder="{$Think.lang.captcha}" name="captcha" required>
+				  <span class="input-group-label required"> &nbsp; </span>
+				</div>
+				<?php if(!empty($error['captcha'])){ ?>
+				<div class="error_tips" for="captcha">
+					{$error.captcha}
+				</div>
+				<?php } ?>
+				
+				<div class="text-center">
+					<img class="captcha" src="{:captcha_src()}" alt="captcha"/>
+				</div>
+				
+				<div class="text-center b-color remember_n_forget">
+					<input id="remember" name="remember" type="checkbox"><label for="remember">{$Think.lang.remember_login}</label>
+					<a href="{:url('recovery')}" target="_blank">{$Think.lang.forget_password}</a>
+				</div>
+				
+				<div class="login_submit_btn text-center">
+					<button type="submit" class="warning button">&nbsp; {$Think.lang.login} &nbsp;</button>
+				</div>
+				
+				<div id="fbLogin" class="text-center" data-url="{:url('fbLogin')}">
+					<button type="button" class="button fb_login_btn" onclick="fbLogin()"><i class="fa fa-facebook-official" aria-hidden="true"></i> {$Think.lang.login} </button>
+				</div>
+				
+				<div class="loading">
+					<i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>
+				</div>
+				
+			</form>
+		  </div>
+		  
+		  <div class="tabs-panel" id="register_con">
+			<form id="registerForm" class="box_form" action="{:url('register')}" method="post">
+				<div class="vl_line"></div>
+				<div class="vr_line"></div>
+				
+				<div class="input-group <?php if(!empty($error['username'])){ ?> has-error<?php } ?>">
+				  <span class="input-group-label">
+					<span class="OL_icon_accout OL_icon"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span><span class="path7"></span><span class="path8"></span><span class="path9"></span><span class="path10"></span><span class="path11"></span><span class="path12"></span><span class="path13"></span><span class="path14"></span><span class="path15"></span><span class="path16"></span><span class="path17"></span><span class="path18"></span><span class="path19"></span></span>
+				  </span>
+				  <input class="input-group-field" type="text" placeholder="{$Think.lang.username}" value="{$data.username|default=''}" name="username" required>
+				  <span class="input-group-label required">*</span>
+				</div>
+				<?php if(!empty($error['username'])){ ?>
+				<div class="error_tips" for="username">
+					{$error.username}
+				</div>
+				<?php } ?>
+				
+				<div class="input-group <?php if(!empty($error['email'])){ ?> has-error<?php } ?>">
+				  <span class="input-group-label">
+					<span class="OL_icon_mail OL_icon"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span></span>
+				  </span>
+				  <input class="input-group-field" type="email" placeholder="{$Think.lang.email}" value="{$data.email|default=''}" name="email" required>
+				  <span class="input-group-label required">*</span>
+				</div>
+				<?php if(!empty($error['email'])){ ?>
+				<div class="error_tips" for="email">
+					{$error.email}
+				</div>
+				<?php } ?>
+				
+				<div class="input-group show_icon_box <?php if(!empty($error['password'])){ ?> has-error<?php } ?>">
+				  <span class="input-group-label">
+					<span class="OL_icon_key OL_icon"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span></span>
+				  </span>
+				  <input class="input-group-field" type="password" placeholder="{$Think.lang.password}" name="password" required>
+				  <span class="show_icon"><i class="fa fa-eye" aria-hidden="true"></i></span>
+				  <span class="input-group-label required">*</span>
+				</div>
+				<?php if(!empty($error['password'])){ ?>
+				<div class="error_tips" for="password">
+					{$error.password}
+				</div>
+				<?php } ?>
+				
+				<div class="input-group <?php if(!empty($error['captcha'])){ ?> has-error<?php } ?>">
+				  <span class="input-group-label">
+					<span class="OL_icon_verify OL_icon"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span></span>
+				  </span>
+				  <input class="input-group-field" type="text" placeholder="{$Think.lang.captcha}" name="captcha" required>
+				  <span class="input-group-label required">*</span>
+				</div>
+				<?php if(!empty($error['captcha'])){ ?>
+				<div class="error_tips" for="captcha">
+					{$error.captcha}
+				</div>
+				<?php } ?>
+				
+				<div class="text-center">
+					<img class="captcha" src="{:captcha_src()}" alt="captcha"/>
+				</div>
+				<div class="register_submit_btn text-center">
+					<button type="submit" class="warning button">&nbsp; {$Think.lang.register} &nbsp;</button>
+				</div>
+				
+				<div class="loading">
+					<i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>
+				</div>
+				
+			</form>
+		  </div>
+		  
+		  <div class="tabs-panel" id="fb_reg_con">
+			<form id="fbRegister" class="box_form" action="{:url('fbRegister')}" method="post">
+				<div class="vl_line"></div>
+				<div class="vr_line"></div>
+				
+				<div class="input-group <?php if(!empty($error['username'])){ ?> has-error<?php } ?>">
+				  <span class="input-group-label">
+					<span class="OL_icon_accout OL_icon"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span><span class="path7"></span><span class="path8"></span><span class="path9"></span><span class="path10"></span><span class="path11"></span><span class="path12"></span><span class="path13"></span><span class="path14"></span><span class="path15"></span><span class="path16"></span><span class="path17"></span><span class="path18"></span><span class="path19"></span></span>
+				  </span>
+				  <input class="input-group-field" type="text" placeholder="{$Think.lang.username}" value="{$data.username|default=''}" name="username" required>
+				  <span class="input-group-label required">*</span>
+				</div>
+				<?php if(!empty($error['username'])){ ?>
+				<div class="error_tips" for="username">
+					{$error.username}
+				</div>
+				<?php } ?>
+				
+				<div class="input-group <?php if(!empty($error['email'])){ ?> has-error<?php } ?>">
+				  <span class="input-group-label">
+					<span class="OL_icon_mail OL_icon"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span></span>
+				  </span>
+				  <input class="input-group-field" type="email" placeholder="{$Think.lang.email}" value="{$data.email|default=''}" name="email" required>
+				  <span class="input-group-label required">*</span>
+				</div>
+				<?php if(!empty($error['email'])){ ?>
+				<div class="error_tips" for="email">
+					{$error.email}
+				</div>
+				<?php } ?>
+				
+				<div class="register_submit_btn text-center">
+					<button type="submit" class="warning button">&nbsp; {$Think.lang.submit} &nbsp;</button>
+				</div>
+				
+				<div class="loading">
+					<i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>
+				</div>
+				
+			</form>
+		  </div>
+		  
+		</div>
+		
+	</div>
+
+	<div class="footer">
+		<div class="row text-center">
+			<span> {:copy_rights()} </span>
+		</div>
+	</div>
+</div>
+
+
+{include file="base/script" /}
+
+<script type="text/javascript">
+
+if($_GET && $_GET['reg']=='1'){
+	setTimeout(function(){
+		$('#register_con-label').click();
+	},100);
+	setCookie('LogTag', 2);
+	$('#loginForm .has-error').removeClass('has-error');
+	$('#loginForm .error_tips').slideUp(function(){
+		$(this).remove();
+	});
+}else if($_GET && ($_GET['reg']=='0' || $_GET['log']=='1')){
+	setTimeout(function(){
+		$('#login_con-label').click();
+	},100);
+	setCookie('LogTag', 1);
+	$('#loginForm .has-error').removeClass('has-error');
+	$('#loginForm .error_tips').slideUp(function(){
+		$(this).remove();
+	});
+}else{
+	if(getCookie('LogTag')==2){
+		$('#register_con-label').click();
+		$('#loginForm .has-error').removeClass('has-error');
+		$('#loginForm .error_tips').slideUp(function(){
+			$(this).remove();
+		});
+	}else{
+		$('#registerForm .has-error').removeClass('has-error');
+		$('#registerForm .error_tips').slideUp(function(){
+			$(this).remove();
+		});
+	}
+}
+$('#reg-tabs a').click(function(){
+	if($(this).attr('href')=='#register_con')
+		setCookie('LogTag', 2);
+	else
+		setCookie('LogTag', 1);
+});
+
+function loginDo(url)
+{
+	<?php 
+	$callback_hide = input('callback_hide');
+	if(!empty($callback_hide)){ 
+	?>
+	$('body').append('<img style="width:0;height:0;border:0;margin:0;padding:0;opacity:0;position:absolute;top:-100%;z-index:-1;" src="'+url+'"/>');
+	<?php }else{ ?>
+	setTimeout(function(){
+		location.href = url;
+	}, 1500);
+	<?php } ?>
+	$('body').addClass('logged');
+}
+
+function registerDo()
+{
+	$.get("{:url('registerEmail')}");
+}
+
+$(function(){
+	$('.show_icon_box .show_icon').click(function(){
+		if($(this).hasClass('in')){
+			$(this).parent().find('input').attr('type', 'password');
+			$(this).removeClass('in').html('<i class="fa fa-eye" aria-hidden="true"></i>');
+		}else{
+			$(this).parent().find('input').attr('type', 'text');
+			$(this).addClass('in').html('<i class="fa fa-eye-slash" aria-hidden="true"></i>');
+		}
+		
+	});
+	
+	$('.captcha').click(function(){
+		if($(this).attr('src').indexOf('&')==-1){
+			window.captcha_src = $(this).attr('src')
+		}
+		if(window.captcha_src){
+			if(window.captcha_src.indexOf('?')>-1){
+				$('.captcha').attr('src', window.captcha_src + '&r=' + Math.random(2,4));
+			}else{
+				$('.captcha').attr('src', window.captcha_src + '?r=' + Math.random(2,4));
+			}
+		}else{
+			if($(this).attr('src').indexOf('?')>-1){
+				$('.captcha').attr('src', $(this).attr('src') + '&r=' + Math.random(2,4));
+			}else{
+				$('.captcha').attr('src', $(this).attr('src') + '?r=' + Math.random(2,4));
+			}
+		}
+	});
+	$('input[name="captcha"]').val('');
+	$('.captcha').click();
+	
+	//login
+	$('#loginForm').submit(function(){
+		var self = $(this);
+		self.find('.has-error').removeClass('has-error');
+		self.find('.error_tips').remove();
+		
+		var data = self.serializeArray();
+		var err = 0;
+		for(i in data){
+			if(!data[i]['value']){
+				self.find('input[name="' + data[i]['name'] + '"]').parent().addClass('has-error');
+				err++ ;
+			}
+		}
+		
+		if(err){
+			window.error('{$Think.lang.red_mark_is_required}');
+			return false;
+		}
+		
+		self.find('.loading').show();
+		$.post(self.attr('action'), data, function(res){
+			self.find('.loading').hide();
+			if(!res.code){
+				//error
+				$('.captcha').click();
+				self.find('input[name="captcha"]').val('');
+				window.error(res.msg);
+				for(i in res.data.error){
+					self.find('input[name="'+i+'"]').parent().addClass('has-error');
+					self.find('input[name="'+i+'"]').parent().after('<div class="error_tips" for="'+i+'">'+res.data.error[i]+'</div>');
+				}
+				
+			}else{
+				//success
+				window.success(res.msg);
+				loginDo(res.url);
+			}
+		});
+		
+		return false;
+	});
+	
+	//register
+	$('#registerForm').submit(function(){
+		var self = $(this);
+		self.find('.has-error').removeClass('has-error');
+		self.find('.error_tips').remove();
+		
+		var data = self.serializeArray();
+		var err = 0;
+		for(i in data){
+			if(!data[i]['value']){
+				self.find('input[name="' + data[i]['name'] + '"]').parent().addClass('has-error');
+				err++ ;
+			}
+		}
+		
+		if(err){
+			window.error('{$Think.lang.red_mark_is_required}');
+			return false;
+		}
+		
+		var Regex = /^([\.a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(\.[a-zA-Z0-9_-])+/;  
+	　　if(!Regex.test(self.find('input[name="email"]').val())){
+			self.find('input[name="email"]').parent().addClass('has-error');
+			self.find('input[name="email"]').parent().after('<div class="error_tips" for="email">{$Think.lang.email_error}</div>');
+			window.error("{$Think.lang.email_error}");
+			err++ ;
+	　　}
+		self.find('.loading').show();
+		$.post(self.attr('action'), data, function(res){
+			self.find('.loading').hide();
+			if(!res.code){
+				//error
+				$('.captcha').click();
+				self.find('input[name="captcha"]').val('');
+				window.error(res.msg);
+				for(i in res.data.error){
+					self.find('input[name="'+i+'"]').parent().addClass('has-error');
+					self.find('input[name="'+i+'"]').parent().after('<div class="error_tips" for="'+i+'">'+res.data.error[i]+'</div>');
+				}
+				
+			}else{
+				//success
+				window.success(res.msg);
+				loginDo(res.url);
+				registerDo();
+			}
+		});
+		
+		return false;
+	});
+	
+});
+</script>
+
+<script type="text/javascript">
+// Load the SDK asynchronously
+(function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/sdk.js";
+    fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
+
+window.fbAsyncInit = function() {
+	FB.init({
+		appId      : "<?php echo FB_APP_ID; ?>",
+		cookie     : true, 
+		xfbml      : true, 
+		version    : 'v2.8'
+	});
+	
+};
+
+function fbLogin(){
+	
+	FB.login(
+		function(response) {
+			if (response.authResponse) {
+				//response.authResponse.userID
+				checkFbLogin()
+				console.log('connected::');
+				return false;
+			} else {
+				alert('Facebook login error !');
+			}
+		}, 
+		{
+			scope : 'public_profile,email,user_photos'
+		}
+	);
+}  
+
+// Here we run a very simple test of the Graph API after login is successful.
+//See statusChangeCallback() for when this call is made.
+function checkFbLogin() {
+    
+	$('#loginForm').find('.loading').show();
+	$.post($('#fbLogin').data('url'), function(res){
+		
+		$('#loginForm').find('.loading').hide();
+		if(!res.code){
+			//error
+			window.info(res.msg);
+			if(typeof res.data.fb_data != 'undefined'){
+				$('#fbRegister input[name="username"]').val(res.data.fb_data.username);
+				$('#fbRegister input[name="email"]').val(res.data.fb_data.email);
+				$('#reg-tabs li').hide();
+				$('#reg-tabs #go_fb_reg_con').show().click();
+			}
+			
+		}else{
+			//success
+			window.success(res.msg);
+			loginDo(res.url);
+		}
+		
+	});
+	
+}
+
+// fb Register  
+$(function(){
+	$('#fbRegister').submit(function(){
+		var self = $(this);
+		self.find('.has-error').removeClass('has-error');
+		self.find('.error_tips').remove();
+		
+		var data = self.serializeArray();
+		var err = 0;
+		for(i in data){
+			if(!data[i]['value']){
+				self.find('input[name="' + data[i]['name'] + '"]').parent().addClass('has-error');
+				err++ ;
+			}
+		}
+		
+		if(err){
+			window.error('{$Think.lang.red_mark_is_required}');
+			return false;
+		}
+		
+		var Regex = /^([\.a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(\.[a-zA-Z0-9_-])+/; 
+	　　if(!Regex.test(self.find('input[name="email"]').val())){
+			self.find('input[name="email"]').parent().addClass('has-error');
+			self.find('input[name="email"]').parent().after('<div class="error_tips" for="email">{$Think.lang.email_error}</div>');
+			window.error("{$Think.lang.email_error}");
+			err++ ;
+	　　}
+		self.find('.loading').show();
+		$.post(self.attr('action'), data, function(res){
+			self.find('.loading').hide();
+			if(!res.code){
+				//error
+				$('.captcha').click();
+				self.find('input[name="captcha"]').val('');
+				window.error(res.msg);
+				for(i in res.data.error){
+					self.find('input[name="'+i+'"]').parent().addClass('has-error');
+					self.find('input[name="'+i+'"]').parent().after('<div class="error_tips" for="'+i+'">'+res.data.error[i]+'</div>');
+				}
+				
+			}else{
+				//success
+				window.success(res.msg);
+				loginDo(res.url);
+				registerDo();
+			}
+		});
+		
+		return false;
+	});
+});
+</script>
+
+{include file="base/footer" /}

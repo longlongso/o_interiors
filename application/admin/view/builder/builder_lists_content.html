@@ -1,0 +1,62 @@
+<?php if(!empty($lists)){ ?>
+<?php foreach($lists as $list){ ?>
+	<tr>
+		<?php 
+			$primary_key_val = '';
+			if(!empty($primary_key)){
+				$primary_key_val = isset($list[$primary_key])?$list[$primary_key]:'';
+			}else{
+				$primary_key_val = isset($list['id'])?$list['id']:'';
+			}
+		?>
+	  <td><input type="checkbox" name="selected[]" value="{$primary_key_val|default=''}"></td>
+	  <?php foreach($keys as $key){ ?>
+		<?php if(isset($key['key']) && empty($key['hide'])){ ?>
+		<td <?php if($key['key']=='do'){ ?>class="text-right"<?php } ?>>
+			
+			<?php if(isset($key['type'])){ ?>
+			
+				<?php if(isset($list[$key['key']])){ ?>
+					
+					<?php if($key['type']=='date' && !empty($list[$key['key']])){ ?>
+						<?php echo date('Y-m-d', $list[$key['key']]); ?>
+					<?php }else if($key['type']=='time' && !empty($list[$key['key']])){ ?>
+						<?php echo date('Y-m-d H:i', $list[$key['key']]); ?>
+					<?php }else if($key['type']=='long2ip' || $key['type']=='ip'){ ?>
+						<?php echo long2ip((int)$list[$key['key']]); ?>
+					<?php }else if($key['type']=='image'){ ?>
+						<img class="thumbnail" src="<?php echo get_image_by_id($list[$key['key']]); ?>" />
+					<?php } ?>
+					
+				<?php } ?>
+			
+			<?php }else if(isset($key['option']) && is_array($key['option'])){ ?>
+				
+				<?php if(isset($list[$key['key']])){ ?>
+					
+					<?php echo isset($key['option'][$list[$key['key']]])?$key['option'][$list[$key['key']]]:''; ?>
+					
+				<?php } ?>
+			
+			<?php }else if($key['key']=='do'){ ?>
+				
+				<?php if(!empty($key['do']) && is_array($key['do'])){ ?>
+					<div class="button-group">
+					<?php foreach($key['do'] as $do){ ?>
+						<a data-key="{$list[$do.key]|default=''}" {$do.script|default=''} class="button<?php if(!empty($do['class'])){ ?> {$do.class|default=''}<?php } ?>" href="{$do.href|default='javascript:;'}<?php if(!empty($do['href']) && !empty($do['key'])){ ?>?&{$do.key}={$list[$do.key]|default=''}<?php } ?>">
+						{$do.title|default=''}
+						</a>
+					<?php } ?>
+					</div>
+				<?php } ?>
+				
+			<?php }else{ ?>
+				{$list[$key['key']]|default=''}
+			<?php } ?>
+			
+		</td>
+		<?php } ?>
+	  <?php } ?>
+	</tr>
+<?php } ?>
+<?php } ?>

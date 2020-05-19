@@ -1,0 +1,77 @@
+{include file="base/header" title="$meta_title" description="$meta_description" keywords="$meta_keywords" /}
+
+	<div class="content_body">
+		<div class="row">
+			<div class="columns">
+				<?php if(!empty($success_msg)){ ?>
+				<div class="success callout">
+					<span>{$success_msg|default=''}</span>
+					<button class="close-button" data-close="" aria-label="Close reveal" type="button">
+						<span aria-hidden="true">×</span>
+					</button>
+				</div>
+				<?php } ?>
+				<?php if(!empty($error_msg)){ ?>
+				<div class="alert callout">
+					<span>{$error_msg|default=''}</span>
+					<button class="close-button" data-close="" aria-label="Close reveal" type="button">
+						<span aria-hidden="true">×</span>
+					</button>
+				</div>
+				<?php } ?>
+			</div>
+		</div>
+		
+		<div class="row">
+			
+			<div class="small-12 medium-12 large-4 columns">
+				<div class="box_con">
+					<div class="box_title">{$Think.lang.os_info}</div>
+					<div class="box_body">
+						
+						<table>
+							<tr>
+							  <td>{$Think.lang.server_os}</td>
+							  <td><?php echo PHP_OS; ?></td>
+							</tr>
+							<?php 
+							/*
+							<tr>
+							  <td>{$Think.lang.disk_space}</td>
+							  <td><?php echo  get_web_disk_space_usage(); ?>/<?php echo get_web_disk_space(); ?></td>
+							</tr>
+							*/
+							?>
+							<tr>
+							  <td>{$Think.lang.server_software}</td>
+							  <td><?php echo $_SERVER['SERVER_SOFTWARE']; ?></td>
+							</tr>
+							<tr>
+							  <td>{$Think.lang.db_info}</td>
+							  <td>
+							  <?php
+								$v = think\Db::query('select version() as v');
+								echo config('database.type') . ' ' . $v[0]['v'];
+							  ?>
+							  </td>
+							</tr>
+							<?php 
+							/*
+							<tr>
+							  <td>{$Think.lang.db_size}</td>
+							  <td><?php echo  get_mysql_db_space_usage(); ?>/<?php echo get_database_space(); ?></td>
+							</tr>
+							*/
+							?>
+						</table>
+						
+					</div>
+				</div>
+			</div>
+			
+		</div>
+	</div>
+	
+{include file="base/script" /}
+
+{include file="base/footer" /}

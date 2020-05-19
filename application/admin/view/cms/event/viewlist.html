@@ -1,0 +1,69 @@
+<?php
+	$_meta_title = empty($_meta_title)?'':$_meta_title;
+	$meta_title = empty($meta_title)?'':$meta_title;
+	$meta_description = empty($meta_description)?'':$meta_description;
+	$meta_keywords = empty($meta_keywords)?'':$meta_keywords;
+?>
+{include file="base/header" title="$_meta_title" description="$meta_description" keywords="$meta_keywords" /}
+
+{include file="base/script" /}
+
+	<div class="content_body">
+		<div class="row">
+			<div class="con_header">
+				<h3>{$title|default=''}</h3>
+				<?php if(!empty($breadcrumbs)){ ?>
+					<nav>
+					  <ul class="breadcrumbs">
+						<?php foreach($breadcrumbs as $bc){ ?>
+							<?php if(empty($bc['href'])){ ?>
+								<li>{$bc.title|default=''}</li>
+							<?php }else{ ?>
+								<li>
+								<a href="{$bc.href|default='javascript:;'}">{$bc.title|default=''}</a>
+								</li>
+							<?php } ?>
+						<?php } ?>
+					  </ul>
+					</nav>
+				<?php } ?>
+			</div>
+			
+			<?php if(!empty($success_msg)){ ?>
+			<div class="success callout">
+				<span>{$success_msg|default=''}</span>
+				<button class="close-button" data-close="" aria-label="Close reveal" type="button">
+					<span aria-hidden="true">×</span>
+				</button>
+			</div>
+			<?php } ?>
+			<?php if(!empty($error_msg)){ ?>
+			<div class="alert callout">
+			  <span>{$error_msg|default=''}</span>
+			  <button class="close-button" data-close="" aria-label="Close reveal" type="button">
+					<span aria-hidden="true">×</span>
+				</button>
+			</div>
+			<?php } ?>
+			
+			<form action="{$action_url|default=''}" method="post" enctype="multipart/form-data" class="eg_form builder_list">
+				
+				<div class="button-group btnGroup">
+					<a class="button fa fa-plus-circle" href="{:url('edit')}"> {$Think.lang.add} </a>
+					<a class="button hollow fa fa-refresh refresh " href="{:url('viewlist')}"> {$Think.lang.refresh} </a>
+					<a class="button" href="{:url('index')}"> {$Think.lang.event} </a>
+				</div>
+				
+				<iframe style="width:100%;height: 650px;border: 0;position: relative;" src="{:url('events')}"></iframe>
+				
+			</form>
+		</div>
+	</div>
+
+
+<script>
+//set meta title
+$('head title').text('{$meta_title}');
+</script>
+
+{include file="base/footer" /}

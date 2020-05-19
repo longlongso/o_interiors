@@ -1,0 +1,157 @@
+<!doctype html>
+<html class="no-js" lang="zh-hk" dir="ltr">
+<head>
+    
+	{include file="base/head" title="$meta_title" description="$meta_description" keywords="$meta_keywords" /}
+	<style>
+	body{background-color: #1EBADF;}
+	</style>
+	
+</head>
+<body class="body">
+
+<div class="reg_body">
+
+	<div class="reg_header text-center">
+		<img style="opacity: 0;" src=""/>
+		
+		<div class="text-center">
+			<ul class="tabs c_tabs" data-tabs id="rec-tabs">
+			  <li class="tabs-title is-active"><a href="#login_con" aria-selected="true">{$Think.lang.recovery}</a></li>
+			</ul>
+		</div>
+	</div>
+	<div class="reg_content">
+		<?php if(!empty($success_msg)){ ?>
+		<div class="success callout">
+		    <span>{$success_msg|default=''}</span>
+			<button class="close-button" data-close="" aria-label="Close reveal" type="button">
+				<span aria-hidden="true">×</span>
+			</button>
+		</div>
+		<?php } ?>
+		<div class="tabs-content" data-tabs-content="rec-tabs">
+		  <div class="tabs-panel is-active" id="login_con">
+			<form id="recoveryForm" class="box_form" action="{:url('recovery')}" method="post">
+				<div class="vl_line"></div>
+				<div class="vr_line"></div>
+				
+				<div class="input-group <?php if(!empty($error['username'])){ ?> has-error<?php } ?>">
+				  <span class="input-group-label">
+					<span class="OL_icon_accout OL_icon"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span><span class="path7"></span><span class="path8"></span><span class="path9"></span><span class="path10"></span><span class="path11"></span><span class="path12"></span><span class="path13"></span><span class="path14"></span><span class="path15"></span><span class="path16"></span><span class="path17"></span><span class="path18"></span><span class="path19"></span></span>
+				  </span>
+				  <input class="input-group-field" type="text" placeholder="{$Think.lang.username_or_email}" value="{$data.username|default=''}" name="username" required>
+				  <span class="input-group-label required"> &nbsp; </span>
+				</div>
+				<?php if(!empty($error['username'])){ ?>
+				<div class="error_tips" for="username">
+					{$error.username}
+				</div>
+				<?php } ?>
+				
+				<div class="input-group <?php if(!empty($error['captcha'])){ ?> has-error<?php } ?>">
+				  <span class="input-group-label">
+					<span class="OL_icon_verify OL_icon"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span></span>
+				  </span>
+				  <input class="input-group-field" type="text" placeholder="{$Think.lang.captcha}" name="captcha" required>
+				  <span class="input-group-label required"> &nbsp; </span>
+				</div>
+				<?php if(!empty($error['captcha'])){ ?>
+				<div class="error_tips" for="captcha">
+					{$error.captcha}
+				</div>
+				<?php } ?>
+				
+				<div class="text-center">
+					<img class="captcha" src="{:captcha_src()}" alt="captcha"/>
+				</div>
+				
+				<div class="submit_btn text-center">
+					<button type="submit" class="warning button">&nbsp; {$Think.lang.submit} &nbsp;</button>
+				</div>
+				
+				<div class="text-center b-color remember_n_forget">
+					<a href="{:url('login')}">{$Think.lang.go_login}</a>
+				</div>
+				
+				<div class="loading">
+					<i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>
+				</div>
+			</form>
+		  </div>
+		  
+		</div>
+		
+	</div>
+	
+	<div class="footer">
+		<div class="row text-center">
+			<span> {:copy_rights()} </span>
+		</div>
+	</div>
+</div>
+
+
+{include file="base/script" /}
+
+<script type="text/javascript">
+$(function(){
+	
+	$('.captcha').click(function(){
+		$('.captcha').attr('src', $(this).attr('src') + '?key=' + Math.random());
+	});
+	$('input[name="captcha"]').val('');
+	$('.captcha').click();
+	
+	//login
+	$('#recoveryForm').submit(function(){
+		var self = $(this);
+		self.find('.has-error').removeClass('has-error');
+		self.find('.error_tips').remove();
+		
+		var data = self.serializeArray();
+		var err = 0;
+		for(i in data){
+			if(!data[i]['value']){
+				self.find('input[name="' + data[i]['name'] + '"]').parent().addClass('has-error');
+				err++ ;
+			}
+		}
+		
+		if(err){
+			window.error('{$Think.lang.red_mark_is_required}');
+			return false;
+		}
+		
+		self.find('.loading').show();
+		/*
+		$.post(self.attr('action'), data, function(res){
+			self.find('.loading').hide();
+			if(!res.code){
+				//error
+				$('.captcha').click();
+				self.find('input[name="captcha"]').val('');
+				window.error(res.msg);
+				for(i in res.data.error){
+					self.find('input[name="'+i+'"]').parent().addClass('has-error');
+					self.find('input[name="'+i+'"]').parent().after('<div class="error_tips" for="'+i+'">'+res.data.error[i]+'</div>');
+				}
+				
+			}else{
+				//success
+				window.success(res.msg);
+				setTimeout(function(){
+					location.href = res.url;
+				}, 1000*res.wait);
+			}
+		});
+		
+		return false;
+		*/
+	});
+	
+});
+</script>
+
+</body>
+</html>

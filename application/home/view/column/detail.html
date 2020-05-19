@@ -1,0 +1,113 @@
+{include file="base/header" title="$meta_title" description="$meta_description" keywords="$meta_keywords" /}
+<style>
+	.column-detail-box {
+		padding-right: 6% !important;
+		padding-left: 6% !important;
+	}
+	.column-detail p,.column-detail span {
+		<?php echo $body_font; ?>
+		margin: 0 !important;
+		line-height: 1.6 !important;
+	}
+	.column-detail table tbody { border: none; }
+	@media screen and (max-width: 640px) {
+		.column-detail table {
+			float: none !important;
+			margin: 0 auto;
+			text-align: center;
+			width: 100% !important;
+		}
+		.column-detail table tr {
+			display: block;
+			height: auto !important;
+		}
+		.column-detail table td {
+			width: auto !important;
+			height: auto !important;
+			display: block;
+			padding: 0 !important;
+		}
+		.column-detail table td:before {
+			content: attr(data-label);
+			float: left;
+			text-transform: uppercase;
+		}
+		.column-detail-box {
+			padding-right: .9375rem !important;
+			padding-left: .9375rem !important;
+		}
+		.column-detail-box img {
+			float: none !important;
+			width: auto !important;
+			max-width: 100% !important;
+			margin: 2px 0 !important;
+		}
+		.column-detail-box img+span {
+			display: none !important;
+		}
+	}
+</style>
+<div class="grid-container">
+    <ul class="breadcrumbs">
+        <li>
+            <a class="link" href="index.html">{$Think.lang.cate_home}</a>
+        </li>
+        <li>
+            <a class="link" href="column.html">{$Think.lang.cate_column}</a>
+        </li>
+        <li> <?php if ($lang_id == 2) { ?>{$data.title_hk}<?php } else { ?>{$data.title}<?php } ?></li>
+    </ul>
+
+    <div>
+        <a class="link-x" href="column.html">
+            < Back </a>
+    </div>
+
+    <div class="grid-x grid-padding-x column-detail-box">
+        <div class="large-9 medium-8 cell column-detail">
+            <p class="about">
+				<?php if ($lang_id == 2) { ?>
+				<h4>{$data.title_hk}</h4>
+				{$data.content_hk}
+				<?php } else { ?>
+                <h4>{$data.title}</h4>
+                {$data.content}
+				<?php } ?>
+				<br>
+            </p>
+        </div>
+		
+		
+		 <?php if(!empty($data['image'])): ?>
+			<div class="large-3 medium-4 cell">
+
+				<div class="grid-x grid-padding-x">
+					<div class="large-12 medium-12 small-6 cell">
+						<div class="box-cell">
+							<?php $num = 0; ?>
+							<?php foreach($data['image'] as $key=>$img): ?>
+							<?php $num++; ?>
+							<?php if($num===1){ ?>
+							<a data-fancybox="gallery" href="{:get_image_by_id($img)}">
+								<img class="thumbnail" src="{:get_image_by_id($data.preview)}" alt="" />
+							</a>
+							<?php }else{ ?>
+							<a data-fancybox="gallery" href="{:get_image_by_id($img)}"></a>
+							<?php } ?>
+							<?php endforeach; ?>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		<?php endif; ?>
+		
+    </div>
+
+   
+</div>
+
+{include file="base/script" /}
+<link rel="stylesheet" href="__STATIC__/vendor/fancybox3/jquery.fancybox.min.css">
+<script src="__STATIC__/vendor/fancybox3/jquery.fancybox.min.js"></script>
+{include file="base/footer" /}

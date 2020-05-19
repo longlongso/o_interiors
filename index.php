@@ -1,0 +1,26 @@
+﻿<?php
+
+// [ 应用入口文件 ]
+if(PHP_SAPI!='cli') {
+    // 当前文件名
+	if(0 === strpos(PHP_SAPI,'cgi') || false !== strpos(PHP_SAPI,'fcgi')) {
+		//CGI/FASTCGI模式下
+		$_temp  = explode('.php',$_SERVER['PHP_SELF']);
+		define('_PHP_FILE_',    rtrim(str_replace($_SERVER['HTTP_HOST'],'',$_temp[0].'.php'),'/'));
+	}else {
+		define('_PHP_FILE_',    rtrim($_SERVER['SCRIPT_NAME'],'/'));
+	}
+    if(!defined('INPUT_PATH')) {
+        $_root  =   rtrim(dirname(_PHP_FILE_),'/');
+        define('INPUT_PATH',  (($_root=='/' || $_root=='\\')?'':$_root));
+    }
+	if(!defined('SERVER_URL')){
+		$sys_protocal = isset($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] == '443' ? 'https://' : 'http://';
+		define('SERVER_URL', $sys_protocal.(isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : ''));
+	}
+}
+
+// 定义应用目录
+define('APP_PATH', __DIR__ . '/application/');
+// 加载框架引导文件
+require __DIR__ . '/core/start.php';

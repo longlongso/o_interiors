@@ -1,0 +1,473 @@
+{include file="base/header" title="$meta_title" description="$meta_description" keywords="$meta_keywords" /}
+
+	<div class="content_body">
+		<div class="row">
+			<div class="con_header">
+				<h3>{$title|default=''}</h3>
+				<?php if(!empty($breadcrumbs)){ ?>
+					<nav>
+					  <ul class="breadcrumbs">
+						<?php foreach($breadcrumbs as $bc){ ?>
+							<?php if(empty($bc['href'])){ ?>
+								<li>{$bc.title|default=''}</li>
+							<?php }else{ ?>
+								<li>
+								<a href="{$bc.href|default='javascript:;'}">{$bc.title|default=''}</a>
+								</li>
+							<?php } ?>
+						<?php } ?>
+					  </ul>
+					</nav>
+				<?php } ?>
+			</div>
+			
+			<?php if(!empty($success_msg)){ ?>
+			<div class="success callout">
+				<span>{$success_msg|default=''}</span>
+				<button class="close-button" data-close="" aria-label="Close reveal" type="button">
+					<span aria-hidden="true">×</span>
+				</button>
+			</div>
+			<?php } ?>
+			<?php if(!empty($error_msg)){ ?>
+			<div class="alert callout">
+			  <span>{$error_msg|default=''}</span>
+			  <button class="close-button" data-close="" aria-label="Close reveal" type="button">
+					<span aria-hidden="true">×</span>
+				</button>
+			</div>
+			<?php } ?>
+			
+			<div class="primary callout">
+			  <span>圖片上載規則：1.同一圖片檔改名上載會覆蓋之前的檔（即相當於改名成新上載那個檔的名），2不同檔同名不會覆蓋同時保留兩個檔（e.g. a.jpg 和 a.jpg 兩個同名的不同內容檔同時保留）[認檔不認名]。如：小明的 圖片 ming.jpg 要換， 上載同名的新圖片 ming.jpg 都要去 Student edit 那裡雙擊選擇一次該新圖。</span>
+			  <button class="close-button" data-close="" aria-label="Close reveal" type="button">
+					<span aria-hidden="true">×</span>
+				</button>
+			</div>
+			
+			<form action="{$action_url|default=''}" data-check-image-unique-url="{$check_image_unique_url|default=''}" data-self-url="{$self_url|default=''}" data-delete-image-url="{:url('file/deleteImage')}" method="POST" enctype="multipart/form-data" class="eg_form">
+				
+				<div class="button-group btnGroup">
+					<button type="button" class="button fa fa-upload" id="imgUpload"> {$Think.lang.upload} </button>
+					<button type="button" class="button fa fa-pencil-square del_tog_btn" data-for="delBtnGroup"> 
+					{$Think.lang.manager} </button>
+					<button type="button" class="button hollow fa fa-refresh" id="refreshImage"> {$Think.lang.refresh} </button>
+					<button id="ImageTogList" type="button" class="button fa fa-list" data-l="fa fa-list" data-g="fa fa-th"> </button>
+					
+					<div class="input-group">
+					  <input id="searchName" class="input-group-field" type="text">
+					  <div class="input-group-button">
+						<button type="button" class="button fa fa-search" id="imageSearch"> {$Think.lang.search} </button>
+					  </div>
+					</div>
+				</div>
+				
+				<div class="button-group subBtnGroup delete_btn_group" id="delBtnGroup">
+					<button type="button" class="alert button fa fa-trash" id="deleteImage"> {$Think.lang.delete} </button>
+					<button type="button" class="button fa fa-mouse-pointer selectAllImage"> {$Think.lang.select_all} </button>
+				</div>
+				
+				<ul  id="uploadTool" class="accordion" data-accordion data-allow-all-closed="true">
+				  <li class="accordion-item is-active" data-accordion-item>
+					<a href="#" class="accordion-title">{$Think.lang.upload_list}</a>
+					<div id="uploadList" class="accordion-content upload_list" data-tab-content>
+						<div class="row">
+							<div id="fileuploader" class="columns">{$Think.lang.upload}</div>
+						</div>
+						<button type="button" class="button" id="finishImageUpload"> {$Think.lang.finish} </button>
+					</div>
+				  </li>
+				</ul>
+				
+				<div id="imageList" class="image_list">
+					<div class="loading">
+						<i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>
+					</div>
+					<div class="row">
+						<?php foreach($image_list as $image){ ?>
+							<label for="img-{$image.id}" class="small-4 medium-3 large-2 columns">
+								<input id="img-{$image.id}" class="check_box" type="checkbox" value="{$image.id}">
+								<img alt="{$image.alias}" title="{$image.alias}" data-id="{$image.id}" class="thumbnail" src="{:get_thumb_by_id($image['id'], 180, 180)}"/>
+								<span class="alias">{$image.alias}</span>
+								<a class="view_image" href="{:get_image_by_path_name($image['path'], $image['name'])}" target="_blank"><i class="fa fa-eye" aria-hidden="true"></i></a>
+								<button data-id="{$image.id}" class="button download_image fa fa-download"></button>
+							</label>
+						<?php } ?>
+					</div>
+					
+					<div id="page">
+					{$image_page}
+					</div>
+				</div>
+				
+			</form>
+			
+		</div>
+	</div>
+
+
+{include file="base/script" /}
+
+<script src="__STATIC__/js/jquery.form.min.js"></script>
+<script src="__STATIC__/js/md5.js"></script>
+<script src="__STATIC__/js/sha1.js"></script>
+
+<link href="__STATIC__/vendor/uploadfile/css/uploadfile.css" rel="stylesheet">
+<script src="__STATIC__/vendor/uploadfile/js/jquery.uploadfile.custom.min.js"></script>
+
+<script>
+$(document).ready(function() {
+
+	//ImageTogList
+	$('#ImageTogList').click(function(){
+		if($('#imageList').hasClass('list3')){
+			$('#imageList').removeClass('list3');
+			$(this).removeClass($(this).data('l')).addClass($(this).data('g'));
+		}else{
+			$('#imageList').addClass('list3');
+			$(this).removeClass($(this).data('g')).addClass($(this).data('l'));
+		}
+		return false;
+	});
+	
+	$('#uploadTool').hide();
+	$(document).on('dragenter', function (e) {
+		e.stopPropagation();
+		e.preventDefault();
+		$('#uploadTool').slideDown();
+		if(!$('#uploadTool .is-active').length){
+			$('#uploadTool').foundation('toggle', $('#uploadList'));
+		}
+		$('#fileuploader .ajax-upload-dragdrop').addClass('state-hover');
+	   
+	});
+	
+	$('#imgUpload').click(function(){
+		$('#fileuploader input[type="file"]').trigger('click');
+		$('#uploadTool').slideDown();
+	});
+	
+	var c = [];
+	var cc = [];
+	var ccc = [];
+	var fileData = [];
+	var uploadFile = $("#fileuploader").uploadFile({
+		url: $('.eg_form').attr('action'),
+		fileName:"file[]",
+		dragdropWidth: "100%",
+		acceptFiles:"image/*",
+		showPreview:true,
+		previewHeight: "100px",
+		previewWidth: "100px",
+		dragDropStr: "<b>{$Think.lang.drag_drop_files_upload}</b>",
+		statusBarWidth: "100%",
+        //uploadStr:"Upload",
+		//multiple:false,
+		//dragDrop:false,
+		autoSubmit:false,
+		//returnType:"json",
+		//sequential:true,
+		//sequentialCount:10,
+		onSelect : function(files){
+			// check file key
+			//console.log(files);
+			$('#imgUpload').attr('disabled', 'disabled');
+			$('#fileuploader').hide();
+			$('.eg_form .loading').show();
+			if(files.length){
+				var timestamp = new Date().getTime();
+				fileData[timestamp] = [];
+				for(var i=0; i<files.length; i++){
+					getFileHash(files[i], fileData[timestamp]);
+				}
+				
+				c[timestamp] = setInterval(function(){
+					if(fileData[timestamp][files.length-1]){
+						clearInterval(c[timestamp]);
+						//console.log(fileData[timestamp].length);
+						var u_data = [];
+						var d_data = [];
+						for(var j=0; j<fileData[timestamp].length; j++){
+							$.get($('.eg_form').data('check-image-unique-url'), {'md5':fileData[timestamp][j]['md5'], 'sha1':fileData[timestamp][j]['sha1'], 'data':fileData[timestamp][j]['name']}, function(res){
+								if(!res.code){
+									//no in server
+									u_data[u_data.length] = res.data;
+								}else{
+									//in server
+									d_data[d_data.length] = res.data;
+								}
+								
+							});
+						}
+						
+						cc[timestamp] = setInterval(function(){
+							
+							if(u_data.length + d_data.length == fileData[timestamp].length){
+								
+								clearInterval(cc[timestamp]);
+								var k = 0;
+								for(d in d_data){
+									var has_check = 0;
+									$('.ajax-file-upload-container .ajax-file-upload-filename').each(function(){
+										if(!has_check && $(this).html().indexOf(d_data[d])>-1){
+											var container = $('<div class="ajax-file-upload-statusbar" style="width: 100%;"><div class="ajax-file-upload-progress" style=""><div class="ajax-file-upload-bar" style="width:100%;"></div></div></div>')
+											var imgSrc = $(this).parent().find('img').clone().prependTo(container);
+											$(this).parent().before(container);
+											$(this).parent().find('.ajax-file-upload-cancel').click();
+											getPageContent($('.eg_form').data('self-url'));
+											k++;
+											has_check = 1;
+										}
+									});
+								}
+								
+								ccc[timestamp] = setInterval(function(){
+									if(k==d_data.length){
+										clearInterval(ccc[timestamp]);
+										$('#imgUpload').removeAttr('disabled');
+										$('#fileuploader').show();
+										uploadFile.startUpload();
+										return false;
+									}
+								},200);
+								
+								if(!u_data.length){
+									if($('#uploadTool .is-active').length){
+										$('#uploadTool').foundation('toggle', $('#uploadList'));
+									}
+								}
+								
+							}
+							
+						}, 200);
+						
+						$('.eg_form .loading').hide();
+						
+					}
+				},200);
+				
+			}else{
+				$('#imgUpload').removeAttr('disabled');
+				$('#fileuploader').show();
+				$('.eg_form .loading').hide();
+			}
+			
+		},
+		//onSubmit : function(files, xhr){},
+		customProgressBar : function(obj,s)
+		{
+			this.statusbar = $("<div class='ajax-file-upload-statusbar'></div>").width(s.statusBarWidth);
+            this.preview = $('<img class="ajax-file-upload-preview thumbnail" style="width:100px;height:100px;"/>').appendTo(this.statusbar).hide();
+            this.filename = $('<div class="ajax-file-upload-filename" style="display:none"></div>').appendTo(this.statusbar);
+            this.progressDiv = $("<div class='ajax-file-upload-progress'>").appendTo(this.statusbar).hide();
+            this.progressbar = $("<div class='ajax-file-upload-bar'></div>").appendTo(this.progressDiv);
+            this.abort = $('<div><span aria-hidden="true">×</span></div>').appendTo(this.statusbar);
+            this.cancel = $("<div>" + s.cancelStr + "</div>").appendTo(this.statusbar).hide();
+            this.done = $("<div>" + s.doneStr + "</div>").appendTo(this.statusbar).hide();
+            this.download = $("<div>" + s.downloadStr + "</div>").appendTo(this.statusbar).hide();
+            this.del = $("<div>" + s.deletelStr + "</div>").appendTo(this.statusbar).hide();
+
+            this.abort.addClass("ajax-file-upload-red");
+            this.done.addClass("ajax-file-upload-green");
+			this.download.addClass("ajax-file-upload-green");            
+            this.cancel.addClass("ajax-file-upload-red");
+            this.del.addClass("ajax-file-upload-red");
+            
+			return this;
+		},
+		//extraHTML:function(){return '';},
+		onSuccess:function(files,data,xhr,pd)
+		{
+			//console.log(data);
+			if(data.code){
+				
+			} else {
+				window.error(data.msg);
+			}
+			
+			if($('#uploadTool .is-active').length){
+				$('#uploadTool').foundation('toggle', $('#uploadList'));
+			}
+			getPageContent($('.eg_form').data('self-url'));
+			$('#imgUpload').removeAttr('disabled');
+			$('#fileuploader').show();
+			return false;
+		},
+		onError: function(files,status,errMsg,pd)
+		{
+			console.log('network is busy');
+		}
+		
+	});
+	
+	//button group toggle
+	$('.btnGroup .button').click(function(){
+		$('#imageList .check_box:checked').prop("checked", false);
+		
+		var sub_btn_id = $(this).data('for');
+		if(sub_btn_id && !$(this).hasClass('active')){
+			$('.btnGroup .button').removeClass('active');
+			$(this).addClass('active');
+			$('#uploadTool').slideUp();
+			$('.subBtnGroup').slideUp();
+			$('#'+sub_btn_id).slideDown();
+			$('#imageList').addClass('active');
+			return false;
+		}
+		
+		if($(this).attr('id')!='imgUpload'){
+			$('#uploadTool').slideUp();
+		}
+		$('.btnGroup .button').removeClass('active');
+		$('#imageList').removeClass('active');
+		$('.subBtnGroup').slideUp();
+		return false;
+	});
+	
+	$('#finishImageUpload').click(function(){
+		$('#uploadList .ajax-file-upload-container').html('');
+		$('#uploadTool').slideUp();
+		return false;
+	});
+	
+	//select all
+	$('.selectAllImage').click(function(){
+		$('#imageList .check_box:checked').click();
+		$('#imageList .check_box').click();
+	});
+	
+	//delete image
+	$('#deleteImage').click(function(){
+		var del = [];
+		$('#imageList .check_box:checked').each(function(){
+			del[del.length] = $(this).val();
+		});
+		if(del.length){
+			window.eg_confirm('{$Think.lang.confirm_delete} <br> 刪圖片將無法恢復，如需要請預先另存。', function(res){
+				if(res){
+					$.get($('.eg_form').data('delete-image-url'), {'id': del}, function(){
+						getPageContent($('.eg_form').data('self-url'));
+					});
+				}
+			}, '{$Think.lang.confirm}', '{$Think.lang.cancel}');
+			
+		}else{
+			window.error('{$Think.lang.delete_image_select_tips}');
+		}
+		return false;
+	});
+	
+	//refresh image list
+	$('#refreshImage').click(function(){
+		getPageContent($('.eg_form').data('self-url'));
+		$('#searchName').val('');
+		return false;
+	});
+	
+	//page
+	$('#page').on('click', 'a', function(){
+		var url = $(this).attr('href');
+		var searchName = $('#searchName').val();
+		if(searchName){
+			url += '&alias=' + searchName;
+		}
+		getPageContent(url);
+		return false;
+	});
+	
+	$('#imageSearch').click(function(){
+		var searchName = $('#searchName').val();
+		var url = $('.eg_form').data('self-url');
+		if(searchName){
+			url += '?alias='+searchName;
+			getPageContent(url);
+		}else{
+			getPageContent(url);
+		}
+	});
+	
+	//get image list 
+	function getPageContent(url){
+		$('#imageList .loading').show();
+		$.get(url, function(res){
+			var h = '';
+			for(i in res.image_list.data){
+				h += '<label for="img-'+res.image_list.data[i]['id']+'" class="small-4 medium-3 large-2 columns">';
+				h += '<input id="img-'+res.image_list.data[i]['id']+'" class="check_box" type="checkbox" value="'+res.image_list.data[i]['id']+'">';
+				h += '<img data-id="'+res.image_list.data[i]['id']+'" class="thumbnail" src="'+res.image_list.data[i]['thumb']+'"/>';
+				h += '<span class="alias">'+res.image_list.data[i]['alias']+'</span>';
+				h += '<a class="view_image" href="'+res.image_list.data[i]['path']+'" target="_blank"><i class="fa fa-eye" aria-hidden="true"></i></a>';
+				h += '<button data-id="'+res.image_list.data[i]['id']+'" class="button download_image fa fa-download"></button>';
+				h += '</label>';
+			}
+			$('#imageList .loading').hide();
+			$('#imageList .row').html(h);
+			$('#page').html(res.image_page);
+		});
+	}
+	
+	function getFileHash(file, data){ 
+		var chunkSize = 204800;  
+		var pos = 0;  
+		
+		var md5Instance = CryptoJS.algo.MD5.create();  
+		var sha1Instance = CryptoJS.algo.SHA1.create();
+		
+		var reader = new FileReader();  
+		function progressiveReadNext(){  
+			var end = Math.min(pos + chunkSize, file.size);  
+  
+			reader.onload = function(e) {  
+				pos = end;  
+				md5Instance.update(CryptoJS.enc.Latin1.parse(e.target.result)); 
+				sha1Instance.update(CryptoJS.enc.Latin1.parse(e.target.result));
+				//var present = (parseFloat(pos)/parseFloat(file.size))*10000/100;  
+				//$("#div_load").css("width",Math.round(present) +"%");  
+				if (pos < file.size) {  
+					progressiveReadNext();  
+				} else {  
+					var md5Value = md5Instance.finalize(); 
+					var sha1Value = sha1Instance.finalize(); 
+					//console.log(md5Value.toString()); 								
+					//console.log(sha1Value.toString());
+					//console.log(file);
+					data[data.length] = {'name':file.name, 'md5':md5Value.toString(), 'sha1':sha1Value.toString()}
+					
+				}  
+			}  
+  
+			if (file.slice) {  
+				var blob = file.slice(pos, end);  
+			} else if (file.webkitSlice) {  
+				var blob = file.webkitSlice(pos, end);  
+			}else if(File.prototype.mozSlice){  
+				var blob = file.mozSlice(pos, end);  
+			}  
+			reader.readAsBinaryString(blob);  
+		}  
+		progressiveReadNext(); 
+	}
+	
+});
+</script>
+
+<link href="__STATIC__/vendor/magnific-popup/magnific-popup.css" rel="stylesheet">
+<script src="__STATIC__/vendor/magnific-popup/jquery.magnific-popup.min.js"></script>
+<script>
+$(function(){
+	$('#imageList').magnificPopup({
+		delegate: '.view_image',
+		type: 'image',
+		gallery: {
+			enabled: true,
+			navigateByImgClick: true,
+			preload: [0,1] // Will preload 0 - before current, and 1 after the current image
+		}
+	});
+	$('#imageList').on('click', '.download_image', function(){
+		window.open("{:url('downloadimage')}?id=" + $(this).data('id'));
+		return false;
+	});
+});
+</script>
+{include file="base/footer" /}

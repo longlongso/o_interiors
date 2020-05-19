@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset='utf-8' />
+<title> Event </title>
+<link href='__STATIC__/vendor/scheduler/fullcalendar.min.css' rel='stylesheet' />
+<link href='__STATIC__/vendor/scheduler/fullcalendar.print.min.css' rel='stylesheet' media='print' />
+<link href='__STATIC__/vendor/scheduler/scheduler.min.css' rel='stylesheet' />
+
+<script type="text/javascript" src="__STATIC__/vendor/jquery/jquery-1.12.3.min.js"></script>
+<script src='__STATIC__/vendor/scheduler/moment.min.js'></script>
+<script src='__STATIC__/vendor/scheduler/fullcalendar.min.js'></script>
+<script src='__STATIC__/vendor/scheduler/scheduler.min.js'></script>
+
+<script>
+
+	$(function() { // document ready
+		$('#calendar').fullCalendar({
+			schedulerLicenseKey: 'CC-Attribution-NonCommercial-NoDerivatives',
+			//lang: 'en',
+			now: '<?php echo date('Y-m-d') ?>',
+			editable: true,
+			aspectRatio: 1.8,
+			scrollTime: '00:00',
+			header: {
+				left: 'today prev,next',
+				center: 'title',
+				right: 'timelineDay,agendaWeek,month'
+			},
+			defaultView: 'month',
+			views: {
+				timelineThreeDays: {
+					type: 'timeline',
+					duration: { days: 3 }
+				}
+			},
+			eventAllow: function(dropLocation, draggedEvent) {
+				// disabled change in calendar
+				//console.log(draggedEvent.id);
+				return false;
+				/*
+				if (draggedEvent.id === '999') {
+					return dropLocation.isAfter('2017-01-01'); // a boolean
+				}else {
+					return true;
+				}
+				*/
+			},
+			eventClick: function(calEvent, jsEvent, view) {
+				//console.log(calEvent)
+				//alert('Event: ' + calEvent.title);
+				//alert('Coordinates: ' + jsEvent.pageX + ',' + jsEvent.pageY);
+				//alert('View: ' + view.name);
+				// change the border color just for fun
+				//$(this).css('border-color', 'red');
+			},
+			/*
+			dayClick: function(date, jsEvent, view) {
+				alert('Clicked on: ' + date.format());
+				alert('Coordinates: ' + jsEvent.pageX + ',' + jsEvent.pageY);
+				alert('Current view: ' + view.name);
+				// change the day's background color just for fun
+				$(this).css('background-color', 'red');
+			},
+			*/
+			resourceAreaWidth: '20%',
+			resourceColumns: [
+				{
+					labelText: "{$Think.lang.course}",
+					field: 'name'
+				}
+			],
+			resources: <?php echo empty($course_list)?'[]':json_encode($course_list); ?>,
+			events: <?php echo empty($event_list)?'[]':json_encode($event_list); ?>
+		});
+	
+	});
+
+</script>
+<style>
+
+	body {
+		margin: 0;
+		padding: 0;
+		font-family: "Lucida Grande",Helvetica,Arial,Verdana,sans-serif;
+		font-size: 14px;
+	}
+
+	#calendar {
+		max-width: 1000px;
+		margin: 20px auto;
+	}
+
+</style>
+</head>
+<body>
+
+	<div id='calendar'></div>
+
+</body>
+</html>

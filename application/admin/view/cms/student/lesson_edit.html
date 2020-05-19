@@ -1,0 +1,199 @@
+    <style>
+    #lesson_edit_con{
+        border: 1px solid #aaa;
+        padding: 5px;
+    }
+    #lesson_edit_con .eg_stack{
+        border: 1px solid #aecbb1;
+        border-collapse: separate;
+    }
+    #lesson_edit_con .used{
+        color: #317839;
+    }
+    </style>
+    <div> Lesson : </div>
+    <div id="lesson_edit_con">
+        <table class="eg_stack">
+            <thead>
+                <tr>
+                    <th>
+                        <input type="checkbox" class="select_all">
+                    </th>
+                    <th> Name </th>
+                    <th> Subject </th>
+                    <th> Venue </th>
+                    <th> Start time </th>
+                    <th> End time </th>
+                    <th> Round </th>
+                    <th> Quota </th>
+                </tr>
+            </thead>
+            
+            <tbody>
+                <tr>
+                    <td colspan="8"> nothing </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <script>
+
+    $(function(){
+        // fixed some stopPropagation
+        var td_click = 0;
+        $("#lesson_edit_con").on('click', 'td', function(e){
+            td_click = 1;
+            setTimeout(function(){
+                td_click = 0;
+            }, 500);
+        });
+        $("#lesson_edit_con").on('click', 'input', function(e){
+            if(td_click){
+                td_click = 0;
+                return false;
+            }
+            td_click = 0;
+        });
+        
+        //
+        $('.combobox[name="edit_course[course_id]"]').change(function(){
+            build_edit_lesson();
+        });
+        
+        function build_edit_lesson(fn){
+            var course_id = Number($('.combobox[name="edit_course[course_id]"]').val());
+            if(!course_id){
+                $("#lesson_edit_con").html(' Nothing! [先選擇Subject]');
+                return false;
+            }
+            
+            var course_ids = [course_id];
+            //console.log(course_ids);
+            $.post("{:url('geteventlist')}", {"course_ids": course_ids}, function(res){
+                //console.log(res);
+                if(res){
+                    
+                    var lesson_arr = {};
+                    for(var i in res){
+                        if(!lesson_arr[res[i].round]){
+                            lesson_arr[res[i].round] = '';
+                        }
+                        
+                        var tr = '';
+                        tr += '<tr>';
+                        tr += '  <td><input type="checkbox" name="edit_course[event_ids][]" value="' + res[i].id + '"/></td>';
+                        tr += '  <td>'+ res[i].name +'</td>';
+                        tr += '  <td>'+ res[i].course +'</td>';
+                        tr += '  <td>'+ res[i].room +'</td>';
+                        
+                        tr += '  <td>'+ res[i].start_time +'</td>';
+                        tr += '  <td>'+ res[i].end_time +'</td>';
+                        tr += '  <td>'+ res[i].round +'</td>';
+                        tr += '  <td><span class="used">'+ res[i].join + '</span> / ' + res[i].quota +'</td>';
+                        tr += '</tr>';
+                        
+                        lesson_arr[res[i].round] += tr;
+                        
+                    }
+                    //console.log(lesson_arr);
+                    
+                    var html = '';
+                    for(var j in lesson_arr){
+                        if(lesson_arr[j]){
+                            html += '<table class="eg_stack">';
+                            html += '    <thead>';
+                            html += '        <tr>';
+                            html += '            <th>';
+                            html += '                <input type="checkbox" class="select_all">';
+                            html += '            </th>';
+                            html += '            <th> Name </th>';
+                            html += '            <th> Subject </th>';
+                            html += '            <th> Venue </th>';
+                            html += '            <th> Start time </th>';
+                            html += '            <th> End time </th>';
+                            html += '            <th> Round </th>';
+                            html += '            <th> Quota </th>';
+                            html += '        </tr>';
+                            html += '    </thead>';
+                            html += '    <tbody>';
+                            
+                            html += lesson_arr[j];
+                            
+                            html += '    </tbody>';
+                            html += '</table>';
+                        }
+                    }
+                    $('#lesson_edit_con').html(html);
+                    
+					setTimeout(function(){
+						var ids_arr = $('#lesson_edit_con').data('id');
+						for(var i in ids_arr){
+							$('#lesson_edit_con input[name="edit_course[event_ids][]"][value="'+ids_arr[i]+'"]').prop("checked", true).trigger('change');
+						}
+						
+						$("#lesson_edit_con table tbody>tr").hide();
+						$("#lesson_edit_con table").each(function(){
+							$(this).find('tbody>tr').eq(0).show();
+							$(this).find('tbody .more').remove();
+							if($(this).find('tbody>tr').length>1){
+								$(this).find('tbody').append('<tr class="more"><td colspan="8"><a><i class="fa fa-caret-down" aria-hidden="true"></i></a></td></tr>');
+							}
+						});
+					}, 200);
+					
+                    var course_id = $('.combobox[name="edit_course[course_id]"]').val();
+                    if(!course_id){
+                        $('#lesson_edit_con').html(' Nothing! [先選擇Subject]');
+                    }
+                    
+                    if(fn){
+                        return fn();
+                    }
+                }
+            });
+            
+            
+        }
+		$("#lesson_edit_con").on('click', 'table .more a', function(){
+			if(!$(this).hasClass('active')){
+				$(this).parent().parent().parent().find('tr').show();
+				$(this).addClass('active').html('<i class="fa fa-caret-up" aria-hidden="true"></i>');
+			}else{
+				$(this).parent().parent().parent().find('tr').hide();
+				$(this).parent().parent().parent().find('tr').eq(0).show();
+				$(this).parent().parent().parent().find('tr.more').show();
+				$(this).removeClass('active').html('<i class="fa fa-caret-down" aria-hidden="true"></i>');
+			}
+			return false;
+		});
+        //
+        
+        $("#lesson_edit_con").on("change", ".select_all", function(){
+            if($(this).is(":checked")){
+                $(this).parent().parent().parent().parent().find('tbody input[type="checkbox"]').each(function(){
+                    if(!$(this).is(':checked')){
+                        $(this).prop("checked", true).trigger('change');
+                    }
+                });
+            }else{
+                $(this).parent().parent().parent().parent().find('tbody input[type="checkbox"]').each(function(){
+                    if($(this).is(':checked')){
+                        $(this).prop("checked", false).trigger('change');
+                    }
+                });
+            }
+        });
+        
+        $('#lesson_edit_con').on('change', 'input[type="checkbox"][name="edit_course[event_ids][]"]', function(){
+            var p = $(this).parent().parent();
+            var u = p.find('.used').text();
+            if($(this).is(':checked')){
+                p.find('.used').text(Number(u)+1);
+            }else{
+                p.find('.used').text(Number(u)-1);
+            }
+        });
+		
+    });
+        
+</script>

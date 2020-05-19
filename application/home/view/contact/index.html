@@ -1,0 +1,112 @@
+{include file="base/header" title="$meta_title" description="$meta_description" keywords="$meta_keywords" /}
+
+<div class="grid-container">
+    <ul class="breadcrumbs">
+        <li>
+            <a class="link" href="index.html">{$Think.lang.cate_home}</a>
+        </li>
+        <li>{$Think.lang.cate_contact}</li>
+    </ul>
+
+    <div class="grid-x grid-padding-x">
+        <div class="large-6 medium-6 small-12 cell">
+            <form action="" method="post" data-abide novalidate>
+                <div data-abide-error class="alert callout" style="display: none;">
+                    <p><i class="fi-alert"></i> </p>
+                </div>
+                <div class="grid-x grid-padding-x">
+
+                    <div class="small-12 cell">
+                        <label>{$Think.lang.form_name}
+					<input type="text" placeholder="{$Think.lang.form_name} *" name="name" required>
+					<span class="form-error">
+						{$Think.lang.error_required}
+					</span>
+				  </label>
+                    </div>
+
+                    <div class="small-12 cell">
+                        <label>{$Think.lang.form_company}
+					<input type="text" placeholder="{$Think.lang.form_company} *" name="company" required>
+					<span class="form-error">
+						{$Think.lang.error_required}
+					</span>
+				  </label>
+                    </div>
+
+                    <div class="small-12 cell">
+                        <label>{$Think.lang.form_tel}
+					<input type="text" placeholder="{$Think.lang.form_tel} *" name="telephone" required>
+					<span class="form-error">
+						{$Think.lang.error_required}
+					</span>
+				  </label>
+                    </div>
+
+                    <div class="small-12 cell">
+                        <label>{$Think.lang.form_email}
+					<input type="email" placeholder="{$Think.lang.form_email}" name="email" required pattern="email">
+					<span class="form-error">
+						{$Think.lang.error_required}
+					</span>
+				  </label>
+                    </div>
+                    <div class="small-12 cell">
+                        <label>{$Think.lang.form_message}
+					<textarea type="text" rows="5" name="message" required></textarea>
+					<span class="form-error">
+						{$Think.lang.error_required}
+					</span>
+				  </label>
+                    </div>
+
+                </div>
+
+                <div class="row">
+                    <fieldset class="large-6 cell text-center">
+                        <button class="button" type="submit" value="Submit">{$Think.lang.form_submit}</button>
+                    </fieldset>
+                </div>
+            </form>
+        </div>
+        <div class="large-6 medium-6 small-12 cell">
+            <p>
+                <img style="float:left;margin-right:5px;margin-top: -6px;" src="__STATIC__/img/icon/map-icon.png" />
+                <span> {$Think.lang.text_address} </span>
+            </p>
+            <p>
+                <img style="float:left;margin-right:5px;margin-top: -6px;" src="__STATIC__/img/icon/mail-icon.png" />
+                <span> info@mas-intdesign.com </span>
+            </p>
+            <p>
+                <img style="float:left;margin-right:5px;margin-top: -6px;" src="__STATIC__/img/icon/phone-icon.png" />
+                <span> 852-2383 1000 </span>
+            </p>
+            <p>
+                <img style="float:left;margin-right:5px;margin-top: -6px;" src="__STATIC__/img/icon/fax-icon.png" />
+                <span> 852-2383 1186 </span>
+            </p>
+			<p style="margin-bottom: 0">
+				<img style="float:left;margin-right:5px;margin-top: -6px;" src="__STATIC__/img/icon/hour-icon.png" />
+                <span> {$Think.lang.text_business_a} </span>
+            </p>
+			<p style="margin-bottom: 0">
+                <span> {$Think.lang.text_business_b} </span>
+            </p>
+			<p>
+                <span style="margin-left: 45px"> {$Think.lang.text_business_c} </span>
+            </p>
+        </div>
+    </div>
+
+    <br>
+
+    <div class="grid-x grid-padding-x">
+        <div class="large-12 cell text-center">
+			<iframe src="{$map_url}" name="map" frameborder="no" border="0" style="width: 100%; min-height: 330px"></iframe>
+        </div>
+    </div>
+
+</div>
+
+{include file="base/script" /} {include file="base/footer" /}

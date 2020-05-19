@@ -1,0 +1,79 @@
+{include file="base/header" title="$meta_title" description="$meta_description" keywords="$meta_keywords" /}
+
+<div class="pro_body">
+
+	<div class="reg_header mp_header text-center">
+		<a href="{:url('user/index')}">
+			<img style="opacity: 0;" src=""/>
+		</a>
+		<div class="text-center">
+			<ul class="tabs c_tabs" data-tabs id="pro-tabs">
+			  <li class="tabs-title is-active"><a href="#profile_con" aria-selected="true">{$Think.lang.user_center}</a></li>
+			</ul>
+		</div>
+	</div>
+	<div class="reg_content">
+		<?php if(!empty($success_msg)){ ?>
+		<div class="success callout">
+		    <span>{$success_msg|default=''}</span>
+			<button class="close-button" data-close="" aria-label="Close reveal" type="button">
+				<span aria-hidden="true">×</span>
+			</button>
+		</div>
+		<?php } ?>
+		<?php if(!empty($error_msg)){ ?>
+		<div class="alert callout">
+		  <span>{$error_msg|default=''}</span>
+		  <button class="close-button" data-close="" aria-label="Close reveal" type="button">
+				<span aria-hidden="true">×</span>
+			</button>
+		</div>
+		<?php } ?>
+		
+		<div class="tabs-content" data-tabs-content="pro-tabs">
+		  <div class="tabs-panel is-active" id="profile_con">
+			<form id="profileForm" class="box_form" action="{:url('save')}" method="post">
+				<div class="vl_line"></div>
+				<div class="vr_line"></div>
+				<a href="{:url('auth/logout')}" class="logout"><i class="fa fa-sign-out" aria-hidden="true"></i></a>
+				
+				<div class="input-group">
+				  <span class="input-group-label">
+					<span class="OL_icon_accout OL_icon"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span><span class="path7"></span><span class="path8"></span><span class="path9"></span><span class="path10"></span><span class="path11"></span><span class="path12"></span><span class="path13"></span><span class="path14"></span><span class="path15"></span><span class="path16"></span><span class="path17"></span><span class="path18"></span><span class="path19"></span></span>
+				  </span>
+				  <span class="input-group-field">
+					{$data.username|default=''}
+				  </span>
+				</div>
+				
+				<div class="input-group">
+				  <span class="input-group-label">
+					<span class="OL_icon_mail OL_icon"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span></span>
+				  </span>
+				  <span class="input-group-field">
+					{$data.email|default=''}
+				  </span>
+				</div>
+				
+				<div class="input-group">
+				  <span class="input-group-label">
+					<span class="OL_icon_key OL_icon"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span></span>
+				  </span>
+				  <span class="input-group-field">
+					********
+				  </span>
+				  <span class="input-group-label"> <a href="{:url('modifyPassword')}">{$Think.lang.modify_password}</a></span>
+				</div>
+				
+			</form>
+		  </div>
+		  
+		</div>
+		
+	</div>
+
+</div>
+
+{include file="base/script" /}
+
+{include file="base/footer" /}

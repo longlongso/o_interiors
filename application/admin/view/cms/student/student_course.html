@@ -1,0 +1,513 @@
+<style>
+    .course_item {
+        border: 1px solid #ccc;
+        padding: 10px;
+    }
+    
+    .lesson_con {
+        border: 1px solid #aaa;
+        padding: 5px;
+    }
+    
+    .lesson_con .eg_stack {
+        border: 1px solid #aecbb1;
+        border-collapse: separate;
+    }
+    
+    .lesson_con .used {
+        color: #317839;
+    }
+	.c_view_image{
+		display: inline-block;
+		position: relative;
+		left: auto;
+		bottom: auto;
+		z-index: 1;
+		background: none;
+		padding: 0;
+		border: none;
+		margin-bottom: 5px;
+	}
+	.c_view_image img{
+		width:80px;
+		height:80px;
+		margin-bottom: 0;
+	}
+</style>
+
+<?php 
+	$active_expiry_date_arr = [0];
+?>
+
+<?php foreach($student_course as $data){ ?>
+
+<div class="course_item<?php if(!empty($data['expiry_date']) && $data['expiry_date']<time()){ ?> history_course_item<?php }else{ $active_expiry_date_arr[] = (int)$data['expiry_date']; } ?>">
+    <button type="button" data-id="{$data.id|default=''}" class="button fa fa-pencil-square-o pull-right edit_course"> {$Think.lang.edit} </button>
+    <label>
+            {$Think.lang.course}: <span class="course_name" data-id="{$data.course_id|default=''}"></span>
+        </label>
+    <label>
+            {$Think.lang.type}: <span class="course_type" data-id="{$data.type|default=''}"></span>
+        </label>
+    <label>
+            {$Think.lang.event}: 
+            <div class="lesson_con course_lesson" data-id="<?php if(!empty($data['event_ids'])){ echo implode(',', json_decode($data['event_ids'], true)); } ?>">
+                <table class="eg_stack">
+                    <thead>
+                        <tr>
+                            <th>  </th>
+                            <th> Name </th>
+                            <th> Subject </th>
+                            <th> Venue </th>
+                            <th> Start time </th>
+                            <th> End time </th>
+                            <th> Round </th>
+                            <th> Quota </th>
+                        </tr>
+                    </thead>
+                    
+                    <tbody>
+                        <tr>
+                            <td colspan="8"> nothing </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </label>
+    <label>
+		{$Think.lang.course_start_date}: <span class="course_start_date"><?php echo empty($data['start_date'])?'':date('Y-m-d', $data['start_date']) ?></span>
+	</label>
+    <label>
+		{$Think.lang.course_expiry_date}: <span class="course_expiry_date"><?php echo empty($data['expiry_date'])?'':date('Y-m-d', $data['expiry_date']) ?></span>
+	</label>
+	<label>
+		{$Think.lang.course_regular_tuition}: <span class="course_regular_tuition">{$data.course_regular_tuition|default=''}</span>
+	</label>
+    <label>
+		{$Think.lang.course_final_tuition}: <span class="course_final_tuition">{$data.course_final_tuition|default=''}</span>
+	</label>
+    <label>
+		{$Think.lang.discount_reasons}: <span class="course_discount_reasons">{$data.discount_reasons|default=''}</span>
+	</label>
+    <label>
+		{$Think.lang.payment_status}: <span class="course_payment_status" data-id="{$data.payment_status|default=''}"></span>
+	</label>
+	<label>
+		{$Think.lang.payment_method}: <span class="course_payment_method" data-id="{$data.payment_method|default=''}"></span>
+	</label>
+	<label>
+		Payment Ref.No.(Cheque or receipt): <span class="course_payment_ref">{$data.payment_ref|default=''}</span>
+	</label>
+	<label>
+		Cheque or receipt image: 
+		<span class="course_payment_ref_image" data-ids="<?php echo empty($data['payment_ref_image'])?'':str_replace('"', '', $data['payment_ref_image']); ?>">
+			
+			<?php 
+				$pr_image_ids = json_decode($data['payment_ref_image'], true);
+				if(!empty($pr_image_ids) && $data['payment_ref_image']!="" && $data['payment_ref_image']!='[""]'){ 
+					foreach($pr_image_ids as $img_id){
+			?>
+				<a class="view_image c_view_image" href="{:get_image_by_id($img_id)}" target="_blank">
+					<img class="thumbnail" src="{:get_image_by_id($img_id)}"/>
+				</a>
+			<?php 
+					}
+				}
+			?>
+		</span>
+	</label>
+    <label>
+		{$Think.lang.remark}: <span class="course_remark">{$data.remark|default=''}</span>
+	</label>
+	<label>
+		Receipt No.: <span class="course_payment_code" data-code="{$data.payment_code|default=''}">{$data.payment_code|default=''}</span>
+	</label>
+    <label>
+		{$Think.lang.date_of_registration}: <span class="course_date_of_registration"><?php echo empty($data['create_time'])?'':date('Y-m-d', $data['create_time']) ?></span>
+	</label>
+</div>
+<?php } ?>
+
+<script>
+    $(function() {
+
+		var course_id_obj = $('select[name="new_course[course_id]"]').eq(0);
+		$('.course_name').each(function() {
+			var id = $(this).data('id');
+			var option_obj = course_id_obj.find('option[value="' + id + '"]');
+			if (option_obj.length) {
+				$(this).text(option_obj.text());
+			} else {
+				$(this).text('--');
+			}
+		});
+
+		var course_type_obj = $('select[name="new_course[type]"]').eq(0);
+		$('.course_type').each(function() {
+			var id = $(this).data('id');
+			var option_obj = course_type_obj.find('option[value="' + id + '"]');
+			if (option_obj.length) {
+				$(this).text(option_obj.text());
+			} else {
+				$(this).text('--');
+			}
+		});
+
+		var build_lesson_len = $('.course_lesson').length;
+		$('.course_lesson').each(function() {
+			var self = $(this);
+			var ids_str = $(this).data('id');
+			if (ids_str) {
+				ids_str = ids_str + '';
+				if (ids_str.indexOf(',') > 0) {
+					var ids_arr = ids_str.split(',');
+				} else {
+					var ids_arr = [Number(ids_str)];
+				}
+				if (ids_arr) {
+
+					$.post("{:url('geteventlist')}", {
+						"event_ids": ids_arr,
+						"student_id": $('input[type="hidden"][name="id"]').val()
+					}, function(res) {
+						// console.log(res);
+						if (res) {
+
+							var lesson_arr = {};
+							for (var i in res) {
+								if (!lesson_arr[res[i].round]) {
+									lesson_arr[res[i].round] = '';
+								}
+
+								var tr = '';
+								tr += '<tr>';
+								tr += '  <td><input type=hidden value="' + res[i].id + '"/></td>';
+								tr += '  <td>' + res[i].name + '</td>';
+								tr += '  <td>' + res[i].course + '</td>';
+								tr += '  <td>' + res[i].room + '</td>';
+
+								tr += '  <td>' + res[i].start_time + '</td>';
+								tr += '  <td>' + res[i].end_time + '</td>';
+								tr += '  <td>' + res[i].round + '</td>';
+								tr += '  <td><span class="used">' + res[i].join + '</span> / ' + res[i].quota + '</td>';
+								tr += '  <td style="color:#139218;text-align:center;">' + (res[i].sign?'V':'') + '</td>';
+								tr += '</tr>';
+
+								lesson_arr[res[i].round] += tr;
+
+							}
+							//console.log(lesson_arr);
+
+							var html = '';
+							for (var j in lesson_arr) {
+								if (lesson_arr[j]) {
+									html += '<table class="eg_stack">';
+									html += '    <thead>';
+									html += '        <tr>';
+									html += '            <th>';
+									html += ' ';
+									html += '            </th>';
+									html += '            <th> Name </th>';
+									html += '            <th> Subject </th>';
+									html += '            <th> Venue </th>';
+									html += '            <th> Start time </th>';
+									html += '            <th> End time </th>';
+									html += '            <th> Round </th>';
+									html += '            <th> Quota </th>';
+									html += '            <th> Present </th>';
+									html += '        </tr>';
+									html += '    </thead>';
+									html += '    <tbody>';
+
+									html += lesson_arr[j];
+
+									html += '    </tbody>';
+									html += '</table>';
+								}
+							}
+							self.html(html);
+							
+							build_lesson_len--;
+						}
+					});
+
+				}
+			}
+		});
+
+		var course_payment_method_obj = $('select[name="new_course[payment_method]"]').eq(0);
+		$('.course_payment_method').each(function() {
+			var id = $(this).data('id');
+			var option_obj = course_payment_method_obj.find('option[value="' + id + '"]');
+			if (option_obj.length) {
+				$(this).text(option_obj.text());
+			} else {
+				$(this).text('--');
+			}
+		});
+
+		var course_payment_status_obj = $('select[name="new_course[payment_status]"]').eq(0);
+		$('.course_payment_status').each(function() {
+			var id = $(this).data('id');
+			var option_obj = course_payment_status_obj.find('option[value="' + id + '"]');
+			if (option_obj.length) {
+				$(this).text(option_obj.text());
+			} else {
+				$(this).text('--');
+			}
+		});
+
+		
+		$('a[href="#panel_edit_course"').parent().hide();
+		$('.edit_course').click(function(){
+			var id = $(this).data('id');
+			$('input[name="edit_course[id]"]').val(id);
+			var pObj = $(this).parent();
+			dObj = pObj.find('[class*="course_"]');
+			dObj.each(function(){
+				var data_status = $(this).attr('data');
+				//console.log($(this));
+				
+				if($(this).hasClass('course_name')){
+					var s_id = $(this).data('id');
+					$('select[name="edit_course[course_id]"]').val(s_id).trigger('change');
+					var s_text = $('select[name="edit_course[course_id]"]').find('option[value="'+s_id+'"]').text();
+					$('select[name="edit_course[course_id]"]').next('.custom-combobox').find('input.ui-autocomplete-input').val(s_text);
+					
+				}else if($(this).hasClass('course_type')){
+					var s_id = $(this).data('id');
+					$('select[name="edit_course[type]"]').val(s_id).trigger('change');
+					
+				}else if($(this).hasClass('course_lesson')){
+					var ids_str = $(this).data('id');
+					ids_str = ids_str + '';
+					if (ids_str.indexOf(',') > 0) {
+						var ids_arr = ids_str.split(',');
+					} else {
+						var ids_arr = [Number(ids_str)];
+					}
+					$('#lesson_edit_con').data('id', ids_arr);
+					
+				}else if($(this).hasClass('course_start_date')){
+					var s_text = $(this).text();
+					$('input[name="edit_course[start_date]"]').val(s_text);
+					
+				}else if($(this).hasClass('course_expiry_date')){
+					var s_text = $(this).text();
+					$('input[name="edit_course[expiry_date]"]').val(s_text);
+					
+				}else if($(this).hasClass('course_date_of_registration')){
+					var s_text = $(this).text();
+					$('input[name="edit_course[create_time]"]').val(s_text);
+					
+				}else if($(this).hasClass('course_payment_method')){
+					var s_id = $(this).data('id');
+					$('select[name="edit_course[payment_method]"]').val(s_id).trigger('change');
+					
+				}else if($(this).hasClass('course_payment_status')){
+					var s_id = $(this).data('id');
+					$('select[name="edit_course[payment_status]"]').val(s_id).trigger('change');
+					
+				}else if($(this).hasClass('course_regular_tuition')){
+					var s_text = $(this).text();
+					$('input[name="edit_course[course_regular_tuition]"]').val(s_text);
+					
+				}else if($(this).hasClass('course_final_tuition')){
+					var s_text = $(this).text();
+					$('input[name="edit_course[course_final_tuition]"]').val(s_text);
+					
+				}else if($(this).hasClass('course_discount_reasons')){
+					var s_text = $(this).text();
+					$('input[name="edit_course[discount_reasons]"]').val(s_text);
+					
+				}else if($(this).hasClass('course_payment_ref')){
+					var s_text = $(this).text();
+					$('textarea[name="edit_course[payment_ref]"]').val(s_text);
+					
+				}else if($(this).hasClass('course_payment_ref_image')){
+					var self = $(this);
+					var img_ids = $(this).data('ids');
+					if(img_ids && img_ids!=[] && img_ids!="" && img_ids.length){
+						var h = '';
+						for(var i in img_ids){
+							var img_id = img_ids[i]
+							var img_src = self.find('img').eq(i).attr('src');
+							
+							h += '<span class="sel_img_con">';
+							h += '<input type="hidden" name="edit_course[payment_ref_image][]" value="'+ img_id +'"/>';
+							h += '<img class="thumbnail select_img_thumb" src="'+img_src+'"/>';
+							h += '<a class="view_image" href="'+img_src+'" target="_blank"><i class="fa fa-eye" aria-hidden="true"></i></a>';
+							h += '<a class="remove_image"><i class="fa fa-times" aria-hidden="true"></i></a>';
+							h += '</span>';
+							
+						}
+						$('.selectImage[data-name="edit_course[payment_ref_image][]"] .sel_img_thumb_con').html(h);
+					}
+				}else if($(this).hasClass('course_remark')){
+					var s_text = $(this).text();
+					$('textarea[name="edit_course[remark]"]').val(s_text);
+					
+				}else if($(this).hasClass('course_payment_code')){
+					var code = $(this).data('code');
+					$('input[name="edit_course[payment_code]"]').val(code);
+					$('#edit_payment_code').val(code);
+				}
+				
+				//console.log($(this).attr('class'));
+				
+			});
+			$('a[href="#panel_edit_course"').parent().show();
+			$('a[href="#panel_edit_course"').click();
+			return false;
+		});
+		
+		// new_course[start_date]
+		$('input[name="new_course[start_date]"]').change(function(){
+			var d_str = $(this).val();
+			if(d_str && d_str.indexOf('-')>-1 && d_str.length==10){
+				var d_arr = d_str.split('-');
+				if(d_arr.length == 3){
+					var y = d_arr[0];
+					if(d_arr[2] == '01'){
+						
+						var m = parseInt(d_arr[1]) + 5;
+						if(m == 6 || m == 9 || m == 11 || m == 16){
+							var d = '30';
+						}else if(m == 7 || m == 8 || m == 10 || m==12 || m == 13 || m == 15 || m == 17){
+							var d = '31';
+						}else if(m == 14){
+							if((y % 4 == 0) && (y % 100 != 0 || y % 400 == 0)){
+								var d = '29';
+							}else{
+								var d = '28';
+							}
+						}
+						
+					}else{
+						var m = parseInt(d_arr[1]) + 6;
+						var d = parseInt(d_arr[2]) - 1;
+					}
+					
+					n_str = y + '-' + (m.length==1?'0'+m:m) + '-' + (d.length==1?'0'+d:d);
+					$('input[name="new_course[expiry_date]"]').val(n_str).trigger('change');
+				}
+			}
+		});
+		$('input[name="edit_course[start_date]"]').change(function(){
+			var d_str = $(this).val();
+			if(d_str && d_str.indexOf('-')>-1 && d_str.length==10){
+				var d_arr = d_str.split('-');
+				if(d_arr.length == 3){
+					var y = d_arr[0];
+					if(d_arr[2] == '01'){
+						
+						var m = parseInt(d_arr[1]) + 5;
+						if(m == 6 || m == 9 || m == 11 || m == 16){
+							var d = '30';
+						}else if(m == 7 || m == 8 || m == 10 || m==12 || m == 13 || m == 15 || m == 17){
+							var d = '31';
+						}else if(m == 14){
+							if((y % 4 == 0) && (y % 100 != 0 || y % 400 == 0)){
+								var d = '29';
+							}else{
+								var d = '28';
+							}
+						}
+						
+					}else{
+						var m = parseInt(d_arr[1]) + 6;
+						var d = parseInt(d_arr[2]) - 1;
+					}
+					
+					n_str = y + '-' + (m.length==1?'0'+m:m) + '-' + (d.length==1?'0'+d:d);
+					$('input[name="edit_course[expiry_date]"]').val(n_str).trigger('change');
+				}
+			}
+		});
+		
+		// check history course
+		var check_lensson_build =  setInterval(function(){
+			if(build_lesson_len){
+				// console.log(build_lesson_len);
+				return false;
+			}
+			clearInterval(check_lensson_build);
+			var h = '';
+			$('.course_item.history_course_item').each(function(){
+				
+				h += '<table>';
+				h += '	<thead>';
+				h += '		<tr>';
+				h += '			<th> Subject </th>';
+				h += '			<th> Lesson </th>';
+				h += '			<th> Update time </th>';    
+				h += '		</tr>';
+				h += '	</thead>';
+				h += '	<tbody>';
+				h += '		<tr>';
+				h += '			<td> ' + $(this).find('.course_name').text() + ' </td>';
+				
+				var Lesson_str = '';
+				$(this).find('.course_lesson .eg_stack').each(function(){
+					$(this).find('tbody tr').each(function(){
+						Lesson_str += $(this).find('td').eq(1).text() + ', ';
+					});
+				});
+				
+				h += '			<td> ' + Lesson_str + ' </td>';
+				h += '			<td> ' + $(this).find('.course_expiry_date').text() + ' </td>';
+				h += '		</tr>';
+				h += '	</tbody>';
+				h += '</table>';
+				
+				$(this).hide();
+			});
+
+			$('#panel_history_list').append(h);
+		}, 100);
+		// edit lessoon in lessoon_edit.html
+		
+		<?php if(count($active_expiry_date_arr)>1){ ?>
+		
+			$('#m_course_expiry_date').text('<?php echo max($active_expiry_date_arr)?date('Y-m-d', max($active_expiry_date_arr)):''; ?>');
+		
+		<?php }else if(count($student_course)){ ?>
+		
+			$('#m_course_expiry_date').text('{$Think.lang.expired}');
+			
+		<?php } ?>
+		
+		$('#panel_new_course input[name="new_course[payment_code]"]').parent().after('<label>Receipt No. <div class="input-group" style="max-width: 500px;"><input class="input-group-field" type="text" disabled="disabled" id="new_payment_code" style="width:100%;"><div class="input-group-button"><input type="button" class="button" value="Generate" onclick="return create_payment_code(1);"></div></div></label>');
+		
+		$('#panel_edit_course input[name="edit_course[payment_code]"]').parent().after('<label>Receipt No. <div class="input-group" style="max-width: 500px;"><input class="input-group-field" type="text" disabled="disabled" id="edit_payment_code" style="width:100%;"><div class="input-group-button"><input type="button" class="button" value="Generate" onclick="return create_payment_code(0);"></div></div></label>');
+		
+	});
+	
+	function create_payment_code(n){
+		if(!n){
+			if($('#panel_edit_course input[name="edit_course[payment_code]"]').val()){
+				alert('can not change');
+				return false;
+			}
+		}else{
+			if($('#panel_new_course input[name="new_course[payment_code]"]').val()){
+				alert('can not change');
+				return false;
+			}
+		}
+		
+		$.get("{:url('create_payment_code')}", function(res){
+			if(n){
+				//new
+				$('#new_payment_code').val(res);
+				$('#panel_new_course input[name="new_course[payment_code]"]').val(res);
+			}else{
+				// edit
+				$('#edit_payment_code').val(res);
+				$('#panel_edit_course input[name="edit_course[payment_code]"]').val(res);
+			}
+		});
+		
+		return false;
+	}
+</script>
