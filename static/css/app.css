@@ -40,14 +40,14 @@ header {
 }
 .nav a {
     text-transform: Uppercase;
-    color: #000;
+    color: #ccc;
     font-size: 1rem;
     display: inline-block;
     padding: 2px 10px;
 }
 
 .nav a.active {
-    border-bottom: 2px solid #000;
+    color: #fff;
 }
 
 @media print,

@@ -43,19 +43,20 @@ $self_url = $url_current . '?' . $url_param;
     <header>
         <div class="grid-container" style="max-width: 2000px">
             <div>
-				<!-- 
+				
 				<span class="head_nav_tog_btn"><button class="menu-icon" type="button"></button></span>
-				 -->
+
                 <a class="logo_con" href="index.html"><img class="logo" src="<?php echo get_image_by_id($site_logo); ?>" /></a>
 				<div style="position: absolute; top: 1px; right: 4px; font-size: 14px">
 					<a href="https://www.facebook.com/#" target="_blank"><img style="width: 40px; vertical-align: middle; margin-bottom: 10px;" src="__STATIC__/img/icon/facebook_icon.png" /></a>
-					<!-- 
+					
 					<a style="color: #fff" href="{$self_url|default=''}&lang=en-us">ENG </a> | 
 					<a style="color: #fff" href="{$self_url|default=''}&lang=zh-hk"> 繁中</a>
-					 -->
+					
 				</div>
             </div>
-			<!-- <div class="head_nav">
+			
+			<div class="head_nav">
 				<ul class="vertical menu accordion-menu" data-accordion-menu>
 				  <li><a <?php if($controller_active=='index' ){ ?>class="is-active"<?php } ?> href="index.html">{$Think.lang.cate_home}</a></li>
 				  <li><a <?php if($controller_active=='about' ){ ?>class="is-active"<?php } ?> href="about.html">{$Think.lang.cate_about}</a></li>
@@ -79,7 +80,7 @@ $self_url = $url_current . '?' . $url_param;
 					<a <?php if($controller_active=='media' ){ ?>class="active"<?php } ?> href="media.html">{$Think.lang.cate_media}</a>
 					<a <?php if($controller_active=='contact' ){ ?>class="active"<?php } ?> href="contact.html">{$Think.lang.cate_contact}</a>
 				</div>
-            </div> -->
+            </div>
         </div>
 		<script>
 			$(function() {

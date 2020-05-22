@@ -58,7 +58,7 @@ return [
 	
 	//菜單
 	'cate_home'=>'首頁',
-	'cate_about'=>'關於我們',
+	'cate_about'=>'關於',
 	'cate_projects'=>'項目',
 	'cate_awards'=>'獎項',
 	'cate_client'=>'合作',

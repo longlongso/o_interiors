@@ -58,7 +58,7 @@ return [
 	
 	// categary
 	'cate_home'=>'Home',
-	'cate_about'=>'About Us',
+	'cate_about'=>'About',
 	'cate_projects'=>'Projects',
 	'cate_awards'=>'Awards',
 	'cate_client'=>'Client',
@@ -85,7 +85,7 @@ return [
 	'text_business_c'=>'( By Appointment Only )',
 	
 	// home
-	'read_more'=>'READ MORE',
+	'read_more'=>'MORE NEWS',
 	'read_more_about'=>'About Us',
 	
 ];

@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:4:{s:71:"D:\MyWork\www\www2020\o_interiors/application/home\view\home\index.html";i:1589848930;s:72:"D:\MyWork\www\www2020\o_interiors/application/home\view\base\header.html";i:1589531900;s:72:"D:\MyWork\www\www2020\o_interiors/application/home\view\base\script.html";i:1531065641;s:72:"D:\MyWork\www\www2020\o_interiors/application/home\view\base\footer.html";i:1589532201;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:4:{s:71:"D:\MyWork\www\www2020\o_interiors/application/home\view\home\index.html";i:1589850491;s:72:"D:\MyWork\www\www2020\o_interiors/application/home\view\base\header.html";i:1589850797;s:72:"D:\MyWork\www\www2020\o_interiors/application/home\view\base\script.html";i:1531065641;s:72:"D:\MyWork\www\www2020\o_interiors/application/home\view\base\footer.html";i:1589532201;}*/ ?>
 <?php 
 $controller_active = strtolower( request()->controller() );
 $get_arr = request()->get();
@@ -42,19 +42,20 @@ $self_url = $url_current . '?' . $url_param;
     <header>
         <div class="grid-container" style="max-width: 2000px">
             <div>
-				<!-- 
+				
 				<span class="head_nav_tog_btn"><button class="menu-icon" type="button"></button></span>
-				 -->
+
                 <a class="logo_con" href="index.html"><img class="logo" src="<?php echo get_image_by_id($site_logo); ?>" /></a>
 				<div style="position: absolute; top: 1px; right: 4px; font-size: 14px">
 					<a href="https://www.facebook.com/#" target="_blank"><img style="width: 40px; vertical-align: middle; margin-bottom: 10px;" src="__STATIC__/img/icon/facebook_icon.png" /></a>
-					<!-- 
+					
 					<a style="color: #fff" href="<?php echo (isset($self_url) && ($self_url !== '')?$self_url:''); ?>&lang=en-us">ENG </a> | 
 					<a style="color: #fff" href="<?php echo (isset($self_url) && ($self_url !== '')?$self_url:''); ?>&lang=zh-hk"> 繁中</a>
-					 -->
+					
 				</div>
             </div>
-			<!-- <div class="head_nav">
+			
+			<div class="head_nav">
 				<ul class="vertical menu accordion-menu" data-accordion-menu>
 				  <li><a <?php if($controller_active=='index' ){ ?>class="is-active"<?php } ?> href="index.html"><?php echo \think\Lang::get('cate_home'); ?></a></li>
 				  <li><a <?php if($controller_active=='about' ){ ?>class="is-active"<?php } ?> href="about.html"><?php echo \think\Lang::get('cate_about'); ?></a></li>
@@ -78,7 +79,7 @@ $self_url = $url_current . '?' . $url_param;
 					<a <?php if($controller_active=='media' ){ ?>class="active"<?php } ?> href="media.html"><?php echo \think\Lang::get('cate_media'); ?></a>
 					<a <?php if($controller_active=='contact' ){ ?>class="active"<?php } ?> href="contact.html"><?php echo \think\Lang::get('cate_contact'); ?></a>
 				</div>
-            </div> -->
+            </div>
         </div>
 		<script>
 			$(function() {
@@ -133,6 +134,7 @@ $self_url = $url_current . '?' . $url_param;
 			<p style="font-size: 19px; color: #9e9e9e;">
 			O Interiors Ltd. is an interior design firm based in Hong Kong. We create space for residential, restaurant, office and retail. We are a team of professional, energetic individual’s with talented designers and experienced managers available to guide our client’s through the flawless and timely execution of any residential design project.
 			</p>
+			<div class="text-right"><a href="news.html" style="color: #666;"><?php echo lang('read_more'); ?></a></div>
 		</div>
 		
 		
