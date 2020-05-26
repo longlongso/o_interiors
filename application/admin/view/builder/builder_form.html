@@ -609,7 +609,82 @@
     </div>
     </label>
     <?php break; ?>
-
+	
+	<?php case 'select2': ?>
+	<div>
+		<label>{$f_key.title|default=''}</label>
+		<div <?php if(!empty($f_key['only_read']) || !empty($f_key['disabled'])){ ?>style="display:none;"<?php } ?> >
+		<select name="{$f_key.name|default=''}" class="select2" multiple="multiple" data-placeholder="">
+			<?php if(!empty($f_key['options'])){ ?>
+				<?php foreach($f_key['options'] as $opt){ ?>
+					<?php
+						if(!isset($opt['title']) && isset($opt['name'])){
+							$opt['title'] = $opt['name'];
+						}
+						if(!isset($opt['value'])){
+							if(isset($opt['id'])){
+								$opt['value'] = $opt['id'];
+							}else{
+								$opt['value'] = $opt['name'];
+							}
+						}
+						$checked = '';
+						$checkbox_name = str_replace('[]', '', $f_key['name']);
+						if(isset($data[$checkbox_name]) && is_array($data[$checkbox_name])){
+							
+							if(isset($opt['value'])){
+								if(in_array($opt['value'], $data[$checkbox_name])){
+									$checked = 'selected="selected"';
+								}
+							}
+							
+						}
+					?>
+					<option value="{$opt.value|default=''}" <?php echo $checked; ?> >{$opt.title|default=''}</option>
+				<?php } ?>
+			<?php } ?>
+		</select>
+		</div>
+		
+		<?php if(!empty($f_key['only_read']) || !empty($f_key['disabled'])){ ?>
+		<div>
+			<?php if(!empty($f_key['options'])){ ?>
+				<?php foreach($f_key['options'] as $opt){ ?>
+					<?php
+						if(!isset($opt['title']) && isset($opt['name'])){
+							$opt['title'] = $opt['name'];
+						}
+						if(!isset($opt['value'])){
+							if(isset($opt['id'])){
+								$opt['value'] = $opt['id'];
+							}else{
+								$opt['value'] = $opt['name'];
+							}
+						}
+						$checked = '';
+						$checkbox_name = str_replace('[]', '', $f_key['name']);
+						if(isset($data[$checkbox_name]) && is_array($data[$checkbox_name])){
+							
+							if(isset($opt['value'])){
+								if(in_array($opt['value'], $data[$checkbox_name])){
+									$checked = 'selected="selected"';
+								}
+							}
+							
+						}
+					?>
+					<?php if($checked){ ?>
+					<span style="display:line-block;padding:5px 10px;">{$opt.title|default=''}</span>
+					<?php } ?>
+				<?php } ?>
+			<?php } ?>
+		</div>
+		<?php } ?>
+	</div>
+	
+	
+	<?php break; ?>
+	
     <?php case 'image': ?>
     <label>
 						  {$f_key.title|default=''}
@@ -983,6 +1058,15 @@
         padding: 5px 10px;
     }
 </style>
+
+<link href="__STATIC__/select2/css/select2_custom.min.css" rel="stylesheet" />
+<script type="text/javascript" src="__STATIC__/select2/js/select2.min.js"></script>
+<script><!--
+$(function(){
+	$('.select2').select2();
+});
+//--></script>
+
 <script>
     $('.date').datepicker({
         'dateFormat': 'yy-mm-dd'

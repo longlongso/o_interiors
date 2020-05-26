@@ -68,8 +68,10 @@ return [
 	'cate_contact'=>'Contact Us',
 	'new_product'=>'LATEST PROJECTS',
 	'product_category'=>'Project Category',
+	'features_project'=>'Features Project',
 	
 	// contact
+	'contact'=>'Contact',
 	'error_form'=>'There are some errors in your form.',
 	'error_required'=>'required!',
 	'form_name'=>'Your name',

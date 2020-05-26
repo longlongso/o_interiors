@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:1:{s:71:"D:\MyWork\www\www2020\o_interiors/application/admin\view\base\menu.html";i:1531065623;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:1:{s:71:"D:\MyWork\www\www2020\o_interiors/application/admin\view\base\menu.html";i:1590462460;}*/ ?>
 <?php 
 		$controller_active = strtolower( request()->controller() );
 		$get_arr = request()->get();
@@ -24,9 +24,6 @@
     <ul class="menu submenu vertical<?php if(strpos($controller_active, 'cms.')!==false){ ?> is-active<?php } ?>" data-submenu>
         <li <?php if($controller_active=='cms.home' ){ ?>class="active"
             <?php } ?>><a href="<?php echo url('cms.home/index'); ?>"><?php echo \think\Lang::get('home'); ?></a></li>
-
-        <li <?php if($controller_active=='cms.about' ){ ?>class="active"
-            <?php } ?>><a href="<?php echo url('cms.about/index'); ?>"><?php echo \think\Lang::get('about'); ?></a></li>
 
         <li <?php if($controller_active=='cms.project' ){ ?>class="active"
             <?php } ?>><a href="<?php echo url('cms.project/index'); ?>"><?php echo \think\Lang::get('project'); ?></a></li>

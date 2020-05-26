@@ -1,6 +1,7 @@
 <?php
 namespace app\admin\controller\cms;
 use app\admin\controller\Base;
+use app\admin\model\cms\Project as ProjectModel;
 
 class Home extends Base
 {
@@ -24,130 +25,116 @@ class Home extends Base
 			]
 		];
 		$this->breadcrumbs($breadcrumbs);
-		
+		$ProjectModel = new ProjectModel;
+		$project_lists = $ProjectModel->getList('*', ['title']);
+		$project_options = [];
+		if(!empty($project_lists['list'])){
+			foreach($project_lists['list'] as $opt){
+				$opt = json_decode(json_encode($opt), true);
+				// print_r($opt);exit;
+				$project_options[] = ['title'=>$opt['title'], 'value'=>$opt['id']];
+			}
+		}
 		$form_keys = [
 			'user'=>[
 				'form'=>[
 					'action'=>'', 
 					'keys'=>[
 						[
+							'type'=>'html',
+							'html'=>'<b>' . lang('home_banner') . '</b>'
+						],
+						[
 							'type'=>'image',
-							'name'=>'home_banner',
-							'title'=>lang('home_banner'),
-							'length'=>10
-						],
-						[
-							'type'=>'editor',
-							'name'=>'home_description',
-							'title'=>lang('home_description') . '（EN）',
-						],
-						[
-							'type'=>'editor',
-							'name'=>'home_description_hk',
-							'title'=>lang('home_description') . '（ZH）',
+							'name'=>'home_banner_1_img',
+							'title'=>'1',
+							'length'=>1
 						],
 						[
 							'type'=>'text',
-							'name'=>'home_description_link',
-							'title'=>lang('home_description_link')
+							'name'=>'home_banner_1_link',
+							'title'=>'Link'
 						],
+						
+						[
+							'type'=>'image',
+							'name'=>'home_banner_2_img',
+							'title'=>'2',
+							'length'=>1
+						],
+						[
+							'type'=>'text',
+							'name'=>'home_banner_2_link',
+							'title'=>'Link'
+						],
+						
+						[
+							'type'=>'image',
+							'name'=>'home_banner_3_img',
+							'title'=>'3',
+							'length'=>1
+						],
+						[
+							'type'=>'text',
+							'name'=>'home_banner_3_link',
+							'title'=>'Link'
+						],
+						
+						[
+							'type'=>'image',
+							'name'=>'home_banner_4_img',
+							'title'=>'4',
+							'length'=>1
+						],
+						[
+							'type'=>'text',
+							'name'=>'home_banner_4_link',
+							'title'=>'Link'
+						],
+						
+						[
+							'type'=>'image',
+							'name'=>'home_banner_5_img',
+							'title'=>'5',
+							'length'=>1
+						],
+						[
+							'type'=>'text',
+							'name'=>'home_banner_5_link',
+							'title'=>'Link'
+						],
+						
 						[
 							'type'=>'html',
-							'html'=>'<hr> Item 1'
+							'html'=>'<hr><b>About</b>'
 						],
+						
 						[
 							'type'=>'image',
-							'name'=>'home_item1_image1',
-							'title'=>lang('home_item1_image1'),
+							'name'=>'home_about_image',
+							'title'=>lang('about') . ' ( Image )',
 							'length'=>1
 						],
 						[
-							'type'=>'text',
-							'name'=>'home_item1_link1',
-							'title'=>lang('home_item1_link1')
+							'type'=>'textarea',
+							'name'=>'home_about_en',
+							'title'=>lang('about') . ' (EN)',
 						],
 						[
-							'type'=>'image',
-							'name'=>'home_item1_image2',
-							'title'=>lang('home_item1_image2'),
-							'length'=>1
+							'type'=>'textarea',
+							'name'=>'home_about_zh',
+							'title'=>lang('about') . ' (ZH)',
 						],
-						[
-							'type'=>'text',
-							'name'=>'home_item1_link2',
-							'title'=>lang('home_item1_link2')
-						],
+						
 						[
 							'type'=>'html',
-							'html'=>'<hr> Item 2'
+							'html'=>'<hr><b>Features Project</b>'
 						],
 						[
-							'type'=>'image',
-							'name'=>'home_item2_image1',
-							'title'=>lang('home_item2_image1'),
-							'length'=>1
-						],
-						[
-							'type'=>'text',
-							'name'=>'home_item2_link1',
-							'title'=>lang('home_item2_link1')
-						],
-						[
-							'type'=>'image',
-							'name'=>'home_item2_image2',
-							'title'=>lang('home_item2_image2'),
-							'length'=>1
-						],
-						[
-							'type'=>'text',
-							'name'=>'home_item2_link2',
-							'title'=>lang('home_item2_link2')
-						],
-						[
-							'type'=>'html',
-							'html'=>'<hr> Item 3'
-						],
-						[
-							'type'=>'image',
-							'name'=>'home_item3_image1',
-							'title'=>lang('home_item3_image1'),
-							'length'=>1
-						],
-						[
-							'type'=>'text',
-							'name'=>'home_item3_link1',
-							'title'=>lang('home_item3_link1')
-						],
-						[
-							'type'=>'image',
-							'name'=>'home_item3_image2',
-							'title'=>lang('home_item3_image2'),
-							'length'=>1
-						],
-						[
-							'type'=>'text',
-							'name'=>'home_item3_link2',
-							'title'=>lang('home_item3_link2')
-						],
-						[
-							'type'=>'image',
-							'name'=>'home_item3_image3',
-							'title'=>lang('home_item3_image3'),
-							'length'=>1
-						],
-						[
-							'type'=>'text',
-							'name'=>'home_item3_link3',
-							'title'=>lang('home_item3_link3')
-						],
-						[
-							'type'=>'html',
-							'html'=>'<hr>'
-						],
-						[
-							'type'=>'text',
-							'name'=>'home_item_link',
-							'title'=>lang('home_item_link')
+							'type'=>'select2',
+							'name'=>'home_project_list[]',
+							'title'=>lang('project'),
+							'options'=>$project_options,
 						],
 					]
 				],
@@ -165,13 +152,14 @@ class Home extends Base
 		$this->actionUrl(url('save'));
 		
 		$keys = array_column($form_keys['user']['form']['keys'], 'name');
-		
+		$keys[] = 'home_project_list';
 		$settings = db('setting')->where('key', 'in', $keys)->select();
 		$data = [];
+		// print_r($settings);exit;
 		foreach($settings as $setting){
 			$data[$setting['key']] = $setting['serialized']==1?json_decode($setting['value'], true):$setting['value'];
 		}
-		
+		// print_r($data);exit;
 		$this->data($data);
 
 		return $this->form();

@@ -68,8 +68,10 @@ return [
 	'cate_contact'=>'聯絡我們',
 	'new_product'=>'最新項目',
 	'product_category'=>'項目分類',
+	'features_project'=>'特色項目',
 	
 	// contact
+	'contact'=>'聯絡',
 	'error_form'=>'請正確填寫您的信息.',
 	'error_required'=>'必填!',
 	'form_name'=>'名字',

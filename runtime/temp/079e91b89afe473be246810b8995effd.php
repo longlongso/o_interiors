@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:4:{s:71:"D:\MyWork\www\www2020\o_interiors/application/home\view\home\index.html";i:1589850491;s:72:"D:\MyWork\www\www2020\o_interiors/application/home\view\base\header.html";i:1589850797;s:72:"D:\MyWork\www\www2020\o_interiors/application/home\view\base\script.html";i:1531065641;s:72:"D:\MyWork\www\www2020\o_interiors/application/home\view\base\footer.html";i:1589532201;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:4:{s:71:"D:\MyWork\www\www2020\o_interiors/application/home\view\home\index.html";i:1590480353;s:72:"D:\MyWork\www\www2020\o_interiors/application/home\view\base\header.html";i:1590474010;s:72:"D:\MyWork\www\www2020\o_interiors/application/home\view\base\script.html";i:1531065641;s:72:"D:\MyWork\www\www2020\o_interiors/application/home\view\base\footer.html";i:1590460259;}*/ ?>
 <?php 
 $controller_active = strtolower( request()->controller() );
 $get_arr = request()->get();
@@ -25,10 +25,10 @@ $self_url = $url_current . '?' . $url_param;
 ">
     <link href="<?php echo get_image_by_id($site_meta_icon); ?>" rel="shortcut icon" />
     <link rel="stylesheet" href="__STATIC__/css/foundation.min.css">
-    <link rel="stylesheet" href="__STATIC__/css/app.css">
+    <link rel="stylesheet" href="__STATIC__/css/app.css?v=1.0">
     <script src="__STATIC__/vendor/jquery.js"></script>
     <script src="__STATIC__/vendor/foundation.min.js"></script>
-    <script src="__STATIC__/js/app.js"></script>
+    <script src="__STATIC__/js/app.js?v=1.0"></script>
 	<?php if ($lang_id == 2) { ?>
 	<style>
 		header .nav a {
@@ -47,7 +47,7 @@ $self_url = $url_current . '?' . $url_param;
 
                 <a class="logo_con" href="index.html"><img class="logo" src="<?php echo get_image_by_id($site_logo); ?>" /></a>
 				<div style="position: absolute; top: 1px; right: 4px; font-size: 14px">
-					<a href="https://www.facebook.com/#" target="_blank"><img style="width: 40px; vertical-align: middle; margin-bottom: 10px;" src="__STATIC__/img/icon/facebook_icon.png" /></a>
+					<a href="https://www.facebook.com/o.interiors" target="_blank"><img style="width: 40px; vertical-align: middle; margin-bottom: 10px;" src="__STATIC__/img/icon/facebook_icon.png" /></a>
 					
 					<a style="color: #fff" href="<?php echo (isset($self_url) && ($self_url !== '')?$self_url:''); ?>&lang=en-us">ENG </a> | 
 					<a style="color: #fff" href="<?php echo (isset($self_url) && ($self_url !== '')?$self_url:''); ?>&lang=zh-hk"> 繁中</a>
@@ -57,8 +57,8 @@ $self_url = $url_current . '?' . $url_param;
 			
 			<div class="head_nav">
 				<ul class="vertical menu accordion-menu" data-accordion-menu>
-				  <li><a <?php if($controller_active=='index' ){ ?>class="is-active"<?php } ?> href="index.html"><?php echo \think\Lang::get('cate_home'); ?></a></li>
-				  <li><a <?php if($controller_active=='about' ){ ?>class="is-active"<?php } ?> href="about.html"><?php echo \think\Lang::get('cate_about'); ?></a></li>
+				  <li><a <?php if($controller_active=='index' ){ ?>class="is-active"<?php } ?> href="index.html"><?php echo \think\Lang::get('cate_about'); ?></a></li>
+				  
 				  <li><a <?php if($controller_active=='project' ){ ?>class="is-active"<?php } ?> href="project.html?type=new&first=1"><?php echo \think\Lang::get('cate_projects'); ?></a></li>
 				  <li><a <?php if($controller_active=='award' ){ ?>class="is-active"<?php } ?> href="award.html"><?php echo \think\Lang::get('cate_awards'); ?></a></li>
 				  <li><a <?php if($controller_active=='column' ){ ?>class="is-active"<?php } ?> href="column.html"><?php echo \think\Lang::get('cate_column'); ?></a></li>
@@ -69,8 +69,8 @@ $self_url = $url_current . '?' . $url_param;
 			</div>
             <div class="nav pc-nav-box">
 				<div class="pc-nav">
-					<a <?php if($controller_active=='index' ){ ?>class="active"<?php } ?> href="index.html"><?php echo \think\Lang::get('cate_home'); ?></a>
-					<a <?php if($controller_active=='about' ){ ?>class="active"<?php } ?> href="about.html"><?php echo \think\Lang::get('cate_about'); ?></a>
+					<a <?php if($controller_active=='index' ){ ?>class="active"<?php } ?> href="index.html"><?php echo \think\Lang::get('cate_about'); ?></a>
+					
 					<a <?php if($controller_active=='project' ){ ?>class="active"<?php } ?> href="project.html?type=new&first=1"><?php echo \think\Lang::get('cate_projects'); ?></a>
 					<a <?php if($controller_active=='award' ){ ?>class="active"<?php } ?> href="award.html"><?php echo \think\Lang::get('cate_awards'); ?></a>
 					
@@ -118,43 +118,58 @@ $self_url = $url_current . '?' . $url_param;
 	}
 </style>
 <div class="owl-carousel owl-theme banner">
-    <?php if(!empty($home_banner)): krsort($home_banner); foreach($home_banner as $key=>$banner): ?>
-    <img class="owl-lazy" <?php if($key==1 || $key==2): ?>data-src-retina="<?php echo get_image_by_id($banner); ?>"
-    <?php endif; ?> data-src="<?php echo get_image_by_id($banner); ?>" alt="" />
-    <?php endforeach; endif; ?>
+    <?php if(!empty($home_banner_1_img)): if(!empty($home_banner_1_link)){ ?>
+		<a href="<?php echo $home_banner_1_link; ?>">
+		<?php } ?>
+		<img class="owl-lazy" data-src-retina="<?php echo get_image_by_id($home_banner_1_img); ?>" data-src="<?php echo get_image_by_id($home_banner_1_img); ?>" alt="" />
+		<?php if(!empty($home_banner_1_link)){ ?>
+		</a>
+		<?php } endif; if(!empty($home_banner_2_img)): if(!empty($home_banner_2_link)){ ?>
+		<a href="<?php echo $home_banner_2_link; ?>">
+		<?php } ?>
+		<img class="owl-lazy" data-src-retina="<?php echo get_image_by_id($home_banner_2_img); ?>" data-src="<?php echo get_image_by_id($home_banner_2_img); ?>" alt="" />
+		<?php if(!empty($home_banner_2_link)){ ?>
+		</a>
+		<?php } endif; if(!empty($home_banner_3_img)): if(!empty($home_banner_3_link)){ ?>
+		<a href="<?php echo $home_banner_3_link; ?>">
+		<?php } ?>
+		<img class="owl-lazy" data-src="<?php echo get_image_by_id($home_banner_3_img); ?>" alt="" />
+		<?php if(!empty($home_banner_3_link)){ ?>
+		</a>
+		<?php } endif; if(!empty($home_banner_4_img)): if(!empty($home_banner_4_link)){ ?>
+		<a href="<?php echo $home_banner_4_link; ?>">
+		<?php } ?>
+		<img class="owl-lazy" data-src="<?php echo get_image_by_id($home_banner_4_img); ?>" alt="" />
+		<?php if(!empty($home_banner_4_link)){ ?>
+		</a>
+		<?php } endif; if(!empty($home_banner_5_img)): if(!empty($home_banner_5_link)){ ?>
+		<a href="<?php echo $home_banner_5_link; ?>">
+		<?php } ?>
+		<img class="owl-lazy" data-src="<?php echo get_image_by_id($home_banner_5_img); ?>" alt="" />
+		<?php if(!empty($home_banner_5_link)){ ?>
+		</a>
+		<?php } endif; ?>
 </div>
 
 <div class="grid-container">
     <div class="grid-x grid-padding-x">
-        <div class="large-12 cell"><h3 class="text-center" style="color:#9e9e9e;font-family: Montserrat-Regular;margin-top:30px;">ABOUT</h3></div>
+        <div class="large-12 cell"><h3 class="text-center s_title"><?php echo \think\Lang::get('about'); ?></h3></div>
 		<div class="large-6 cell">
-			<img src="static/img/logo_big.jpg">
+			<img src="<?php echo get_image_by_id($home_about_image); ?>">
 		</div>
 		<div class="large-6 cell align-self-middle">
 			<p style="font-size: 19px; color: #9e9e9e;">
-			O Interiors Ltd. is an interior design firm based in Hong Kong. We create space for residential, restaurant, office and retail. We are a team of professional, energetic individual’s with talented designers and experienced managers available to guide our client’s through the flawless and timely execution of any residential design project.
+				<?php if($lang_id==2){ ?>
+					<?php echo $home_about_zh; }else{ ?>
+					<?php echo $home_about_en; } ?>
 			</p>
 			<div class="text-right"><a href="news.html" style="color: #666;"><?php echo lang('read_more'); ?></a></div>
 		</div>
 		
-		
-		<!--
-		<div class="large-12 cell home-about">
-			
-            <p>
-				<?php if (get_lang() == 'zh-hk') { ?>
-				<?php echo $home_description_hk; } else { ?>
-                <?php echo $home_description; } ?>
-            </p>
-            <div class="text-center">
-                <a class="link" href="<?php echo empty($home_description_link)?'about.html':$home_description_link; ?>"><?php echo \think\Lang::get('read_more_about'); ?></a>
-            </div>
-        </div>
-		-->
     </div>
 
-	<div class="grid-x grid-padding-x">
-        <div class="large-12 cell"><h3 style="color:#9e9e9e;font-family: Montserrat-Regular;margin-top:30px;">CONTACT</h3></div>
+	<!-- <div class="grid-x grid-padding-x">
+        <div class="large-12 cell"><h3 class="s_title"><?php echo \think\Lang::get('contact'); ?></h3></div>
 		<div class="large-6 cell">
 			<img src="static/img/googlemap.jpg">
 		</div>
@@ -171,107 +186,24 @@ $self_url = $url_current . '?' . $url_param;
 				Email: <b><a style="color: #9e9e9e;" href="mailto:info@ointeriorshk.com">info@ointeriorshk.com</a></b><br>
 			</p>
 		</div>
-	</div>
+	</div> -->
 	
     <br>
-	<!--
-    <div class="grid-x grid-padding-x home_project">
-        <div class="large-12 cell padding-lr">
-            <?php if(!empty($home_item1_image1) || !empty($home_item1_image2)): ?>
-            <div class="grid-x grid-padding-x">
-                <div class="large-4 medium-4 small-4 cell item_n_right">
-                    <div class="box-cell">
-                        <?php if(!empty($home_item1_link1)){ ?>
-                        <a href="<?php echo $home_item1_link1; ?>">
-                            <?php } ?>
-                            <img src="<?php echo empty($home_item1_image1)?'':get_image_by_id($home_item1_image1); ?>" alt="" />
-                            <?php if(!empty($home_item1_link1)){ ?>
-                        </a>
-                        <?php } ?>
-                    </div>
-                </div>
-                <div class="large-8 medium-8 small-8 cell">
-                    <div class="box-cell">
-                        <?php if(!empty($home_item1_link2)){ ?>
-                        <a href="<?php echo $home_item1_link2; ?>">
-                            <?php } ?>
-                            <img src="<?php echo empty($home_item1_image2)?'':get_image_by_id($home_item1_image2); ?>" alt="" />
-                            <?php if(!empty($home_item1_link2)){ ?>
-                        </a>
-                        <?php } ?>
-                    </div>
-                </div>
-            </div>
-            <?php endif; if(!empty($home_item2_image1) || !empty($home_item2_image2)): ?>
-            <div class="grid-x grid-padding-x">
-                <div class="large-8 medium-8 small-8 cell">
-                    <div class="box-cell">
-                        <?php if(!empty($home_item2_link1)){ ?>
-                        <a href="<?php echo $home_item2_link1; ?>">
-                            <?php } ?>
-                            <img src="<?php echo empty($home_item2_image1)?'':get_image_by_id($home_item2_image1); ?>" alt="" />
-                            <?php if(!empty($home_item2_link1)){ ?>
-                        </a>
-                        <?php } ?>
-                    </div>
-                </div>
-                <div class="large-4 medium-4 small-4 cell item_n_left">
-                    <div class="box-cell">
-                        <?php if(!empty($home_item2_link2)){ ?>
-                        <a href="<?php echo $home_item2_link2; ?>">
-                            <?php } ?>
-                            <img src="<?php echo empty($home_item2_image2)?'':get_image_by_id($home_item2_image2); ?>" alt="" />
-                            <?php if(!empty($home_item2_link2)){ ?>
-                        </a>
-                        <?php } ?>
-                    </div>
-                </div>
-            </div>
-            <?php endif; if(!empty($home_item3_image1) || !empty($home_item3_image2) || !empty($home_item3_image3)): ?>
-            <div class="grid-x grid-padding-x">
-                <div class="large-4 medium-4 small-4 cell item_n_right">
-                    <div class="box-cell">
-                        <?php if(!empty($home_item3_link1)){ ?>
-                        <a href="<?php echo $home_item3_link1; ?>">
-                            <?php } ?>
-                            <img src="<?php echo empty($home_item3_image1)?'':get_image_by_id($home_item3_image1); ?>" alt="" />
-                            <?php if(!empty($home_item3_link1)){ ?>
-                        </a>
-                        <?php } ?>
-                    </div>
-                </div>
-                <div class="large-4 medium-4 small-4 cell">
-                    <div class="box-cell">
-                        <?php if(!empty($home_item3_link2)){ ?>
-                        <a href="<?php echo $home_item3_link2; ?>">
-                            <?php } ?>
-                            <img src="<?php echo empty($home_item3_image2)?'':get_image_by_id($home_item3_image2); ?>" alt="" />
-                            <?php if(!empty($home_item3_link2)){ ?>
-                        </a>
-                        <?php } ?>
-                    </div>
-                </div>
-                <div class="large-4 medium-4 small-4 cell item_n_left">
-                    <div class="box-cell">
-                        <?php if(!empty($home_item3_link3)){ ?>
-                        <a href="<?php echo $home_item3_link3; ?>">
-                            <?php } ?>
-                            <img src="<?php echo empty($home_item3_image3)?'':get_image_by_id($home_item3_image3); ?>" alt="" />
-                            <?php if(!empty($home_item3_link3)){ ?>
-                        </a>
-                        <?php } ?>
-                    </div>
-                </div>
-            </div>
-            <?php endif; ?>
-
-            <div class="text-center">
-                <a class="link" href="<?php echo empty($home_item_link)?'project.html?type=new':$home_item_link; ?>"><?php echo \think\Lang::get('read_more'); ?></a>
-            </div>
-
-        </div>
-    </div>
-	-->
+	
+	<?php if(!empty($project_list)){ ?>
+	<div class="grid-x grid-padding-x">
+		<div class="large-12 cell"><h3 class="s_title"><?php echo \think\Lang::get('features_project'); ?></h3></div>
+		<?php foreach($project_list as $project) { ?>
+		<div class="large-3 medium-3 cell" style="padding: 0 6px">
+			<div class="box-cell">
+				<a href="project.html?id=<?php echo $project['id']; ?>" class="a-thum-port">
+					<img style="margin-bottom: 0" class="thumbnail thum-port" src="<?php echo get_thumb_by_id($project['image'][0], 350, 350); ?>" alt="" />
+				</a>
+			</div>
+		</div>
+		<?php } ?>
+	</div>
+	<?php } ?>
 	
 </div>
 
@@ -294,18 +226,18 @@ $self_url = $url_current . '?' . $url_param;
 <br>
 
 <footer>
-    <!-- <div class="f_nav">
-        <a href="index.html"><?php echo \think\Lang::get('cate_home'); ?></a>
-        <a href="about.html"><?php echo \think\Lang::get('cate_about'); ?></a>
+    <div class="f_nav">
+        <a href="index.html"><?php echo \think\Lang::get('cate_about'); ?></a>
+        
         <a href="project.html?type=new"><?php echo \think\Lang::get('cate_projects'); ?></a>
         <a href="award.html"><?php echo \think\Lang::get('cate_awards'); ?></a>
         <a href="column.html"><?php echo \think\Lang::get('cate_column'); ?></a>
         <a href="magazine.html"><?php echo \think\Lang::get('cate_magazine_interview'); ?></a>
         <a href="media.html"><?php echo \think\Lang::get('cate_media'); ?></a>
         <a href="contact.html"><?php echo \think\Lang::get('cate_contact'); ?></a>
-    </div> -->
+    </div>
     <div class="text-center" style="padding-top:20px;">
-		<a href="https://www.facebook.com/#" target="_blank"><img src="__STATIC__/img/icon/facebook_icon.png" /></a>
+		<a href="https://www.facebook.com/o.interiors" target="_blank"><img src="__STATIC__/img/icon/facebook_icon.png" /></a>
     </div>
 
     <div class="copyright">

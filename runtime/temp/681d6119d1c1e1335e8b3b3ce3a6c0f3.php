@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:5:{s:82:"D:\MyWork\www\www2020\o_interiors/application/admin\view\builder\builder_form.html";i:1531065625;s:73:"D:\MyWork\www\www2020\o_interiors/application/admin\view\base\header.html";i:1531065623;s:71:"D:\MyWork\www\www2020\o_interiors/application/admin\view\base\head.html";i:1531065623;s:73:"D:\MyWork\www\www2020\o_interiors/application/admin\view\base\script.html";i:1531065623;s:73:"D:\MyWork\www\www2020\o_interiors/application/admin\view\base\footer.html";i:1531065623;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:5:{s:82:"D:\MyWork\www\www2020\o_interiors/application/admin\view\builder\builder_form.html";i:1590478799;s:73:"D:\MyWork\www\www2020\o_interiors/application/admin\view\base\header.html";i:1531065623;s:71:"D:\MyWork\www\www2020\o_interiors/application/admin\view\base\head.html";i:1531065623;s:73:"D:\MyWork\www\www2020\o_interiors/application/admin\view\base\script.html";i:1531065623;s:73:"D:\MyWork\www\www2020\o_interiors/application/admin\view\base\footer.html";i:1531065623;}*/ ?>
 <!doctype html>
 <html class="no-js" lang="zh-hk" dir="ltr">
 <head>
@@ -635,7 +635,70 @@
     <?php } } ?>
     </div>
     </label>
-    <?php break; case 'image': ?>
+    <?php break; case 'select2': ?>
+	<div>
+		<label><?php echo (isset($f_key['title']) && ($f_key['title'] !== '')?$f_key['title']:''); ?></label>
+		<div <?php if(!empty($f_key['only_read']) || !empty($f_key['disabled'])){ ?>style="display:none;"<?php } ?> >
+		<select name="<?php echo (isset($f_key['name']) && ($f_key['name'] !== '')?$f_key['name']:''); ?>" class="select2" multiple="multiple" data-placeholder="">
+			<?php if(!empty($f_key['options'])){ foreach($f_key['options'] as $opt){ 						if(!isset($opt['title']) && isset($opt['name'])){
+							$opt['title'] = $opt['name'];
+						}
+						if(!isset($opt['value'])){
+							if(isset($opt['id'])){
+								$opt['value'] = $opt['id'];
+							}else{
+								$opt['value'] = $opt['name'];
+							}
+						}
+						$checked = '';
+						$checkbox_name = str_replace('[]', '', $f_key['name']);
+						if(isset($data[$checkbox_name]) && is_array($data[$checkbox_name])){
+							
+							if(isset($opt['value'])){
+								if(in_array($opt['value'], $data[$checkbox_name])){
+									$checked = 'selected="selected"';
+								}
+							}
+							
+						}
+					?>
+					<option value="<?php echo (isset($opt['value']) && ($opt['value'] !== '')?$opt['value']:''); ?>" <?php echo $checked; ?> ><?php echo (isset($opt['title']) && ($opt['title'] !== '')?$opt['title']:''); ?></option>
+				<?php } } ?>
+		</select>
+		</div>
+		
+		<?php if(!empty($f_key['only_read']) || !empty($f_key['disabled'])){ ?>
+		<div>
+			<?php if(!empty($f_key['options'])){ foreach($f_key['options'] as $opt){ 						if(!isset($opt['title']) && isset($opt['name'])){
+							$opt['title'] = $opt['name'];
+						}
+						if(!isset($opt['value'])){
+							if(isset($opt['id'])){
+								$opt['value'] = $opt['id'];
+							}else{
+								$opt['value'] = $opt['name'];
+							}
+						}
+						$checked = '';
+						$checkbox_name = str_replace('[]', '', $f_key['name']);
+						if(isset($data[$checkbox_name]) && is_array($data[$checkbox_name])){
+							
+							if(isset($opt['value'])){
+								if(in_array($opt['value'], $data[$checkbox_name])){
+									$checked = 'selected="selected"';
+								}
+							}
+							
+						}
+					if($checked){ ?>
+					<span style="display:line-block;padding:5px 10px;"><?php echo (isset($opt['title']) && ($opt['title'] !== '')?$opt['title']:''); ?></span>
+					<?php } } } ?>
+		</div>
+		<?php } ?>
+	</div>
+	
+	
+	<?php break; case 'image': ?>
     <label>
 						  <?php echo (isset($f_key['title']) && ($f_key['title'] !== '')?$f_key['title']:''); ?>
 						  <div>
@@ -978,6 +1041,15 @@
         padding: 5px 10px;
     }
 </style>
+
+<link href="__STATIC__/select2/css/select2_custom.min.css" rel="stylesheet" />
+<script type="text/javascript" src="__STATIC__/select2/js/select2.min.js"></script>
+<script><!--
+$(function(){
+	$('.select2').select2();
+});
+//--></script>
+
 <script>
     $('.date').datepicker({
         'dateFormat': 'yy-mm-dd'

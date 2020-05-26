@@ -22,10 +22,10 @@ $self_url = $url_current . '?' . $url_param;
     <meta name="keywords" content="[keywords]">
     <link href="<?php echo get_image_by_id($site_meta_icon); ?>" rel="shortcut icon" />
     <link rel="stylesheet" href="__STATIC__/css/foundation.min.css">
-    <link rel="stylesheet" href="__STATIC__/css/app.css">
+    <link rel="stylesheet" href="__STATIC__/css/app.css?v=1.0">
     <script src="__STATIC__/vendor/jquery.js"></script>
     <script src="__STATIC__/vendor/foundation.min.js"></script>
-    <script src="__STATIC__/js/app.js"></script>
+    <script src="__STATIC__/js/app.js?v=1.0"></script>
 	<?php if ($lang_id == 2) { ?>
 	<style>
 		header .nav a {
@@ -48,7 +48,7 @@ $self_url = $url_current . '?' . $url_param;
 
                 <a class="logo_con" href="index.html"><img class="logo" src="<?php echo get_image_by_id($site_logo); ?>" /></a>
 				<div style="position: absolute; top: 1px; right: 4px; font-size: 14px">
-					<a href="https://www.facebook.com/#" target="_blank"><img style="width: 40px; vertical-align: middle; margin-bottom: 10px;" src="__STATIC__/img/icon/facebook_icon.png" /></a>
+					<a href="https://www.facebook.com/o.interiors" target="_blank"><img style="width: 40px; vertical-align: middle; margin-bottom: 10px;" src="__STATIC__/img/icon/facebook_icon.png" /></a>
 					
 					<a style="color: #fff" href="{$self_url|default=''}&lang=en-us">ENG </a> | 
 					<a style="color: #fff" href="{$self_url|default=''}&lang=zh-hk"> 繁中</a>
@@ -58,8 +58,8 @@ $self_url = $url_current . '?' . $url_param;
 			
 			<div class="head_nav">
 				<ul class="vertical menu accordion-menu" data-accordion-menu>
-				  <li><a <?php if($controller_active=='index' ){ ?>class="is-active"<?php } ?> href="index.html">{$Think.lang.cate_home}</a></li>
-				  <li><a <?php if($controller_active=='about' ){ ?>class="is-active"<?php } ?> href="about.html">{$Think.lang.cate_about}</a></li>
+				  <li><a <?php if($controller_active=='index' ){ ?>class="is-active"<?php } ?> href="index.html">{$Think.lang.cate_about}</a></li>
+				  
 				  <li><a <?php if($controller_active=='project' ){ ?>class="is-active"<?php } ?> href="project.html?type=new&first=1">{$Think.lang.cate_projects}</a></li>
 				  <li><a <?php if($controller_active=='award' ){ ?>class="is-active"<?php } ?> href="award.html">{$Think.lang.cate_awards}</a></li>
 				  <li><a <?php if($controller_active=='column' ){ ?>class="is-active"<?php } ?> href="column.html">{$Think.lang.cate_column}</a></li>
@@ -70,8 +70,8 @@ $self_url = $url_current . '?' . $url_param;
 			</div>
             <div class="nav pc-nav-box">
 				<div class="pc-nav">
-					<a <?php if($controller_active=='index' ){ ?>class="active"<?php } ?> href="index.html">{$Think.lang.cate_home}</a>
-					<a <?php if($controller_active=='about' ){ ?>class="active"<?php } ?> href="about.html">{$Think.lang.cate_about}</a>
+					<a <?php if($controller_active=='index' ){ ?>class="active"<?php } ?> href="index.html">{$Think.lang.cate_about}</a>
+					
 					<a <?php if($controller_active=='project' ){ ?>class="active"<?php } ?> href="project.html?type=new&first=1">{$Think.lang.cate_projects}</a>
 					<a <?php if($controller_active=='award' ){ ?>class="active"<?php } ?> href="award.html">{$Think.lang.cate_awards}</a>
 					

@@ -113,7 +113,7 @@ footer {
 
 .f_nav a {
     text-transform: Uppercase;
-    color: #000;
+    color: #ccc;
     font-size: 1rem;
     display: inline-block;
     padding: 5px 8px;
@@ -185,6 +185,11 @@ footer {
 }
 .left_nav li button {
 	display: none;
+}
+
+.s_title{
+	color:#9e9e9e;font-family: Montserrat-Regular;margin-top:30px;
+	text-transform:uppercase;
 }
 
 @media print,
