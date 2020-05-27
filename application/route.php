@@ -8,6 +8,7 @@ use think\Route;
 Route::rule([
     'index/'=>'home/index/index',
     'about/'=>'home/about/index',
+	'projectflow/'=>'home/projectflow/index',
 	'project/'=>'home/project/index',
 	'award/'=>'home/award/index',
 	'client/'=>'home/client/index',

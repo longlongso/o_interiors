@@ -1,0 +1,12 @@
+{include file="base/header" title="$meta_title" description="$meta_description" keywords="$meta_keywords" /}
+<div class="bg_con">
+	<?php if(!empty($project_flow_img)){ ?>
+	<img src="{:get_image_by_id($project_flow_img)}">
+	<?php }else{ ?>
+	<div style="width:100%;height:500px;"></div>
+	<?php } ?>
+	<div class="content_box">
+		
+	</div>
+</div>
+{include file="base/footer" /}

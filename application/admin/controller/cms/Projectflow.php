@@ -144,7 +144,7 @@ class Projectflow extends Base
 		$this->actionUrl(url('save'));
 		
 		$keys = array_column($form_keys['user']['form']['keys'], 'name');
-		$keys[] = 'home_project_list';
+		// print_r(json_encode($keys));exit;
 		$settings = db('setting')->where('key', 'in', $keys)->select();
 		$data = [];
 		// print_r($settings);exit;
@@ -166,7 +166,7 @@ class Projectflow extends Base
 				//'home'  => 'require',
 			];
 			$msg = [
-				'home.require' => lang('home') . ' : ' . lang('required')
+				// 'home.require' => lang('home') . ' : ' . lang('required')
 			];
 			
 			$err = validate_error($rule, $msg, $data);
