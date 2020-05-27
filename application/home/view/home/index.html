@@ -3,12 +3,6 @@
 	.home-about p,.home-about span {
 		<?php echo $body_font; ?>
 	}
-	header{
-		position: absolute;
-		width: 100%;
-		top: 0;
-		z-index: 3;
-	}
 </style>
 <div class="owl-carousel owl-theme banner">
     <?php if(!empty($home_banner_1_img)): ?>
@@ -69,14 +63,14 @@
 			<img src="{:get_image_by_id($home_about_image)}">
 		</div>
 		<div class="large-6 cell align-self-middle">
-			<p style="font-size: 19px; color: #9e9e9e;">
+			<p class="s_des about_des">
 				<?php if($lang_id==2){ ?>
 					{$home_about_zh}
 				<?php }else{ ?>
 					{$home_about_en}
 				<?php } ?>
 			</p>
-			<div class="text-right"><a href="news.html" style="color: #666;">{:lang('read_more')}</a></div>
+			<div class="text-right"><a href="news.html" style="color: #555;">{:lang('read_more')}</a></div>
 		</div>
 		
     </div>
@@ -107,10 +101,19 @@
 	<div class="grid-x grid-padding-x">
 		<div class="large-12 cell"><h3 class="s_title">{$Think.lang.features_project}</h3></div>
 		<?php foreach($project_list as $project) { ?>
-		<div class="large-3 medium-3 cell" style="padding: 0 6px">
-			<div class="box-cell">
+		<div class="large-3 medium-3 small-6 cell" style="padding: 0 6px">
+			<div class="box-cell box_cell">
 				<a href="project.html?id=<?php echo $project['id']; ?>" class="a-thum-port">
 					<img style="margin-bottom: 0" class="thumbnail thum-port" src="{:get_thumb_by_id($project['image'][0], 350, 350)}" alt="" />
+					<span class="box_title">
+						<?php 
+							if($lang_id==2){ 
+								echo $project['title_hk'];
+							}else{
+								echo $project['title'];
+							}
+						?>
+					</span>
 				</a>
 			</div>
 		</div>

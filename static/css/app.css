@@ -17,10 +17,13 @@ body {
 	font-family: Montserrat-SemiBold,Helvetica Neue,Helvetica,Roboto,Arial,SimHei,Microsoft YaHei,黑体,sans-serif;
 }
 header {
-	position: relative;
-    background: rgba(51, 51, 51, .9);
+	position: fixed;
+    background: rgba(25, 25, 25, 0.9);
     z-index: 3;
+	width: 100%;
+	top: 0;
 }
+
 .logo_con{
 	
 }
@@ -37,13 +40,17 @@ header {
 }
 .pc-nav-box{
 	padding-left: 160px;
+	margin-top: -30px;
 }
 .nav a {
     text-transform: Uppercase;
     color: #ccc;
     font-size: 1rem;
     display: inline-block;
-    padding: 2px 10px;
+    padding: 8px 10px;
+}
+.pc-nav a{
+	font-size: 1.1rem;
 }
 
 .nav a.active {
@@ -69,6 +76,11 @@ screen and (max-width: 480px) {
     .nav a {
         font-size: .9rem;
     }
+}
+
+.link_con{
+	position: absolute; top: 1px; right: 4px; font-size: 14px;
+	color: #ccc;
 }
 
 .banner {
@@ -139,7 +151,7 @@ footer {
 
 .head_nav_tog_btn {
     display: none;
-    background-color: #000;
+    background-color: #848484;
     padding: 3px 6px;
 	position: absolute;
 	top: 10px;
@@ -175,10 +187,10 @@ footer {
 	display: none;
 }
 .head_nav .is-active {
-	border-bottom: 1px solid #000;
+	border-bottom: 1px solid #fff;
 }
 .head_nav a {
-	color: #000;
+	color: #fff;
 }
 .left_nav a {
 	padding-left: 0;
@@ -188,8 +200,33 @@ footer {
 }
 
 .s_title{
-	color:#9e9e9e;font-family: Montserrat-Regular;margin-top:30px;
+	color:#696868;font-family: Montserrat-Regular;margin-top:30px;
 	text-transform:uppercase;
+}
+.s_des{
+	color:#676767;
+}
+.about_des{
+	font-size: 22px;
+}
+
+.box_cell{
+	position: relative;
+	overflow: hidden;
+}
+.box_cell .box_title{
+	position: absolute;
+    bottom: -100%;
+    z-index: 2;
+    left: 0;
+    right: 0;
+    background: rgba(0,0,0,0.5);
+    padding: 5px 3px;
+    color: #fff;
+    transition: all 0.2s;
+}
+.box_cell:hover .box_title{
+    bottom: 0;
 }
 
 @media print,
@@ -214,6 +251,12 @@ screen and (max-width: 640px) {
     }
 	header .nav {
 		display: none;
+	}
+	.about_des{
+		font-size: 18px;
+	}
+	.box_cell .box_title{
+		bottom: 0;
 	}
 }
 
@@ -339,5 +382,4 @@ screen and (max-width: 640px) {
 .medium-1,.medium-10,.medium-11,.medium-12,.medium-2,.medium-3,.medium-4,.medium-5,.medium-6,.medium-7,.medium-8,.medium-9,.medium-full,.medium-shrink {
     float: left;
 }
-
 
