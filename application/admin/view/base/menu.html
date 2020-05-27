@@ -23,7 +23,9 @@
     <ul class="menu submenu vertical<?php if(strpos($controller_active, 'cms.')!==false){ ?> is-active<?php } ?>" data-submenu>
         <li <?php if($controller_active=='cms.home' ){ ?>class="active"
             <?php } ?>><a href="{:url('cms.home/index')}">{$Think.lang.home}</a></li>
-
+		<li <?php if($controller_active=='cms.projectflow' ){ ?>class="active"
+            <?php } ?>><a href="{:url('cms.projectflow/index')}">{$Think.lang.project_flow}</a></li>
+		
         <li <?php if($controller_active=='cms.project' ){ ?>class="active"
             <?php } ?>><a href="{:url('cms.project/index')}">{$Think.lang.project}</a></li>
         <li <?php if($controller_active=='cms.projectcategory' ){ ?>class="active"

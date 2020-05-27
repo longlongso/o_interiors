@@ -129,6 +129,10 @@ return [
 	'home_item3_image3'=>'首页项目3图片(3)',
 	
 	'home_item_link'=>'Project Link',
+	
+	'project_flow'=>'Project Flow',
+	'background_image'=>'Background Image',
+	
 	// about
 	'about'=>'About',
 	

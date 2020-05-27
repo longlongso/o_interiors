@@ -69,6 +69,7 @@ return [
 	'new_product'=>'LATEST PROJECTS',
 	'product_category'=>'Project Category',
 	'features_project'=>'Features Project',
+	'project_flow'=>'Project Flow',
 	
 	// contact
 	'contact'=>'Contact',

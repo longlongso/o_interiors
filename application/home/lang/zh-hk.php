@@ -69,6 +69,7 @@ return [
 	'new_product'=>'最新項目',
 	'product_category'=>'項目分類',
 	'features_project'=>'特色項目',
+	'project_flow'=>'Project Flow',
 	
 	// contact
 	'contact'=>'聯絡',
