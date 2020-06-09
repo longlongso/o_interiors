@@ -383,3 +383,21 @@ screen and (max-width: 640px) {
     float: left;
 }
 
+.bg_con{
+	position:relative;
+	background: #000;
+}
+.bg_con .bg_img{
+	width: 100%;
+}
+.bg_con .content_box{
+	position:absolute;
+	top: 125px;
+}
+@media print,
+screen and (max-width: 640px) {
+	.bg_con .content_box{
+		position:absolute;
+		top: 65px;
+	}
+}
