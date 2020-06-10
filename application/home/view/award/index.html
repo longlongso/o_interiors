@@ -1,13 +1,15 @@
 {include file="base/header" title="$meta_title" description="$meta_description" keywords="$meta_keywords" /}
 
-<div class="grid-container">
+<div class="grid-container pd-top">
     <ul class="breadcrumbs">
         <li>
             <a class="link" href="index.html">{$Think.lang.cate_home}</a>
         </li>
         <li>{$Think.lang.cate_awards}</li>
     </ul>
-
+	
+	<div class="c_title_h1">{$Think.lang.cate_awards}</div>
+	
     <div class="grid-x grid-padding-x">
         <?php if(!empty($award_list)){ ?>
         <?php $date = 0; ?>
@@ -15,55 +17,54 @@
 
         <?php if($award['date']!=$date){ ?>
         <div class="large-12 medium-12 cell">
-            <p>
-                <span class="line-x"></span>
+			<hr>
+            <div class="a_title">
                 <?php echo $award['date']; $date = $award['date'];  ?>
-            </p>
+            </div>
         </div>
         <?php } ?>
 
-        <div class="large-2 medium-3 small-6 cell">
-            <div class="box-cell text-center">
-				<a class="a-thum-award">
-                <img class="thumbnail thum-port" style="margin-bottom: 0; box-shadow: none" src="{:get_image_by_id($award['image'])}" alt="" />
-				</a>
-                <p class="p-title">
+		<table>
+			<tr>
+				<td>
+					<a class="a-thum-award">
+						<img class="thumbnail thum-port" style="margin-bottom: 0; box-shadow: none" src="{:get_image_by_id($award['image'])}" alt="" />
+					</a>
+				</td>
+				<td>
+					<p class="p-title">
+						<?php if ($lang_id == 2) { ?>
+						<?php echo $award['title_hk']; ?>
+						<?php } else { ?>
+						<?php echo $award['title']; ?>
+						<?php } ?>
+					</p>
+					<div class="title-desc-box">
 					<?php if ($lang_id == 2) { ?>
-					<?php echo $award['title_hk']; ?>
+					<?php echo $award['title_desc_hk']; ?>
 					<?php } else { ?>
-                    <?php echo $award['title']; ?>
+					<?php echo $award['title_desc']; ?>
 					<?php } ?>
-                </p>
-				<div class="title-desc-box">
-				<?php if ($lang_id == 2) { ?>
-				<?php echo $award['title_desc_hk']; ?>
-				<?php } else { ?>
-				<?php echo $award['title_desc']; ?>
-				<?php } ?>
-				</div>
-            </div>
-        </div>
-
+					</div>
+				</td>
+			</tr>
+		</table>
+		
         <?php } ?>
         <?php } ?>
     </div>
 	
-	<script>
-		var thum_width = $('.a-thum-award').width();
-		$('.a-thum-award img').each(function(){
-			var img_height = $(this).css('height');
-			var max_height = thum_width * 1.2;
-			if (parseFloat(img_height) > parseFloat(max_height)) {
-				$(this).css('height', max_height);
-			} else {
-				$('.a-thum-award').css('height', max_height);
-				var d_px = parseFloat(max_height) - parseFloat(img_height);
-				d_px = d_px / 2;
-				$(this).css('margin-top', d_px + 'px');
-			}
-		});
-	</script>
-
 </div>
-
+<script>
+$(function(){
+	function re_box_size(){
+		var h = $('header').height()+20;
+		$('.pd-top').css('padding-top', h+'px');
+	}
+	re_box_size();
+	$(window).resize(function(){
+		re_box_size();
+	});
+});
+</script>
 {include file="base/script" /} {include file="base/footer" /}

@@ -62,7 +62,7 @@ return [
 	'cate_projects'=>'項目',
 	'cate_awards'=>'獎項',
 	'cate_client'=>'合作',
-	'cate_column'=>'專欄',
+	'cate_column'=>'News',
 	'cate_magazine_interview'=>'雜誌訪談',
 	'cate_media'=>'媒體',
 	'cate_contact'=>'聯絡我們',
@@ -70,6 +70,7 @@ return [
 	'product_category'=>'項目分類',
 	'features_project'=>'特色項目',
 	'project_flow'=>'Project Flow',
+	'cate_news'=>'News',
 	
 	// contact
 	'contact'=>'聯絡',
@@ -86,6 +87,7 @@ return [
 	'text_business_a'=>'辦工時間',
 	'text_business_b'=>'上午 9:00 – 下午 6:00',
 	'text_business_c'=>'( 敬請預約 )',
+	'address'=>'Address',
 	
 	// home
 	'read_more'=>'更多',

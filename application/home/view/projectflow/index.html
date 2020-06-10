@@ -1,7 +1,7 @@
 {include file="base/header" title="$meta_title" description="$meta_description" keywords="$meta_keywords" /}
 <div class="bg_con">
-	<?php if(!empty($project_flow_img)){ ?>
-	<img class="bg_img" src="{:get_image_by_id($project_flow_img)}">
+	<?php if(!empty($flow['project_flow_img'])){ ?>
+	<img class="bg_img" src="{:get_image_by_id($flow['project_flow_img'])}">
 	<?php }else{ ?>
 	<div style="width:100%;height:500px;"></div>
 	<?php } ?>
@@ -9,35 +9,50 @@
 		<div class="wms">
 			<a href="index.html">{$Think.lang.cate_home}</a> > <a href="projectflow.html">{$Think.lang.project_flow}</a>
 		</div>
-		<h3>{$Think.lang.project_flow}</h3>
-		<div>
+		<h3 class="c_title">{$Think.lang.project_flow}</h3>
+		<div class="c_list_con">
 			<table>
 				<tr>
-					<td>STEP<br>01</td>
-					<td></td>
+					<td class="sp">STEP<br>01</td>
+					<td class="sp_con sp1">{$flow['project_flow_title_1_'.$lang_code]}</td>
 				</tr>
 				<tr>
-					<td>STEP<br>02</td>
-					<td></td>
+					<td class="sp">STEP<br>02</td>
+					<td class="sp_con sp2">{$flow['project_flow_title_2_'.$lang_code]}</td>
 				</tr>
 				<tr>
-					<td>STEP<br>03</td>
-					<td></td>
+					<td class="sp">STEP<br>03</td>
+					<td class="sp_con sp3">{$flow['project_flow_title_3_'.$lang_code]}</td>
 				</tr>
 				<tr>
-					<td>STEP<br>04</td>
-					<td></td>
+					<td class="sp">STEP<br>04</td>
+					<td class="sp_con sp4">{$flow['project_flow_title_4_'.$lang_code]}</td>
 				</tr>
 				<tr>
-					<td>STEP<br>05</td>
-					<td></td>
+					<td class="sp">STEP<br>05</td>
+					<td class="sp_con sp5">{$flow['project_flow_title_5_'.$lang_code]}</td>
 				</tr>
 				<tr>
-					<td>STEP<br>06</td>
-					<td></td>
+					<td class="sp">STEP<br>06</td>
+					<td class="sp_con sp6">{$flow['project_flow_title_6_'.$lang_code]}</td>
 				</tr>
 			</table>
 		</div>
 	</div>
 </div>
+<script>
+$(function(){
+	function re_box_size(){
+		var h = $('header').height()+20;
+		$('.content_box').css('top', h+'px');
+		
+		var ch = $('.content_box').height()+h+100;
+		$('.bg_con').css('min-height', ch+'px');
+	}
+	re_box_size();
+	$(window).resize(function(){
+		re_box_size();
+	});
+});
+</script>
 {include file="base/footer" /}

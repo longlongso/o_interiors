@@ -73,11 +73,11 @@ class Setting extends Base
 							'name'=>'site_meta_icon',
 							'title'=>lang('meta_icon'),
 						],
-						[
+						/* [
 							'type'=>'text',
 							'name'=>'map_url',
 							'title'=>lang('map_url'),
-						],
+						], */
 						[
 							'type'=>'text',
 							'name'=>'site_meta_title',

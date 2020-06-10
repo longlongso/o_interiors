@@ -135,6 +135,7 @@ return [
 	
 	// about
 	'about'=>'About',
+	'contact'=>'Contact',
 	
 	//project
 	'project'=>'Project',
@@ -146,9 +147,10 @@ return [
 	//Client
 	'client'=>'Client',
 	//column
-	'column'=>'Column',
+	'column'=>'News',
 	'magazine'=>'Magazine',
 	'media'=>'Media',
+	'news'=>'News',
 	
 	//CSV Upload
 	'import'=>'Import Data',
@@ -246,7 +248,7 @@ return [
 	'sort'=>'Sort',
 	'title'=>'Title',
 	'small_title'=>'Small Title',
-	'title_prefix'=>'Title Prefix',
+	'title_prefix'=>'Title Description',
 	'title_desc'=>'Description',
 	'url'=>'URL',
 	'all'=>'All',

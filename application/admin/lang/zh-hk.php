@@ -135,6 +135,7 @@ return [
 	
 	// about
 	'about'=>'關於',
+	'contact'=>'聯絡',
 	
 	//project
 	'project'=>'Project',
@@ -146,9 +147,10 @@ return [
 	//Client
 	'client'=>'Client',
 	//column
-	'column'=>'Column',
+	'column'=>'News',
 	'magazine'=>'Magazine',
 	'media'=>'Media',
+	'news'=>'News',
 
 	//CSV Upload
 	'import'=>'導入數據',
@@ -247,7 +249,7 @@ return [
 	'sort'=>'序號',
 	'title'=>'標題',
 	'small_title'=>'副標題',
-	'title_prefix'=>'標題（前）',
+	'title_prefix'=>'標題簡述',
 	'title_desc'=>'描述',
 	'url'=>'URL',
 	'all'=>'所有',

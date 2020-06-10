@@ -24,7 +24,7 @@ class Column extends Model
 
 	public function getDetail($id){
 		$data = $this::find($id);
-		$data['image'] = json_decode($data['image'], true);
+		$data['image'] = []; // json_decode($data['image'], true);
 		return $data;
 	}
 	
@@ -42,7 +42,7 @@ class Column extends Model
 			'title.unique' => -3,
 		];
 		$data['date'] = strtotime($data['date']);
-		$data['image'] = json_encode($data['image']);
+		$data['image'] = ''; // json_encode($data['image']);
 		if(empty($data['id'])){
 			$res = $this::validate($rule, $msg)->allowField(true)->save($data);
 		}else{

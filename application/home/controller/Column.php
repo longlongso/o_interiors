@@ -14,9 +14,9 @@ class Column extends Base
 		$id = input('id');
 		if($id){
 			$data = $ColumnModel->getDetail($id);
-			$image_arr = $data['image'];
-			krsort($image_arr);
-			$data['image'] = $image_arr;
+			// $image_arr = $data['image'];
+			// krsort($image_arr);
+			// $data['image'] = $image_arr;
 			$this->assign(['data'=>$data, 'lang_id'=>$lang_id]);
 			return view('column/detail');
 		}else{

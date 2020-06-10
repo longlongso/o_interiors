@@ -166,14 +166,14 @@ class Column extends Base
 						],
 						[
 							'type'=>'text',
-							'name'=>'title_prefix',
-							'title'=>lang('title_prefix') . '(EN)',
+							'name'=>'title',
+							'title'=>lang('title') . '(EN)',
 							'required'=>1
 						],
 						[
 							'type'=>'text',
-							'name'=>'title',
-							'title'=>lang('title') . '(EN)',
+							'name'=>'title_prefix',
+							'title'=>lang('title_prefix') . '(EN)',
 							'required'=>1
 						],
 						[
@@ -193,12 +193,12 @@ class Column extends Base
 							'title'=>lang('date'),
 							'required'=>1
 						],
-						[
+						/* [
 							'type'=>'image',
 							'name'=>'image',
 							'title'=>lang('image'),
 							'length'=>100
-						],
+						], */
 						[
 							'type'=>'number',
 							'name'=>'sort',
@@ -228,14 +228,14 @@ class Column extends Base
 					'keys'=>[
 						[
 							'type'=>'text',
-							'name'=>'title_prefix_hk',
-							'title'=>lang('title_prefix') . '(ZH)',
+							'name'=>'title_hk',
+							'title'=>lang('title') . '(ZH)',
 							'required'=>1
 						],
 						[
 							'type'=>'text',
-							'name'=>'title_hk',
-							'title'=>lang('title') . '(ZH)',
+							'name'=>'title_prefix_hk',
+							'title'=>lang('title_prefix') . '(ZH)',
 							'required'=>1
 						],
 						[
@@ -268,6 +268,8 @@ class Column extends Base
 			$ColumnModel = new ColumnModel;
 			$data = $ColumnModel->getDetail($id);
 			$this->data($data);
+		}else{
+			$this->data(['date'=>time()]);
 		}
 		
 		return $this->form();
@@ -288,7 +290,7 @@ class Column extends Base
 				'title.require' => lang('title') . ' : ' . lang('required'),
 				'title.max' => lang('title') . ' : ' . lang('code_max_error', [255]),
 				'sort.number'=> lang('sort') . ' : ' . lang('type_number'),
-				'image.require' => lang('image') . ' : ' . lang('required'),
+				// 'image.require' => lang('image') . ' : ' . lang('required'),
 				'date.max' => lang('date') . ' : ' . lang('code_max_error', [255]),
 			];
 			

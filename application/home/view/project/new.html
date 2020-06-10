@@ -1,6 +1,6 @@
 {include file="base/header" title="$meta_title" description="$meta_description" keywords="$meta_keywords" /}
 
-<div class="grid-container" style="max-width: 2000px">
+<div class="grid-container pd-top" style="max-width: 2000px">
     <ul class="breadcrumbs">
         <li>
             <a class="link" href="index.html">{$Think.lang.cate_home}</a>
@@ -150,7 +150,18 @@
 	});  
 	
 </script>
-
+<script>
+$(function(){
+	function re_box_size(){
+		var h = $('header').height()+20;
+		$('.pd-top').css('padding-top', h+'px');
+	}
+	re_box_size();
+	$(window).resize(function(){
+		re_box_size();
+	});
+});
+</script>
 {include file="base/script" /}
 <link rel="stylesheet" href="__STATIC__/vendor/fancybox3/jquery.fancybox.min.css">
 <script src="__STATIC__/vendor/fancybox3/jquery.fancybox.min.js"></script>

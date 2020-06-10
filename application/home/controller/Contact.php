@@ -5,20 +5,40 @@ class Contact extends Base
 {
   	public function index()
     {
-      $data = input();
-      if(!empty($data['email'])){
+		$data = input();
+		if(!empty($data['email'])){
 
-        $content = '';
-        $content .= 'Client name: ' . (empty($data['name'])?'':$this->StrFilter((string)$data['name'])) . '<br>';
-        $content .= 'Client company: ' . (empty($data['company'])?'':$this->StrFilter((string)$data['company'])) . '<br>';
-        $content .= 'Client telephone: ' . (empty($data['telephone'])?'':$this->StrFilter((string)$data['telephone'])) . '<br>';
-        $content .= 'Client email: ' . (empty($data['email'])?'':$this->StrFilter((string)$data['email'])) . '<br>';
-        $content .= 'Client message: ' . (empty($data['message'])?'':$this->StrFilter((string)$data['message'])) . '<br>';
-        
-        send_mail(config('smtp_username'), 'Mas Studio client contact', $content);
-      }
-		$this->assign(['map_url'=>config('map_url')]);
-		  return view('contact/index');
+			$content = '';
+			$content .= 'Client name: ' . (empty($data['name'])?'':$this->StrFilter((string)$data['name'])) . '<br>';
+			$content .= 'Client company: ' . (empty($data['company'])?'':$this->StrFilter((string)$data['company'])) . '<br>';
+			$content .= 'Client telephone: ' . (empty($data['telephone'])?'':$this->StrFilter((string)$data['telephone'])) . '<br>';
+			$content .= 'Client email: ' . (empty($data['email'])?'':$this->StrFilter((string)$data['email'])) . '<br>';
+			$content .= 'Client message: ' . (empty($data['message'])?'':$this->StrFilter((string)$data['message'])) . '<br>';
+			
+			send_mail(config('smtp_username'), 'Mas Studio client contact', $content);
+		}
+		
+		$keys = [
+			"contact_company",
+			"contact_address",
+			"contact_address_link",
+			"contact_tel",
+			"contact_fax",
+			"contact_facebook_name",
+			"contact_facebook_link",
+			"contact_whatsapp",
+			"contact_email"
+		];
+		
+		$settings = db('setting')->where('key', 'in', $keys)->select();
+		
+		$data = [];
+		foreach($settings as $setting){
+			$data[$setting['key']] = $setting['serialized']==1?json_decode($setting['value'], true):$setting['value'];
+		}
+		// print_r($data);exit;
+		$this->assign($data);
+		return view('contact/index');
     }
 	
 	private function StrFilter($str){

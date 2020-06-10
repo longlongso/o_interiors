@@ -1,37 +1,38 @@
 {include file="base/header" title="$meta_title" description="$meta_description" keywords="$meta_keywords" /}
 
-<div class="grid-container">
+<div class="grid-container pd-top">
     <ul class="breadcrumbs">
         <li>
             <a class="link" href="index.html">{$Think.lang.cate_home}</a>
         </li>
         <li>{$Think.lang.cate_column}</li>
     </ul>
+	<div class="c_title_h1">{$Think.lang.cate_column}</div>
 
     <div class="grid-x grid-padding-x">
 
-        <div class="large-12 medium-12 cell">
+        <div class="large-12 medium-12 cell news_list">
             <div class="grid-x grid-padding-x">
                 <?php if(!empty($lists)): ?>
                 <?php foreach($lists['list'] as $data): ?>
-                <div class="large-2 medium-3 small-6 cell">
+                <div class="large-3 medium-4 small-6 cell">
                     <div class="box-cell text-center">
                         <a href="column.html?id={$data.id}">
-                            <img class="thumbnail" src="{:get_thumb_by_id($data['preview'], 350, 450)}" alt="" />
+                            <img class="thumbnail" src="{:get_thumb_by_id($data['preview'], 450, 350)}" alt="" />
                         </a>
 						<?php if ($lang_id == 2) { ?>
-						<p class="p-title" style="font-weight: 700">{$data.title_prefix_hk}</p>
-						<p style="font-size: 14px; line-height: 18px; color: #B0ADA6;">{$data.title_hk}</p>
+						<p class="p-title" style="font-weight: 700">{$data.title_hk}</p>
+						<p style="font-size: 14px; line-height: 18px; color: #B0ADA6;">{$data.title_prefix_hk}</p>
 						<?php } else { ?>
-                        <p class="p-title" style="font-weight: 700">{$data.title_prefix}</p>
-						<p style="font-size: 14px; line-height: 18px; color: #B0ADA6;">{$data.title}</p>
+                        <p class="p-title" style="font-weight: 700">{$data.title}</p>
+						<p style="font-size: 14px; line-height: 18px; color: #B0ADA6;">{$data.title_prefix}</p>
 						<?php } ?>
                     </div>
                 </div>
                 <?php endforeach; ?>
                 <?php endif; ?>
                 <div class="large-12 medium-12 small-12 cell">
-                    <div class="box-cell text-center">
+                    <div class="text-center">
                         {$lists['page']|default=''}
                     </div>
                 </div>
@@ -41,5 +42,16 @@
     </div>
 
 </div>
-
+<script>
+$(function(){
+	function re_box_size(){
+		var h = $('header').height()+50;
+		$('.pd-top').css('padding-top', h+'px');
+	}
+	re_box_size();
+	$(window).resize(function(){
+		re_box_size();
+	});
+});
+</script>
 {include file="base/script" /} {include file="base/footer" /}

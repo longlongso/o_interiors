@@ -24,12 +24,12 @@ class Projectflow extends Base
 		$settings = db('setting')->where('key', 'in', $keys)->select();
 		$data = [];
 		foreach($settings as $setting){
-			$data[$setting['key']] = $setting['serialized']==1?json_decode($setting['value'], true):$setting['value'];
+			$data['flow'][$setting['key']] = $setting['serialized']==1?json_decode($setting['value'], true):$setting['value'];
 		}
 		
-		$data['lang_id'] = 1;
+		$data['lang_code'] = 'en';
 		if (get_lang() == 'zh-hk') {
-			$data['lang_id'] = 2;
+			$data['lang_code'] = 'zh';
 		}
 		
 		$this->assign($data);

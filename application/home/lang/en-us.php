@@ -62,7 +62,7 @@ return [
 	'cate_projects'=>'Projects',
 	'cate_awards'=>'Awards',
 	'cate_client'=>'Client',
-	'cate_column'=>'Column',
+	'cate_column'=>'News',
 	'cate_magazine_interview'=>'Magazine Interview',
 	'cate_media'=>'Media',
 	'cate_contact'=>'Contact Us',
@@ -70,6 +70,7 @@ return [
 	'product_category'=>'Project Category',
 	'features_project'=>'Features Project',
 	'project_flow'=>'Project Flow',
+	'cate_news'=>'News',
 	
 	// contact
 	'contact'=>'Contact',
@@ -86,6 +87,11 @@ return [
 	'text_business_a'=>'Business Hour',
 	'text_business_b'=>'9:00 – 18:00',
 	'text_business_c'=>'( By Appointment Only )',
+	'address'=>'Address',
+	'Tel'=> 'Tel',
+	'Fax'=> 'Fax',
+	'Facebook'=> 'Facebook',
+	'Whatsapp'=> 'Whatsapp',
 	
 	// home
 	'read_more'=>'MORE NEWS',
