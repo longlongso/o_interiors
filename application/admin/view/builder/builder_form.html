@@ -1443,7 +1443,7 @@ $(function(){
                 if ($(this).is(':checked')) {
                     image_obj['id' + $(this).val()] = {
                         'id': $(this).val(),
-                        'src': $(this).next().attr('src')
+                        'src': $(this).next().data('path')
                     };
                     image_obj.length = image_obj.length + 1;
                 } else {
@@ -1593,7 +1593,7 @@ $(function(){
 
         if ($('#ImageModal').data('editor-image') == 1) {
             var field_name = $('#ImageModal').data('editor-image-id');
-            window.editor_win.document.getElementById(field_name).value = $(this).attr('src');
+            window.editor_win.document.getElementById(field_name).value = $(this).data('path');
             $('#ImageModal').data('editor-image', '');
             $('#ImageModal').data('editor-image-id', '');
             window.editor_win = null;
@@ -1649,7 +1649,7 @@ $(function(){
             for (i in res.image_list.data) {
                 h += '<label style="overflow:hidden;padding-top:1px;" for="img-' + res.image_list.data[i]['id'] + '" class="small-4 medium-3 large-2 columns">';
                 h += '<input id="img-' + res.image_list.data[i]['id'] + '" class="check_box" type="checkbox" value="' + res.image_list.data[i]['id'] + '"/>';
-                h += '<img data-id="' + res.image_list.data[i]['id'] + '" title="' + res.image_list.data[i]['alias'] + '" class="thumbnail" src="' + res.image_list.data[i]['thumb'] + '">';
+                h += '<img data-id="' + res.image_list.data[i]['id'] + '" title="' + res.image_list.data[i]['alias'] + '" class="thumbnail" src="' + res.image_list.data[i]['thumb'] + '" data-path="' + res.image_list.data[i]['path'] + '">';
                 h += '<span title="' + res.image_list.data[i]['alias'] + '" class="alias">' + res.image_list.data[i]['alias'] + '</span>';
                 h += '</label>';
             }
