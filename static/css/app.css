@@ -25,7 +25,7 @@ header {
 }
 
 .logo_con{
-	
+	display: inline-block;
 }
 .logo {
 	margin: 5px 0;
@@ -232,10 +232,20 @@ footer {
 @media print,
 screen and (max-width: 768px) {
 	.logo_con{
-		padding-left:40px;
+		margin-left:40px;
+		display: inline-block;
+		height: 50px;
+		position: relative;
+		width: 50%;
+		overflow: hidden;
 	}
 	.logo {
-		max-height: 45px;
+		margin: auto;
+		height: 130%;
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
 	}
 	.head_nav {
         display: none;
@@ -257,6 +267,9 @@ screen and (max-width: 768px) {
 	}
 	.box_cell .box_title{
 		bottom: 0;
+	}
+	.about-small-hide{
+		display: none !important;
 	}
 }
 

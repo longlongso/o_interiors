@@ -4,64 +4,72 @@
 		<?php echo $body_font; ?>
 	}
 </style>
-<div class="owl-carousel owl-theme banner">
-    <?php if(!empty($home_banner_1_img)): ?>
+
+<div id="banner-slideshow" class="swiper-container banner">
+    <div class="swiper-wrapper">
+		
+		<?php if(!empty($home_banner_1_img)): ?>
 		<?php if(!empty($home_banner_1_link)){ ?>
-		<a href="{$home_banner_1_link}">
+		<a class="item" href="{$home_banner_1_link}">
 		<?php } ?>
-		<img class="owl-lazy" data-src-retina="{:get_image_by_id($home_banner_1_img)}" data-src="{:get_image_by_id($home_banner_1_img)}" alt="" />
+		<img class="" src="{:get_image_by_id($home_banner_1_img)}" alt="" />
 		<?php if(!empty($home_banner_1_link)){ ?>
 		</a>
 		<?php } ?>
-	<?php endif; ?>
-	
-	<?php if(!empty($home_banner_2_img)): ?>
-		<?php if(!empty($home_banner_2_link)){ ?>
-		<a href="{$home_banner_2_link}">
-		<?php } ?>
-		<img class="owl-lazy" data-src-retina="{:get_image_by_id($home_banner_2_img)}" data-src="{:get_image_by_id($home_banner_2_img)}" alt="" />
-		<?php if(!empty($home_banner_2_link)){ ?>
-		</a>
-		<?php } ?>
-	<?php endif; ?>
-	
-	<?php if(!empty($home_banner_3_img)): ?>
-		<?php if(!empty($home_banner_3_link)){ ?>
-		<a href="{$home_banner_3_link}">
-		<?php } ?>
-		<img class="owl-lazy" data-src="{:get_image_by_id($home_banner_3_img)}" alt="" />
-		<?php if(!empty($home_banner_3_link)){ ?>
-		</a>
-		<?php } ?>
-	<?php endif; ?>
-	
-	<?php if(!empty($home_banner_4_img)): ?>
-		<?php if(!empty($home_banner_4_link)){ ?>
-		<a href="{$home_banner_4_link}">
-		<?php } ?>
-		<img class="owl-lazy" data-src="{:get_image_by_id($home_banner_4_img)}" alt="" />
-		<?php if(!empty($home_banner_4_link)){ ?>
-		</a>
-		<?php } ?>
-	<?php endif; ?>
-	
-	<?php if(!empty($home_banner_5_img)): ?>
-		<?php if(!empty($home_banner_5_link)){ ?>
-		<a href="{$home_banner_5_link}">
-		<?php } ?>
-		<img class="owl-lazy" data-src="{:get_image_by_id($home_banner_5_img)}" alt="" />
-		<?php if(!empty($home_banner_5_link)){ ?>
-		</a>
-		<?php } ?>
-	<?php endif; ?>
+		<?php endif; ?>
+		
+		<?php if(!empty($home_banner_1_img)): ?>
+        <div class="swiper-slide">
+          <a href="<?php echo empty($home_banner_1_link)?'javascript:;':$home_banner_1_link; ?>" style="background-image:url('{:get_image_by_id($home_banner_1_img)}');height: 600px;">
+            <img src="{:get_image_by_id($home_banner_1_img)}" alt="" class="img-responsive" />
+          </a>
+		</div>
+		<?php endif; ?>
+		
+		<?php if(!empty($home_banner_2_img)): ?>
+        <div class="swiper-slide">
+          <a href="<?php echo empty($home_banner_2_link)?'javascript:;':$home_banner_2_link; ?>" style="background-image:url('{:get_image_by_id($home_banner_2_img)}');height: 600px;">
+            <img src="{:get_image_by_id($home_banner_2_img)}" alt="" class="img-responsive" />
+          </a>
+		</div>
+		<?php endif; ?>
+		
+		<?php if(!empty($home_banner_3_img)): ?>
+        <div class="swiper-slide">
+          <a href="<?php echo empty($home_banner_3_link)?'javascript:;':$home_banner_3_link; ?>" style="background-image:url('{:get_image_by_id($home_banner_3_img)}');height: 600px;">
+            <img src="{:get_image_by_id($home_banner_3_img)}" alt="" class="img-responsive" />
+          </a>
+		</div>
+		<?php endif; ?>
+		
+		<?php if(!empty($home_banner_4_img)): ?>
+        <div class="swiper-slide">
+          <a href="<?php echo empty($home_banner_4_link)?'javascript:;':$home_banner_4_link; ?>" style="background-image:url('{:get_image_by_id($home_banner_4_img)}');height: 600px;">
+            <img src="{:get_image_by_id($home_banner_4_img)}" alt="" class="img-responsive" />
+          </a>
+		</div>
+		<?php endif; ?>
+		
+		<?php if(!empty($home_banner_5_img)): ?>
+        <div class="swiper-slide">
+          <a href="<?php echo empty($home_banner_5_link)?'javascript:;':$home_banner_5_link; ?>" style="background-image:url('{:get_image_by_id($home_banner_5_img)}');height: 600px;">
+            <img src="{:get_image_by_id($home_banner_5_img)}" alt="" class="img-responsive" />
+          </a>
+		</div>
+		<?php endif; ?>
+	</div>
+    <div class="swiper-pagination category-slideshow"></div>
 </div>
 
 <div class="grid-container">
-    <div class="grid-x grid-padding-x">
+    <div class="grid-x grid-padding-x" id="about_con">
         <div class="large-12 cell"><h3 class="text-center s_title">{$Think.lang.about}</h3></div>
-		<div class="large-6 cell">
+		<?php if(!empty($home_about_image)): ?>
+		<div class="large-6 cell about-small-hide">
 			<img src="{:get_image_by_id($home_about_image)}">
 		</div>
+		<?php endif; ?>
+		
 		<div class="large-6 cell align-self-middle">
 			<p class="s_des about_des">
 				<?php if($lang_id==2){ ?>
@@ -70,7 +78,7 @@
 					{$home_about_en}
 				<?php } ?>
 			</p>
-			<div class="text-right"><a href="news.html" style="color: #555;">{:lang('read_more')}</a></div>
+			<div class="text-right"><a href="column.html" style="color: #555;">{:lang('read_more')}</a></div>
 		</div>
 		
     </div>
@@ -125,18 +133,48 @@
 
 {include file="base/script" /}
 
-<link rel="stylesheet" href="__STATIC__/vendor/owlcarousel2/assets/owl.carousel.min.css">
-<script src="__STATIC__/vendor/owlcarousel2/owl.carousel.min.js"></script>
-<script type="text/javascript">
-    $('.owl-carousel').owlCarousel({
-        items: 1,
-        lazyLoad: true,
-        loop: true,
-        margin: 10,
-        autoplay: true,
-        autoplayTimeout: 13000,
-		lazyEffect: '3000',
-    });
-</script>
+<link rel="stylesheet" href="__STATIC__/vendor/swiper/css/swiper.min.css">
+<script src="__STATIC__/vendor/swiper/js/swiper.min.js"></script>
+<style>
+.swiper-pagination-bullet-active{
+	background: #fff;
+}
+</style>
+<script type="text/javascript"><!--
+$(function() {
+  var banner_slideshow = new Swiper('#banner-slideshow', {
+    effect : 'fade',
+    slidesPerView: 1,
+    pagination: {
+      el: '.category-slideshow',
+      clickable: true
+    },
+    autoplay: {
+      delay: 3000,
+      disableOnInteraction: false
+    }
+  });
+
+  for ( i = 0; i < banner_slideshow.pagination.bullets.length; i++ ) {
+    banner_slideshow.pagination.bullets[i].index = i;
+    banner_slideshow.pagination.bullets[i].onmouseover = function() {
+      banner_slideshow.slideTo(this.index);
+    };
+  }
+
+  $('#banner-slideshow').hover(function() {
+    banner_slideshow.autoplay.stop();
+  }, function() {
+    banner_slideshow.autoplay.start();
+  });
+  
+  $('.go_about').click(function(){
+	if($('.head_nav_tog_btn').is(':visible')){
+		$('.head_nav').slideToggle();
+	}
+	$('html, body').animate({ scrollTop: $('#about_con').position().top-$('header').height() }, 'slow');
+  });
+})
+--></script>
 
 {include file="base/footer" title="$meta_title" /}
