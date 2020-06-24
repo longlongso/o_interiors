@@ -32,7 +32,7 @@ return [
 	'password_error'=>'密碼錯誤',
 	'captcha_required'=>'請填寫驗證碼',
 	'captcha_error'=>'驗證碼錯誤',
-	'type_error'=>'$參數錯誤或未作修改',
+	'type_error'=>'未做任何修改',
 	
 	'logout'=>'登出',
 	'login_success'=>'登入成功',

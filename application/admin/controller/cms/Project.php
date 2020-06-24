@@ -212,7 +212,7 @@ class Project extends Base
 						[
 							'type'=>'text',
 							'name'=>'video',
-							'title'=> 'Video ( YouTube Link )',
+							'title'=> 'Video ( Embed URL/Link of Youtube Video )',
 						],
 						[
 							'type'=>'image',

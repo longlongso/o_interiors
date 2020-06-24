@@ -32,7 +32,7 @@ return [
 	'password_error'=>'password error',
 	'captcha_required'=>'captcha required',
 	'captcha_error'=>'captcha error',
-	'type_error'=>'$ param error or Non modification',
+	'type_error'=>'Nothing have been updated',
 	
 	'logout'=>'Logout',
 	'login_success'=>'Login success',

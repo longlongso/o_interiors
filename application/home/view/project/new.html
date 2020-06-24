@@ -89,7 +89,7 @@
 					
 					<?php if(!empty($project_detail['video'])) { ?>
 					<div class="grid-x grid-padding-x">
-						<div class="large-3 medium-3 cell" style="padding: 0 6px 15px 6px;">
+						<div class="large-6 medium-12 small-12 cell" style="padding: 0 6px 15px 6px;">
 							<div class="box-cell" style="height:100%;">
 									<div class="responsive-embed">
 									  <iframe width="420" height="420" src="{$project_detail['video']}" frameborder="0" allowfullscreen></iframe>
@@ -103,7 +103,7 @@
                     <div class="grid-x grid-padding-x">
                         <?php if(!empty($project_detail['image'])) { ?>
                         <?php foreach($project_detail['image'] as $img) { ?>
-                        <div class="large-3 medium-3 cell" style="padding: 0 6px">
+                        <div class="large-3 medium-4 small-12 cell" style="padding: 0 6px">
                             <div class="box-cell">
                                 <a data-fancybox="gallery" href="{:get_image_by_id($img)}" class="a-thum-port">
                                     <img style="margin-bottom: 0" class="thumbnail thum-port" src="{:get_thumb_by_id($img,350,350)}" alt="" />
