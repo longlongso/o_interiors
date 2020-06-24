@@ -210,6 +210,11 @@ class Project extends Base
 							'title'=>lang('content') . '(EN)',
 						],
 						[
+							'type'=>'text',
+							'name'=>'video',
+							'title'=> 'Video ( YouTube Link )',
+						],
+						[
 							'type'=>'image',
 							'name'=>'image',
 							'title'=>lang('image'),
