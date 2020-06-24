@@ -427,6 +427,12 @@ screen and (max-width: 640px) {
 .bg_con .c_list_con{
 	min-width: 500px;
 }
+@media(max-width:501px){
+	.bg_con .c_list_con{
+		min-width: auto;
+		width: 100%;
+	}
+}
 .c_list_con table tr td.sp{
 	background: #7C878D;
 	color: #fff;
