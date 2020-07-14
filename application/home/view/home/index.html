@@ -9,16 +9,6 @@
     <div class="swiper-wrapper">
 		
 		<?php if(!empty($home_banner_1_img)): ?>
-		<?php if(!empty($home_banner_1_link)){ ?>
-		<a class="item" href="{$home_banner_1_link}">
-		<?php } ?>
-		<img class="" src="{:get_image_by_id($home_banner_1_img)}" alt="" />
-		<?php if(!empty($home_banner_1_link)){ ?>
-		</a>
-		<?php } ?>
-		<?php endif; ?>
-		
-		<?php if(!empty($home_banner_1_img)): ?>
         <div class="swiper-slide">
           <a href="<?php echo empty($home_banner_1_link)?'javascript:;':$home_banner_1_link; ?>" style="background-image:url('{:get_image_by_id($home_banner_1_img)}');height: 600px;">
             <img src="{:get_image_by_id($home_banner_1_img)}" alt="" class="img-responsive" />

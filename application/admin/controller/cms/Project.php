@@ -216,6 +216,13 @@ class Project extends Base
 						],
 						[
 							'type'=>'image',
+							'name'=>'cover',
+							'title'=>lang('cover'),
+							'length'=>1,
+							'required'=>1
+						],
+						[
+							'type'=>'image',
 							'name'=>'image',
 							'title'=>lang('image'),
 							'length'=>100,

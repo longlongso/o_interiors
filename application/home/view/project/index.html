@@ -6,6 +6,9 @@
             <a class="link" href="index.html">{$Think.lang.cate_home}</a>
         </li>
         <li>{$Think.lang.cate_projects}</li>
+		<li>
+            <h4 class="ct" style="<?php echo $body_font; ?>"><?php if (isset($_GET['type'])) { echo lang('new_product'); } else { echo $cate_name; } ?></h4>
+        </li>
     </ul>
 
     <div class="grid-x grid-padding-x">
@@ -37,7 +40,7 @@
 							</li>
                             <?php if(!empty($cate_list)): ?>
                             <?php foreach($cate_list as $cate): ?>
-                            <li>
+                            <li <?php if($active_category_id==$cate['id']){ ?>class="is-active"<?php } ?>>
                                 <a href="project.html?cate_id=<?php echo $cate['id']; ?>" style="color: #646550">
 									<?php if ($lang_id == 2) { ?>
 									<?php echo strtoupper($cate['name_hk']); ?>
@@ -46,13 +49,12 @@
 									<?php } ?>
                                 </a>
 								
-                                <ul class="menu vertical nested">
+                                <ul class="menu vertical nested <?php if($active_category_id==$cate['id']){ ?>is-active<?php } ?>">
                                     <?php if(!empty($project_list)){ ?>
                                     <?php foreach($project_list as $project){ ?>
                                     <?php if($project['category_id']==$cate['id']){ ?>
-                                    <li <?php if($project[ 'id']==$active_id){ ?>class="is-active"
-                                        <?php } ?>>
-                                        <a href="project.html?id=<?php echo $project['id']; ?>" style="color: #646550; background-color: #fff;">
+                                    <li <?php if($project[ 'id']==$active_id){ ?>class="is-active"<?php } ?>>
+                                        <a href="project.html?cate_id=<?php echo $project['category_id']; ?>&id=<?php echo $project['id']; ?>" style="color: #646550;">
 											<?php if ($lang_id == 2) { ?>
 											<?php echo strtoupper($project['title_hk']); ?>
 											<?php } else { ?>
@@ -130,7 +132,9 @@
 			}
         },function(){
 			if ($(window).width() > 622) {
-				$(this).children('ul').hide();
+				if(!$(this).children('ul').hasClass('is-active')){
+					$(this).children('ul').hide();
+				}
 			}
         });
 		

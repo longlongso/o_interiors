@@ -25,7 +25,7 @@ class Project extends Model
 	
 	public function getListAll($map = ['status'=>1], $order = ['sort'=>'desc', 'id'=>'desc'])
 	{
-		return $this::field('id, title, title_hk, category_id, image, sort')->where($map)->order($order)->select();
+		return $this::field('id, title, title_hk, category_id, cover, image, sort')->where($map)->order($order)->select();
 	}
 
 	public function setDetail($data){

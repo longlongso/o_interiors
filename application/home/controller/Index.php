@@ -34,7 +34,7 @@ class Index extends Base
 			$data['lang_id'] = 2;
 		}
 		
-		$data['project_list'] = [];
+		/* $data['project_list'] = [];
 		if(!empty($data['home_project_list'])){
 			$ProjectModel = new ProjectModel;
 			foreach($data['home_project_list'] as $project_id){
@@ -45,7 +45,7 @@ class Index extends Base
 					$data['project_list'][$project_id]['image'] = $image_arr;
 				}
 			}
-		}
+		} */
 		
 		$this->assign($data);
 

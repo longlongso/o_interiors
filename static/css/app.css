@@ -198,6 +198,16 @@ footer {
 .left_nav li button {
 	display: none;
 }
+.left_nav .box-cell ul li.is-active>a{
+	background: #eae7e7;
+}
+.left_nav .box-cell ul li ul li>a{
+	background: #eae7e7;
+}
+.left_nav .box-cell ul li.is-active ul.is-active li>a:hover,
+.left_nav .box-cell ul li.is-active ul.is-active li.is-active>a{
+	background: #fff;
+}
 
 .s_title{
 	color:#696868;font-family: Montserrat-Regular;margin-top:30px;
@@ -514,4 +524,15 @@ screen and (max-width: 768px) {
 .n_box{
 	border: 1px solid #ccc;
 	margin-bottom: 50px;
+}
+.breadcrumbs .ct{
+	margin-bottom: 0;
+	margin-top: -2px;
+}
+@media print,
+screen and (min-width: 640px) {
+	.breadcrumbs .ct{
+		margin-bottom: 0; 
+		margin-top: -10px;
+	}
 }

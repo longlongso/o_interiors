@@ -22,10 +22,10 @@ $self_url = $url_current . '?' . $url_param;
     <meta name="keywords" content="[keywords]">
     <link href="<?php echo get_image_by_id($site_meta_icon); ?>" rel="shortcut icon" />
     <link rel="stylesheet" href="__STATIC__/css/foundation.min.css">
-    <link rel="stylesheet" href="__STATIC__/css/app.css?v=1.0.2">
+    <link rel="stylesheet" href="__STATIC__/css/app.css?v=1.0.3">
     <script src="__STATIC__/vendor/jquery.js"></script>
     <script src="__STATIC__/vendor/foundation.min.js"></script>
-    <script src="__STATIC__/js/app.js?v=1.0.2"></script>
+    <script src="__STATIC__/js/app.js?v=1.0.3"></script>
 	<?php if ($lang_id == 2) { ?>
 	<style>
 		header .nav a {
@@ -62,8 +62,9 @@ $self_url = $url_current . '?' . $url_param;
 				  <li><a <?php if($controller_active=='projectflow' ){ ?>class="is-active"<?php } ?> href="projectflow.html">{$Think.lang.project_flow}</a></li>
 				  
 				  <li><a <?php if($controller_active=='project' ){ ?>class="is-active"<?php } ?> href="project.html?type=new&first=1">{$Think.lang.cate_projects}</a></li>
+				  <!--
 				  <li><a <?php if($controller_active=='award' ){ ?>class="is-active"<?php } ?> href="award.html">{$Think.lang.cate_awards}</a></li>
-				  
+				  -->
 				  <li><a <?php if($controller_active=='column' ){ ?>class="is-active"<?php } ?> href="column.html">{$Think.lang.cate_news}</a></li>
 				  
 				  <li><a <?php if($controller_active=='contact' ){ ?>class="is-active"<?php } ?> href="contact.html">{$Think.lang.cate_contact}</a></li>
@@ -75,8 +76,9 @@ $self_url = $url_current . '?' . $url_param;
 					<a <?php if($controller_active=='projectflow' ){ ?>class="active"<?php } ?> href="projectflow.html">{$Think.lang.project_flow}</a>
 					
 					<a <?php if($controller_active=='project' ){ ?>class="active"<?php } ?> href="project.html?type=new&first=1">{$Think.lang.cate_projects}</a>
+					<!--
 					<a <?php if($controller_active=='award' ){ ?>class="active"<?php } ?> href="award.html">{$Think.lang.cate_awards}</a>
-					
+					-->
 					<a <?php if($controller_active=='column' ){ ?>class="active"<?php } ?> href="column.html">{$Think.lang.cate_news}</a>
 					
 					<a <?php if($controller_active=='contact' ){ ?>class="active"<?php } ?> href="contact.html">{$Think.lang.cate_contact}</a>

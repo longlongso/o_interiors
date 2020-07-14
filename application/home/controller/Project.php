@@ -17,7 +17,7 @@ class Project extends Base
 		$id = input('id');
 		//$cate_id = empty($cate_list[0]['id'])?0:$cate_list[0]['id'];
 
-		$cate_id = 0;
+		$cate_id = (int)$is_cate;
 		$cate_name = '';
 		$cate_project_list = '';
 		$ProjectModel = new ProjectModel;
@@ -31,6 +31,14 @@ class Project extends Base
 			// $id = $id?$id:(empty($project_list[0]['id'])?0:$project_list[0]['id']);
 		}
 		
+		if($is_cate){
+			$cate_info = $Projectcategory->getDetail($is_cate);
+			if ($lang_id == 2) {
+				$cate_name = $cate_info['name_hk'];
+			} else {
+				$cate_name = $cate_info['name'];
+			}
+		}
 		
 		if($id){
 			$project_detail = $ProjectModel->getDetail($id);
@@ -41,12 +49,6 @@ class Project extends Base
 		} else {
 			if ($is_cate) {
 				$cate_project_list = $ProjectModel->getListAll(['status'=>1, 'category_id'=>$is_cate], ['sort'=>'desc', 'id'=>'desc']);
-				$cate_info = $Projectcategory->getDetail($is_cate);
-				if ($lang_id == 2) {
-					$cate_name = $cate_info['name_hk'];
-				} else {
-					$cate_name = $cate_info['name'];
-				}
 			} elseif ($is_new) {
 				if (!$id) {
 					$cate_project_list = $ProjectModel->getListAll(['status'=>1, 'is_new'=>1], ['sort'=>'desc', 'id'=>'desc']);
@@ -58,16 +60,15 @@ class Project extends Base
 		
 		$this->assign(['cate_list'=>$cate_list, 'project_list'=>$project_list, 'cate_project_list'=>$cate_project_list, 'project_detail'=>$project_detail, 'active_id'=>$id, 'active_category_id'=>$cate_id, 'cate_name'=>$cate_name, 'project_list_new'=>$project_list_new, 'lang_id'=>$lang_id]);
 		
-		if ($is_cate) {
-			return view('project/cate_product');
-		}
-		if ($is_new) {
-			if ($id) {
+		if($id){
+			if ($is_new) {
 				return view('project/new');
+			}else{
+				return view('project/index');
 			}
+		}else{
 			return view('project/cate_product');
 		}
-		return view('project/index');
     }
 	
 }
