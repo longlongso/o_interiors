@@ -59,6 +59,7 @@ class Project extends Base
 				if (!$id) {
 					$cate_project_list = $ProjectModel->getListAll(['status'=>1], ['sort'=>'desc', 'id'=>'desc']);
 					$all_cate = 1;
+					$cate_name = lang('all_projects');
 				}
 			}
 			

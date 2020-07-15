@@ -97,6 +97,6 @@ return [
 	'read_more'=>'MORE NEWS',
 	'read_more_about'=>'About Us',
 	
-	'all_projects'=>'All Projects',
+	'all_projects'=>'All PROJECTS',
 	'back'=>'BACK',
 ];
