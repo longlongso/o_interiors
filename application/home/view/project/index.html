@@ -1,5 +1,14 @@
 {include file="base/header" title="$meta_title" description="$meta_description" keywords="$meta_keywords" /}
-
+<style>
+@media print,
+screen and (max-width: 768px) {
+	.back_btn{
+		text-align: right;
+		margin-top: 10px;
+		margin-bottom: 10px;
+	}
+}
+</style>
 <div class="grid-container pd-top" style="max-width: 2000px">
     <ul class="breadcrumbs">
         <li>
@@ -18,9 +27,10 @@
                 <div class="large-12 cell">
                     <span class="left_nav_tog_btn"><span style="float: left">{$Think.lang.product_category}</span><i class="cate-icon-down"></i><div style="clear: both;"></div></span>
                 </div>
-                <div class="large-3 medium-3 cell left_nav">
+                <div class="large-3 medium-12 cell left_nav">
                     <div class="box-cell">
                         <ul class="vertical menu accordion-menu is-active" data-accordion-menu data-submenu-toggle="true">
+							<?php /*
 							<li><a href="project.html?type=new" style="color: #646550">{$Think.lang.new_product}</a>
 								<ul class="menu vertical nested">
 								<?php if(!empty($project_list_new)){ ?>
@@ -38,6 +48,9 @@
 								<?php } ?>
 								</ul>
 							</li>
+							*/ 
+							?>
+							<li <?php if($all_cate==1){ ?>class="is-active"<?php } ?>><a href="project.html" style="color: #646550">{$Think.lang.all_projects}</a></li>
                             <?php if(!empty($cate_list)): ?>
                             <?php foreach($cate_list as $cate): ?>
                             <li <?php if($active_category_id==$cate['id']){ ?>class="is-active"<?php } ?>>
@@ -74,15 +87,16 @@
                     </div>
                 </div>
 
-                <div class="large-9 medium-9 cell">
-                    <p>
-                        <h4 style="<?php echo $body_font; ?>">
-							<?php if ($lang_id == 2) { ?>
-							<?php echo isset($project_detail['title_hk'])?$project_detail['title_hk']:''; ?>
-							<?php } else { ?>
-                            <?php echo isset($project_detail['title'])?$project_detail['title']:''; ?>
-							<?php } ?>
-                        </h4>
+                <div class="large-9 medium-12 cell">
+					<div class="back_btn"><a href="{$back_link}">< {$Think.lang.back}</a></div>
+					<h4 style="<?php echo $body_font; ?>">
+						<?php if ($lang_id == 2) { ?>
+						<?php echo isset($project_detail['title_hk'])?$project_detail['title_hk']:''; ?>
+						<?php } else { ?>
+						<?php echo isset($project_detail['title'])?$project_detail['title']:''; ?>
+						<?php } ?>
+					</h4>
+					<p style="<?php echo $body_font; ?>">
 						<?php if ($lang_id == 2) { ?>
 						<?php echo isset($project_detail['content_hk'])?$project_detail['content_hk']:''; ?>
 						<?php } else { ?>

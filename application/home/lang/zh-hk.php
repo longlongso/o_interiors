@@ -93,4 +93,6 @@ return [
 	'read_more'=>'更多',
 	'read_more_about'=>'關於我們',
 	
+	'all_projects'=>'所以項目',
+	'back'=>'返回',
 ];

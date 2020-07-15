@@ -40,6 +40,8 @@ class Project extends Base
 			}
 		}
 		
+		$all_cate = 0;
+		
 		if($id){
 			$project_detail = $ProjectModel->getDetail($id);
 			$image_arr = $project_detail['image'];
@@ -53,17 +55,24 @@ class Project extends Base
 				if (!$id) {
 					$cate_project_list = $ProjectModel->getListAll(['status'=>1, 'is_new'=>1], ['sort'=>'desc', 'id'=>'desc']);
 				}
+			}else{
+				if (!$id) {
+					$cate_project_list = $ProjectModel->getListAll(['status'=>1], ['sort'=>'desc', 'id'=>'desc']);
+					$all_cate = 1;
+				}
 			}
 			
 			$project_detail = [];
 		}
 		
-		$this->assign(['cate_list'=>$cate_list, 'project_list'=>$project_list, 'cate_project_list'=>$cate_project_list, 'project_detail'=>$project_detail, 'active_id'=>$id, 'active_category_id'=>$cate_id, 'cate_name'=>$cate_name, 'project_list_new'=>$project_list_new, 'lang_id'=>$lang_id]);
+		$this->assign(['cate_list'=>$cate_list, 'project_list'=>$project_list, 'cate_project_list'=>$cate_project_list, 'project_detail'=>$project_detail, 'active_id'=>$id, 'active_category_id'=>$cate_id, 'cate_name'=>$cate_name, 'project_list_new'=>$project_list_new, 'lang_id'=>$lang_id, 'all_cate'=>$all_cate]);
 		
 		if($id){
 			if ($is_new) {
 				return view('project/new');
 			}else{
+				$this->assign('back_link', 'project.html' . ($is_cate?'?cate_id=' . $is_cate : ''));
+				
 				return view('project/index');
 			}
 		}else{

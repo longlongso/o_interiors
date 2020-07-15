@@ -21,11 +21,12 @@
                 <div class="large-3 medium-3 cell left_nav">
                     <div class="box-cell">
                         <ul class="vertical menu accordion-menu is-active" data-accordion-menu data-submenu-toggle="true">
-							<li class="is-active"><a href="project.html?type=new" style="color: #646550">{$Think.lang.new_product}</a>
-								<ul class="menu vertical nested is-active">
+							<?php /*
+							<li><a href="project.html?type=new" style="color: #646550">{$Think.lang.new_product}</a>
+								<ul class="menu vertical nested">
 								<?php if(!empty($project_list_new)){ ?>
 								<?php foreach($project_list_new as $product_new): ?>
-									<li <?php if($product_new[ 'id']==$active_id){ ?>class="is-active"<?php } ?>>
+									<li>
 										<a href="project.html?type=new&id=<?php echo $product_new['id']; ?>" style="color: #646550">
 											<?php if ($lang_id == 2) { ?>
 											<?php echo strtoupper($product_new['title_hk']); ?>
@@ -38,6 +39,9 @@
 								<?php } ?>
 								</ul>
 							</li>
+							*/ 
+							?>
+							<li <?php if($all_cate==1){ ?>class="is-active"<?php } ?>><a href="project.html" style="color: #646550">{$Think.lang.all_projects}</a></li>
                             <?php if(!empty($cate_list)): ?>
                             <?php foreach($cate_list as $cate): ?>
                             <li>
