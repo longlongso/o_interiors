@@ -130,46 +130,10 @@
 <script>
 	$(function() { 
 		$(".has-submenu-toggle>a").click(function(){
-			if ($(window).width() > 622) {
-			} else {
-				var ul_status = $(this).parent().children('ul').is(':hidden');
-				if (ul_status) {
-					$(this).parent().children('ul').show();
-				} else {
-					$(this).parent().children('ul').hide();
-				}
-				
-				return false;
-			}
+            $(this).parent().children('ul').toggleClass('is-active').slideToggle();
+            $(this).parent().toggleClass('is-active');
+            return false
 		});
-		
-		// 鼠标经过菜单
-		$(".has-submenu-toggle").hover(function(){ 
-			if ($(window).width() > 622) {
-				$(this).children('ul').show();
-			}
-        },function(){
-			if ($(window).width() > 622) {
-				if(!$(this).children('ul').hasClass('is-active')){
-					$(this).children('ul').hide();
-				}
-			}
-        });
-		
-		/* if ($(window).width() > 622) {
-			var thum_width = $('.a-thum-port').css('width');
-			$('.a-thum-port img').each(function(){
-				var img_height = $(this).css('height');
-				if (img_height < thum_width) {
-					var disparity = parseInt(thum_width) / parseInt(img_height);
-					var new_width = parseInt($(this).css('width')) * disparity;
-					$(this).css('width', new_width + 'px');
-					$(this).css('max-width', new_width + 'px');
-					$(this).css('height', thum_width);
-				}
-			});
-			$('.a-thum-port').css('height', thum_width);
-		} */
 	});  
 	
 </script>
