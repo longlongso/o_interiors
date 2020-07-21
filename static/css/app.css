@@ -311,7 +311,7 @@ screen and (max-width: 768px) {
 	width: 100%;
 	background-color: rgba(0,0,0,0.6);
 }
-.a-thum-port img {
+/* .a-thum-port img {
 	-webkit-filter: grayscale(60%);
 	-moz-filter: grayscale(60%);
 	-ms-filter: grayscale(60%);
@@ -326,7 +326,7 @@ screen and (max-width: 768px) {
 	-o-filter: grayscale(0%);
 	filter: grayscale(0%);
 	filter: none;
-}
+} */
 .thum-port {
 	border: none;
 }
