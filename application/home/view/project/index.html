@@ -112,6 +112,9 @@ screen and (max-width: 768px) {
                         <?php echo isset($project_detail['content'])?$project_detail['content']:''; ?>
 						<?php } ?>
                     </p>
+                    
+                    <div style="border-bottom:1px solid #ccc; margin: 5px 0px 10px 0px;"></div>
+                    
                     <?php if(!empty($project_detail['video'])) { ?>
 					<div class="grid-x grid-padding-x">
 						<div class="large-6 medium-12 small-12 cell" style="padding: 0 6px 15px 6px;">
@@ -149,7 +152,7 @@ screen and (max-width: 768px) {
 		$(".has-submenu-toggle>a").click(function(){
             $(this).parent().children('ul').toggleClass('is-active').slideToggle();
             $(this).parent().toggleClass('is-active');
-            return false
+            // return false
 		});
 	});  
 	

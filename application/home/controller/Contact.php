@@ -22,6 +22,7 @@ class Contact extends Base
 			"contact_company",
 			"contact_address",
 			"contact_address_link",
+            "contact_address_link_zh",
 			"contact_tel",
 			"contact_fax",
 			"contact_facebook_name",
@@ -36,7 +37,9 @@ class Contact extends Base
 		foreach($settings as $setting){
 			$data[$setting['key']] = $setting['serialized']==1?json_decode($setting['value'], true):$setting['value'];
 		}
-		// print_r($data);exit;
+        if (get_lang() == 'zh-hk' && !empty($data['contact_address_link_zh'])) {
+			$data['contact_address_link'] = $data['contact_address_link_zh'];
+		}
 		$this->assign($data);
 		return view('contact/index');
     }

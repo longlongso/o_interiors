@@ -1,0 +1,5 @@
+location /[URI]/ {
+    if (!-e $request_filename){
+        rewrite  ^/[URI]/(.*)$  /[URI]/index.php?s=/$1  last;
+    }
+}
