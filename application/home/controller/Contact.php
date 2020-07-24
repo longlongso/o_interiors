@@ -21,6 +21,7 @@ class Contact extends Base
 		$keys = [
 			"contact_company",
 			"contact_address",
+            "contact_address_zh",
 			"contact_address_link",
             "contact_address_link_zh",
 			"contact_tel",
@@ -37,8 +38,13 @@ class Contact extends Base
 		foreach($settings as $setting){
 			$data[$setting['key']] = $setting['serialized']==1?json_decode($setting['value'], true):$setting['value'];
 		}
-        if (get_lang() == 'zh-hk' && !empty($data['contact_address_link_zh'])) {
-			$data['contact_address_link'] = $data['contact_address_link_zh'];
+        if (get_lang() == 'zh-hk') {
+            if(!empty($data['contact_address_link_zh'])){
+                $data['contact_address_link'] = $data['contact_address_link_zh'];
+            }
+            if(!empty($data['contact_address_zh'])){
+                $data['contact_address'] = $data['contact_address_zh'];
+            }
 		}
 		$this->assign($data);
 		return view('contact/index');
