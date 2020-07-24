@@ -303,12 +303,15 @@ screen and (max-width: 768px) {
 	text-align: center;
 }
 .cate-project-title {
-	position:  absolute;
-	padding: 4px 0;
-	left: 0;
-	bottom: 0;
-	width: 100%;
-	background-color: rgba(0,0,0,0.6);
+    position: relative;
+    padding: 4px 0;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    display: block;
+    background: #fff;
+    color: #000;
+    font-weight: bold;
 }
 .a-thum-port-d {
 	display: block;

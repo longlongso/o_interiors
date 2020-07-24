@@ -38,7 +38,12 @@ class Contact extends Base
 						[
 							'type'=>'textarea',
 							'name'=>'contact_address',
-							'title'=>'Company Name'
+							'title'=>'Adress (Eng)'
+						],
+                        [
+							'type'=>'textarea',
+							'name'=>'contact_address_zh',
+							'title'=>'Adress (中文)'
 						],
 						[
 							'type'=>'text',
