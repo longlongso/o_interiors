@@ -93,7 +93,7 @@ return [
 	'password_reset_help'=>'如有疑問',
 	
 	//dashboard
-	'home'=>'首頁',
+	'home'=>'Home',
 	'dashboard'=>'儀表',
 	'os_info'=>'伺服器信息',
 	'server_os'=>'伺服器',
@@ -134,8 +134,8 @@ return [
 	'background_image'=>'背景圖',
 	
 	// about
-	'about'=>'關於',
-	'contact'=>'聯絡',
+	'about'=>'About',
+	'contact'=>'Contact',
 	
 	//project
 	'project'=>'Project',

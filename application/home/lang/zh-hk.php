@@ -87,12 +87,14 @@ return [
 	'text_business_a'=>'辦工時間',
 	'text_business_b'=>'上午 9:00 – 下午 6:00',
 	'text_business_c'=>'( 敬請預約 )',
-	'address'=>'Address',
-	
+	'address'=>'地址',
+	'Tel'=> '電話',
+	'Fax'=> '傳真',
+    
 	// home
 	'read_more'=>'更多',
 	'read_more_about'=>'關於我們',
 	
-	'all_projects'=>'所以項目',
+	'all_projects'=>'所有項目',
 	'back'=>'返回',
 ];

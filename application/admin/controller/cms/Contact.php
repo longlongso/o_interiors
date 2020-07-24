@@ -45,6 +45,11 @@ class Contact extends Base
 							'name'=>'contact_address_link',
 							'title'=>'GMap Link'
 						],
+                        [
+							'type'=>'text',
+							'name'=>'contact_address_link_zh',
+							'title'=>'GMap Link (中文)'
+						],
 						[
 							'type'=>'text',
 							'name'=>'contact_tel',
