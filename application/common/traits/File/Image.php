@@ -244,7 +244,7 @@ trait Image
 	protected function getImageList($limit=16, $map = []){
 		$imageModel = new ImageModel;
 		$map = empty($map)?['status'=>1]:array_merge($map, ['status'=>1]);
-		$list = $imageModel->field('id, path, name, `alias`')->where($map)->order('update_time desc, id desc')->paginate($limit);
+		$list = $imageModel->field('id, path, name, `alias`')->where($map)->order('alias, update_time desc, id desc')->paginate($limit);
 		return ['image_list'=>$list, 'image_page'=>$list->render()];
 	}
 	
