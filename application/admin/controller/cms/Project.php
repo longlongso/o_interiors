@@ -284,6 +284,9 @@ class Project extends Base
 			$id = request()->get('id');
 			$ProjectModel = new ProjectModel;
 			$data = $ProjectModel->getDetail($id);
+            $image_arr = $data['image'];
+			krsort($image_arr);
+			$data['image'] = $image_arr;
 			$this->data($data);
 		}
 		
