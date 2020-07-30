@@ -44,9 +44,9 @@ class Project extends Base
 		
 		if($id){
 			$project_detail = $ProjectModel->getDetail($id);
-			$image_arr = $project_detail['image'];
+			/* $image_arr = $project_detail['image'];
 			krsort($image_arr);
-			$project_detail['image'] = $image_arr;
+			$project_detail['image'] = $image_arr; */
 			$cate_id = empty($project_detail['category_id'])?0:$project_detail['category_id'];
 		} else {
 			if ($is_cate) {
