@@ -1,5 +1,28 @@
 {include file="base/header" title="$meta_title" description="$meta_description" keywords="$meta_keywords" /}
 <div class="bg_con">
+    
+    <style>
+    .bg_img_m{
+        display: none;
+        width: 100%;
+    }
+    @media(max-width:768px){
+        .bg_img_m{
+            display: inline-block;
+            width: 100%;
+        }
+        .bg_img{
+            display: none;
+        }
+    }
+    </style>
+    
+    <?php if(!empty($flow['project_flow_img_m'])){ ?>
+	<img class="bg_img_m" src="{:get_image_by_id($flow['project_flow_img_m'])}">
+	<?php }else if(!empty($flow['project_flow_img'])){ ?>
+	<img class="bg_img_m" src="{:get_image_by_id($flow['project_flow_img'])}">
+	<?php } ?>
+	
 	<?php if(!empty($flow['project_flow_img'])){ ?>
 	<img class="bg_img" src="{:get_image_by_id($flow['project_flow_img'])}">
 	<?php }else{ ?>
@@ -12,30 +35,17 @@
 		<h3 class="c_title">{$Think.lang.project_flow}</h3>
 		<div class="c_list_con">
 			<table>
+				<?php $r = 1; ?>
+				<?php for($i=1; $i<7; $i++){ ?>
+				<?php if(!empty($flow['project_flow_title_'.$i.'_'.$lang_code])){ ?>
 				<tr>
-					<td class="sp">STEP<br>01</td>
-					<td class="sp_con sp1">{$flow['project_flow_title_1_'.$lang_code]}</td>
+					<td class="sp">STEP<br>0{$r}</td>
+					<td class="sp_con sp{$i}">{$flow['project_flow_title_'.$i.'_'.$lang_code]}</td>
 				</tr>
-				<tr>
-					<td class="sp">STEP<br>02</td>
-					<td class="sp_con sp2">{$flow['project_flow_title_2_'.$lang_code]}</td>
-				</tr>
-				<tr>
-					<td class="sp">STEP<br>03</td>
-					<td class="sp_con sp3">{$flow['project_flow_title_3_'.$lang_code]}</td>
-				</tr>
-				<tr>
-					<td class="sp">STEP<br>04</td>
-					<td class="sp_con sp4">{$flow['project_flow_title_4_'.$lang_code]}</td>
-				</tr>
-				<tr>
-					<td class="sp">STEP<br>05</td>
-					<td class="sp_con sp5">{$flow['project_flow_title_5_'.$lang_code]}</td>
-				</tr>
-				<tr>
-					<td class="sp">STEP<br>06</td>
-					<td class="sp_con sp6">{$flow['project_flow_title_6_'.$lang_code]}</td>
-				</tr>
+				<?php $r++; ?>
+				<?php } ?>
+				<?php } ?>
+				
 			</table>
 		</div>
 	</div>

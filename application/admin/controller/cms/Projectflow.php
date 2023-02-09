@@ -128,6 +128,16 @@ class Projectflow extends Base
 							'title'=>'',
 							'length'=>1
 						],
+						[
+							'type'=>'html',
+							'html'=>'<b>' . lang('background_image') . '(mobile)</b>'
+						],
+						[
+							'type'=>'image',
+							'name'=>'project_flow_img_m',
+							'title'=>'',
+							'length'=>1
+						],
 					]
 				],
 			]

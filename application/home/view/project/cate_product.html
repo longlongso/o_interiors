@@ -88,11 +88,13 @@
                             <div class="box-cell">
                                 <a href="project.html?cate_id=<?php echo $cpl['category_id']; ?>&<?php if (isset($_GET['type'])) { echo 'type=new&'; } ?>id=<?php echo $cpl['id']; ?>" style="color: #B0ADA6" class="a-thum-port">
 									<div style="position: relative;">
+										<div style="position: relative;">
 										<?php if(!empty($cpl['cover'])){ ?>
 											<img style="margin-bottom: 0" class="thumbnail thum-port cover-x" src="{:get_thumb_by_id($cpl['cover'], 350, 350)}" alt="" />
 										<?php }else{ ?>
 											<img style="margin-bottom: 0" class="thumbnail thum-port" src="{:get_thumb_by_id($img_arr[0], 350, 350)}" alt="" />
 										<?php } ?>
+										</div>
 										<span class="cate-project-title"><?php if ($lang_id == 2) { echo $cpl['title_hk']; } else { echo $cpl['title']; } ?></span>
 									</div>
                                 </a>
@@ -128,6 +130,21 @@ $(function(){
 	re_box_size();
 	$(window).resize(function(){
 		re_box_size();
+	});
+	$('.a-thum-port').mouseover(function(){
+	    var img = $(this).find('.s_img');
+	    if(!img.length){
+	        var img = $(this).find('img').clone();
+    	    img.addClass('s_img').css({'position':'absolute', 'left': '50%', 'top': '50%', 'transform': 'translate(-50%, -50%)'});
+    	    $(this).find('img').parent().append(img);
+	    }
+	    img.css({'position':'absolute', 'left': '50%', 'top': '50%', 'transform': 'translate(-50%, -50%) scale(1.5)'});
+	});
+	$('.a-thum-port').mouseout(function(){
+	    var img = $(this).find('.s_img');
+	    if(img.length){
+    	    img.css({'transform': 'translate(-50%, -50%) scale(1)'});
+	    }
 	});
 });
 </script>

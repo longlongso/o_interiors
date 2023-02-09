@@ -18,7 +18,8 @@ class Projectflow extends Base
 			"project_flow_title_5_zh",
 			"project_flow_title_6_en",
 			"project_flow_title_6_zh",
-			"project_flow_img"
+			"project_flow_img",
+			'project_flow_img_m',
 		];
 
 		$settings = db('setting')->where('key', 'in', $keys)->select();

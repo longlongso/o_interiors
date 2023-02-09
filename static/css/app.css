@@ -319,20 +319,10 @@ screen and (max-width: 768px) {
 	text-align: center;
 }
 .a-thum-port img {
-	-webkit-filter: grayscale(100%);
-	-moz-filter: grayscale(100%);
-	-ms-filter: grayscale(100%);
-	-o-filter: grayscale(100%);
-	filter: grayscale(100%);
-	filter: gray;
+	
 }
 .a-thum-port img:hover {
-	-webkit-filter: grayscale(0%);
-	-moz-filter: grayscale(0%);
-	-ms-filter: grayscale(0%);
-	-o-filter: grayscale(0%);
-	filter: grayscale(0%);
-	filter: none;
+	
 }
 .thum-port {
 	border: none;

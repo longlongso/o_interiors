@@ -1,8 +1,11 @@
-php_value upload_max_filesize "128M"
+# php_value upload_max_filesize "128M"
 
 <IfModule mod_rewrite.c>
-  Options +FollowSymlinks -Multiviews
+  # Options +FollowSymlinks -Multiviews
   RewriteEngine On
+  # RewriteCond %{SERVER_PORT} !^443$
+  # RewriteRule (.*) https://%{SERVER_NAME}/$1 [R=301,L]
+  
   RewriteCond %{REQUEST_FILENAME} !-d
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteRule ^(.*)$ index.php/$1 [QSA,PT,L]
